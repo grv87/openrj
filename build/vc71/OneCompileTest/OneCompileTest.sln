@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneCompileTest", "OneCompileTest.csproj", "{A3BA4B2B-3BD8-4651-BC17-803660A9F916}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A3BA4B2B-3BD8-4651-BC17-803660A9F916}.Debug.ActiveCfg = Debug|.NET
+		{A3BA4B2B-3BD8-4651-BC17-803660A9F916}.Debug.Build.0 = Debug|.NET
+		{A3BA4B2B-3BD8-4651-BC17-803660A9F916}.Release.ActiveCfg = Release|.NET
+		{A3BA4B2B-3BD8-4651-BC17-803660A9F916}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

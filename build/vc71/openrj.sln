@@ -1,0 +1,39 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "openrj", "openrj.vcproj", "{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Debug MultiThreaded = Debug MultiThreaded
+		Debug MultiThreaded DLL = Debug MultiThreaded DLL
+		Debug pseudoUNIX = Debug pseudoUNIX
+		Release = Release
+		Release MultiThreaded = Release MultiThreaded
+		Release MultiThreaded DLL = Release MultiThreaded DLL
+		Release pseudoUNIX = Release pseudoUNIX
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug.ActiveCfg = Debug|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug.Build.0 = Debug|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug MultiThreaded.ActiveCfg = Debug MultiThreaded|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug MultiThreaded.Build.0 = Debug MultiThreaded|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug MultiThreaded DLL.ActiveCfg = Debug MultiThreaded DLL|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug MultiThreaded DLL.Build.0 = Debug MultiThreaded DLL|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug pseudoUNIX.ActiveCfg = Debug pseudoUNIX|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Debug pseudoUNIX.Build.0 = Debug pseudoUNIX|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release.ActiveCfg = Release|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release.Build.0 = Release|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release MultiThreaded.ActiveCfg = Release MultiThreaded|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release MultiThreaded.Build.0 = Release MultiThreaded|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release MultiThreaded DLL.ActiveCfg = Release MultiThreaded DLL|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release MultiThreaded DLL.Build.0 = Release MultiThreaded DLL|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release pseudoUNIX.ActiveCfg = Release pseudoUNIX|Win32
+		{EE6C6EBE-7CF8-413C-BE3C-0FC853566FA3}.Release pseudoUNIX.Build.0 = Release pseudoUNIX|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
