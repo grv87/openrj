@@ -4,18 +4,18 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 29th September 2004
+ * Updated: 3rd March 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -51,37 +51,39 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_H_OPENRJ_MAJOR      1
-# define OPENRJ_VER_H_OPENRJ_MINOR      7
-# define OPENRJ_VER_H_OPENRJ_REVISION   1
-# define OPENRJ_VER_H_OPENRJ_EDIT       25
+# define OPENRJ_VER_H_OPENRJ_MINOR      9
+# define OPENRJ_VER_H_OPENRJ_REVISION   4
+# define OPENRJ_VER_H_OPENRJ_EDIT       33
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
- * The major version number of STLSoft
+ * The major version number of Open-RJ
  */
 
 /** \def OPENRJ_VER_MINOR
- * The minor version number of STLSoft
+ * The minor version number of Open-RJ
  */
 
 /** \def OPENRJ_VER_REVISION
- * The revision version number of STLSoft
+ * The revision version number of Open-RJ
  */
 
 /** \def OPENRJ_VER
- * The current composite version number of STLSoft
+ * The current composite version number of Open-RJ
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_1_0_1       0x01000100
 # define OPENRJ_VER_1_1_1       0x01010100
+# define OPENRJ_VER_1_1_2       0x01010200
+# define OPENRJ_VER_1_2_1       0x01020100
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
-#define OPENRJ_VER_MINOR    1
+#define OPENRJ_VER_MINOR    2
 #define OPENRJ_VER_REVISION 1
 
-#define OPENRJ_VER  OPENRJ_VER_1_1_1
+#define OPENRJ_VER  OPENRJ_VER_1_2_1
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -96,15 +98,15 @@
 /** \mainpage What is Open-RJ?
  *
  * This is a simple library to support the Record-Jar format (so named in the
- * excellent 
- * <a href = "http://awprofessional.com/title/0131429019">The Art Of UNIX Programming</a>), 
- * which is a simple, loosely structured format supporting multiple records 
+ * excellent
+ * <a href = "http://awprofessional.com/title/0131429019">The Art Of UNIX Programming</a>),
+ * which is a simple, loosely structured format supporting multiple records
  * with variable fields.
  *
- * Each \c ORJFieldA field is a name value pair, where the 
- * name is the whitespace-trimmed leftmost portion of the line, preceeding the 
+ * Each \c ORJFieldA field is a name value pair, where the
+ * name is the whitespace-trimmed leftmost portion of the line, preceeding the
  * colon separator. The value is the white-space trimmed remainder of the line.
- * Values may extend over multiple lines by use the the \c \ 
+ * Values may extend over multiple lines by use the the \c \
  * line continuation character.
  * The format looks like the following:
  *
@@ -168,16 +170,24 @@ namespace openrj
  * Macros and symbols
  */
 
-#if defined(OPENRJ_DOCUMENTATION_SKIP_SECTION) || \
-    defined(_CH_)
+#if defined(_CH_)
 # define OPENRJ_NO_STRUCT_TAG_PREFIX
 #endif /* OPENRJ_DOCUMENTATION_SKIP_SECTION || _CH_ */
 
-#ifdef OPENRJ_NO_STRUCT_TAG_PREFIX
+#if defined(OPENRJ_DOCUMENTATION_SKIP_SECTION) || \
+    defined(OPENRJ_NO_STRUCT_TAG_PREFIX)
 # define ORJ_TAG_NAME(x)                    x
 #else /* ? OPENRJ_NO_STRUCT_TAG_PREFIX */
 # define ORJ_TAG_NAME(x)                    tag ## x
 #endif /* OPENRJ_NO_STRUCT_TAG_PREFIX */
+
+/* OPENRJ_NO_STDIO */
+
+/* OPENRJ_NO_FILE_HANDLING */
+
+#if defined(OPENRJ_NO_FILE_HANDLING)
+# define OPENRJ_NO_STDIO
+#endif /* OPENRJ_NO_FILE_HANDLING */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Ch
@@ -311,15 +321,6 @@ typedef struct ORJ_TAG_NAME(ORJRecordA)     ORJRecordA;
 typedef ORJRecordA                          ORJRecord;
 /* typedef ORJRecordW                         ORJRecord; */
 
-#if 0
-#ifdef __cplusplus
-template <size_t N>
-class Record
-{
-};
-#endif /* __cplusplus */
-#endif /* 0 */
-
 
 /** \brief The database type (for ANSI coding)
  *
@@ -371,6 +372,7 @@ typedef struct ORJ_TAG_NAME(ORJError)       ORJError;
  */
 /** @{ */
 
+#ifndef OPENRJ_NO_FILE_HANDLING
 /** \brief Reads the records from the given file into an Open-RJ databsae
  *
  * \param jarName Name of the Record-JAR file. May not be NULL
@@ -385,6 +387,24 @@ ORJ_CALL(ORJRC) ORJ_ReadDatabaseA(  /* [in] */ char const           *jarName
                                 ,   /* [in] */ unsigned             flags
                                 ,   /* [out] */ ORJDatabaseA const  **pdatabase
                                 ,   /* [out] */ ORJError            *error);
+#endif /* !OPENRJ_NO_FILE_HANDLING */
+
+/** \brief Reads the records from the memory block into an Open-RJ databsae
+ *
+ * \param contents Pointer to the base of the memory contents to parse. May not be NULL
+ * \param cbContents Number of bytes in the memory contents to parse
+ * \param ator The allocator to use for allocating memory, May be NULL, in which case CRT malloc() / realloc() / free() are used
+ * \param flags Combination of the \link #ORJ_FLAG ORJ_FLAG \endlink enumeration
+ * \param error Pointer to an error structure, which is filled out with information if a parsing error is encountered
+ * \param pdatabase Pointer to a database pointer, in which will be returned the database. May not be NULL. The returned pointer
+ * must be freed using ORJ_FreeDatabaseA().
+ */
+ORJ_CALL(ORJRC) ORJ_CreateDatabaseFromMemoryA(  /* [in] */ char const           *contents
+                                            ,   /* [in] */ size_t               cbContents
+                                            ,   /* [in] */ IORJAllocator        *ator
+                                            ,   /* [in] */ unsigned             flags
+                                            ,   /* [out] */ ORJDatabaseA const  **pdatabase
+                                            ,   /* [out] */ ORJError            *error);
 
 
 /** \brief Frees the resources associated with the database
@@ -481,7 +501,7 @@ ORJ_CALL(ORJDatabaseA const*) ORJ_Record_GetDatabaseA(  /* [in] */ ORJRecordA co
 /** \brief Gives the name of a field
  *
  * \param field The field whose name is to be retrieved
- * \param pname Pointer to a string pointer. The returned value points at a string 
+ * \param pname Pointer to a string pointer. The returned value points at a string
  * structure representing the name
  * \note In the current implementation, the field is assumed valid, and the return value
  * is always ORJ_RC_SUCCESS
@@ -492,7 +512,7 @@ ORJ_CALL(ORJRC) ORJ_Field_GetNameA(         /* [in] */ ORJFieldA const  *field
 /** \brief Gives the value of a field
  *
  * \param field The field whose value is to be retrieved
- * \param pvalue Pointer to a string pointer. The returned value points at a string 
+ * \param pvalue Pointer to a string pointer. The returned value points at a string
  * structure representing the value
  * \note In the current implementation, the field is assumed valid, and the return value
  * is always ORJ_RC_SUCCESS
@@ -503,9 +523,9 @@ ORJ_CALL(ORJRC) ORJ_Field_GetValueA(        /* [in] */ ORJFieldA const  *field
 /** \brief Gives the name and value of a field
  *
  * \param field The field whose value is to be retrieved
- * \param pname Pointer to a string pointer. The returned value points at a string 
+ * \param pname Pointer to a string pointer. The returned value points at a string
  * structure representing the name
- * \param pvalue Pointer to a string pointer. The returned value points at a string 
+ * \param pvalue Pointer to a string pointer. The returned value points at a string
  * structure representing the value
  * \note In the current implementation, the field is assumed valid, and the return value
  * is always ORJ_RC_SUCCESS
@@ -551,54 +571,50 @@ ORJ_CALL(char const *) ORJ_GetParseErrorStringA( /* [in] */ ORJ_PARSE_ERROR erro
 /** @} */
 
 
-#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# if !defined(OPENRJ_DOCUMENTATION_SKIP_SECTION) && \
+     !defined(OPENRJ_PURE_API)
 /***************************************
  * Implementation functions
  *
  * \note These are subject to change in a future version
  */
 
-#ifndef __cplusplus
-#define ORJ_Database_GetNumLinesA(database)     ((size_t)(database)->numLines)
-#define ORJ_Database_GetNumFieldsA(database)    ((size_t)(database)->numFields)
-#define ORJ_Database_GetNumRecordsA(database)   ((size_t)(database)->numRecords)
-
-#define ORJ_Record_GetNumFieldsA(record)        ((size_t)(record)->numFields)
-
+# ifndef __cplusplus
+#  define ORJ_Database_GetNumLinesA(database)   ((size_t)(database)->numLines)
+#  define ORJ_Database_GetNumFieldsA(database)  ((size_t)(database)->numFields)
+#  define ORJ_Database_GetNumRecordsA(database) ((size_t)(database)->numRecords)
+#  define ORJ_Record_GetNumFieldsA(record)      ((size_t)(record)->numFields)
 #else /* ? __cplusplus */
 
-#define ORJ_Database_GetNumLinesA   ORJ_Database_GetNumLinesA_
+#  define ORJ_Database_GetNumLinesA             ORJ_Database_GetNumLinesA_
 inline size_t ORJ_Database_GetNumLinesA_(/* [in] */ ORJDatabaseA const *database)
 {
     return database->numLines;
 }
 
-#define ORJ_Database_GetNumFieldsA  ORJ_Database_GetNumFieldsA_
+#  define ORJ_Database_GetNumFieldsA            ORJ_Database_GetNumFieldsA_
 inline size_t ORJ_Database_GetNumFieldsA_(/* [in] */ ORJDatabaseA const *database)
 {
     return database->numFields;
 }
-#define ORJ_Database_GetNumRecordsA ORJ_Database_GetNumRecordsA_
+#  define ORJ_Database_GetNumRecordsA           ORJ_Database_GetNumRecordsA_
 inline size_t ORJ_Database_GetNumRecordsA_(/* [in] */ ORJDatabaseA const *database)
 {
     return database->numRecords;
 }
 
-#define ORJ_Record_GetNumFieldsA    ORJ_Record_GetNumFieldsA_
+#  define ORJ_Record_GetNumFieldsA              ORJ_Record_GetNumFieldsA_
 inline size_t ORJ_Record_GetNumFieldsA_(/* [in] */ ORJRecordA const *record)
 {
     return record->numFields;
 }
 
-
-#endif /* !__cplusplus */
-
-#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
-
-
+# endif /* !__cplusplus */
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION && !OPENRJ_PURE_API */
 
 
 #ifdef __cplusplus
+# ifndef OPENRJ_NO_FILE_HANDLING
 inline ORJRC ORJ_ReadDatabase(  /* [in] */ orj_char_t const     *jarName
                             ,   /* [in] */ IORJAllocator        *ator
                             ,   /* [in] */ unsigned             flags
@@ -607,15 +623,27 @@ inline ORJRC ORJ_ReadDatabase(  /* [in] */ orj_char_t const     *jarName
 {
     return ORJ_ReadDatabaseA(jarName, ator, flags, pdatabase, error);
 }
+# endif /* !OPENRJ_NO_FILE_HANDLING */
+inline ORJRC ORJ_CreateDatabaseFromMemory(  /* [in] */ orj_char_t const     *contents
+                                        ,   /* [in] */ size_t               cbContents
+                                        ,   /* [in] */ IORJAllocator        *ator
+                                        ,   /* [in] */ unsigned             flags
+                                        ,   /* [out] */ ORJDatabaseA const  **pdatabase
+                                        ,   /* [out] */ ORJError            *error)
+{
+    return ORJ_CreateDatabaseFromMemoryA(contents, cbContents, ator, flags, pdatabase, error);
+}
 inline ORJRC ORJ_FreeDatabase(/* [in] */ ORJDatabase const *database)
 {
     return ORJ_FreeDatabaseA(database);
 }
 #else /* ? __cplusplus */
-# define ORJ_ReadDatabase           ORJ_ReadDatabaseA
-# define ORJ_FreeDatabase           ORJ_FreeDatabaseA
+# ifndef OPENRJ_NO_FILE_HANDLING
+#  define ORJ_ReadDatabase                      ORJ_ReadDatabaseA
+# endif /* !OPENRJ_NO_FILE_HANDLING */
+# define ORJ_CreateDatabaseFromMemory           ORJ_CreateDatabaseFromMemoryA
+# define ORJ_FreeDatabase                       ORJ_FreeDatabaseA
 #endif /* __cplusplus */
-
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Shims
@@ -653,7 +681,6 @@ inline S &operator <<(S &s, ORJ_PARSE_ERROR pe)
 
 #if !defined(ORJ_NO_NAMESPACE)
 } // namespace openrj
-
 
 namespace stlsoft
 {

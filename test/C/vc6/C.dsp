@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /W4 /GX /O2 /I "..\..\..\include" /I "$(SYNESIS_DEV)\include" /I "$(SYNESIS_DEV)\incpriv" /D "WIN32" /D "NDEBUG" /D "STRICT" /D "_CONSOLE" /FR /YX /FD /c
+# ADD CPP /nologo /W4 /GX /O1 /I "..\..\..\include" /I "$(SYNESIS_DEV)\include" /I "$(SYNESIS_DEV)\incpriv" /D "WIN32" /D "NDEBUG" /D "STRICT" /D "_CONSOLE" /FR /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0xc09 /d "NDEBUG"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 openrj.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.0 /subsystem:console /machine:I386 /libpath:"..\..\..\lib"
+# ADD LINK32 openrj.vc6.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.0 /subsystem:console /machine:I386 /libpath:"..\..\..\lib"
 
 !ELSEIF  "$(CFG)" == "C - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 openrj.debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.0 /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\lib"
+# ADD LINK32 openrj.vc6.debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.0 /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\lib"
 
 !ENDIF 
 
@@ -98,34 +98,6 @@ SOURCE=..\C.c
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Group "Synesis Header Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\..\..\..\..\Dev\Include\M3CstTyp.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\..\Dev\Include\M3DbgExt.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\..\Dev\Include\M3Msvc.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\..\Dev\Include\MLBase.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\..\Dev\Include\SLBase.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\..\..\Dev\Include\SLBasUDf.h
-# End Source File
-# End Group
 # Begin Group "Open-RJ Header Files"
 
 # PROP Default_Filter ""

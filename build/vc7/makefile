@@ -1,229 +1,837 @@
 ################################################################################
 # File:		makefile
-# 
-# Purpose:	Makefile for the Open-RJ project for Visual C++ 7.0
 #
-# Created:	26th June 2004
-# Updated:	28th September 2004
+# Purpose:	Makefile for the Open-RJ project, for the Visual C++ v7.0
+#           compiler, on Win32
 #
+# Created:	15th Feburary 2005
+# Updated:	3rd March 2005
 #
 ################################################################################
 
-COMP_ID		=	vc7
-CC			=	cl
-CPPC		=	cl
-AR			=	lib
-LD			=	link
 
-OPENRJ_BASE		=	..\..
-OPENRJ_INCLUDE	=	$(OPENRJ_BASE)\include
-OPENRJ_SRC		=	$(OPENRJ_BASE)\src
-OPENRJ_LIB		=	$(OPENRJ_BASE)\lib
-OPENRJ_BIN		=	$(OPENRJ_BASE)\bin
-OPENRJ_MAPPINGS =	$(OPENRJ_BASE)\mappings
-OPENRJ_TEST		=	$(OPENRJ_BASE)\test
-OPENRJ_SAMPLES	=	$(OPENRJ_BASE)\samples
+################################################################################
+# Environment check
+#
 
-CC_ARGS			=	-c -W4 -WX -nologo -I$(OPENRJ_INCLUDE)
-CC_ARGS_ST		=	-ML $(CC_ARGS)
-CC_ARGS_MT		=	-MT $(CC_ARGS)
-CC_ARGS_DLL		=	-MD $(CC_ARGS)
-CPPC_ARGS		=	-c -W4 -WX -nologo -I$(OPENRJ_INCLUDE) -EHsc
-CPPC_ARGS_ST	=	-ML $(CPPC_ARGS)
-CPPC_ARGS_MT	=	-MT $(CPPC_ARGS)
-CPPC_ARGS_DLL	=	-MD $(CPPC_ARGS)
+!ifndef STLSOFT_INCLUDE
+!error STLSOFT_INCLUDE must be defined
+!endif # STLSOFT_INCLUDE
 
-LD_ARGS			=	-nologo
+!ifndef CH_EXTERN
+!error CH_EXTERN must be defined
+!endif # CH_EXTERN
+
+!ifndef PYTHON_ROOT
+!error PYTHON_ROOT must be defined
+!endif # PYTHON_ROOT
+
+################################################################################
+# Symbols
+
+# Identification
+
+COMP_TAG			=	vc7
+PROJ_TAG			=	openrj
+
+CC					=	cl
+CPPC				=	cl
+CPPDNC				=	cl -clr
+CSC					=	csc
+AR					=	lib
+LD					=	link
+RM					=	del /f
+
+# Directories
+
+PROJ_BASE_DIR		=	..\..
+PROJ_LIB_DIR		=	$(PROJ_BASE_DIR)\lib
+PROJ_OBJ_DIR		=	.
+PROJ_BIN_DIR		=	$(PROJ_BASE_DIR)\bin
+PROJ_SRC_DIR		=	$(PROJ_BASE_DIR)\src
+PROJ_INCLUDE_DIR	=	$(PROJ_BASE_DIR)\include
+PROJ_MAPPINGS_DIR	=	$(PROJ_BASE_DIR)\mappings
+PROJ_TEST_DIR		=	$(PROJ_BASE_DIR)\test
+
+# Includes
+
+INCLUDES_LEADER		=	
+
+PROJ_INCLUDE		=	-I$(PROJ_INCLUDE_DIR)
+
+COMMON_INCLUDES		=	
+
+CC_INCLUDES = \
+ $(INCLUDES_LEADER) \
+ $(PROJ_INCLUDE) \
+ $(COMMON_INCLUDES) \
+ \
+
+CPPC_INCLUDES = \
+ $(INCLUDES_LEADER) \
+ $(PROJ_INCLUDE) \
+ $(COMMON_INCLUDES) \
+ -I"$(STLSOFT_INCLUDE)" \
+ -I"$(STLSOFT_INCLUDE)\inprogress" \
+ \
+
+CPPDNC_INCLUDES = \
+ $(INCLUDES_LEADER) \
+ $(PROJ_INCLUDE) \
+ $(COMMON_INCLUDES) \
+ -I"$(STLSOFT_INCLUDE)" \
+ -I"$(STLSOFT_INCLUDE)\inprogress" \
+ \
+
+# Lib
+
+LIBS_LEADER			=	
+
+COMMON_LIB			=	
+
+# #defines
+
+COMMON_DEFS			=	-DWIN32
+
+CC_DEFS				=	$(COMMON_DEFS)
+
+CPPC_DEFS			=	$(COMMON_DEFS)
+
+CPPDNC_DEFS			=	$(COMMON_DEFS)
+
+# Flags
+
+CC_F_NOLOGO				=	-nologo
+CC_F_COMPILE_ONLY		=	-c
+CC_F_WARNING_MAX		=	-W4
+CC_F_WARNING_ERR		=	-WX
+
+CPPC_F_NOLOGO		=	-nologo
+CPPC_F_COMPILE_ONLY	=	-c
+CPPC_F_WARNING_MAX	=	-W4
+CPPC_F_WARNING_ERR	=	-WX
+CPPC_F_EXCEPTIONS	=	-EHsc
+CPPC_F_RTTI			=	-GR
+
+CPPDNC_F_NOLOGO			=	-nologo
+CPPDNC_F_COMPILE_ONLY	=	-c
+CPPDNC_F_WARNING_MAX	=	-W4
+CPPDNC_F_WARNING_ERR	=	-WX
+CPPDNC_F_EXCEPTIONS		=	-EHsc
+CPPDNC_F_RTTI			=	-GR
+
+CSC_F_NOLOGO			=	-nologo
+CSC_F_COMPILE_ONLY		=	
+CSC_F_WARNING_MAX		=	-warn:4
+CSC_F_WARNING_ERR		=	-warnaserror
+
+CC_TOOL_FLAGS		=	
+
+CC_FLAGS = \
+ $(CC_TOOL_FLAGS) \
+ $(CC_F_NOLOGO) \
+ $(CC_F_COMPILE_ONLY) \
+ $(CC_F_WARNING_MAX) \
+ $(CC_F_WARNING_ERR)
+
+CPPC_TOOL_FLAGS		=	
+
+CPPC_FLAGS = \
+ $(CPPC_TOOL_FLAGS) \
+ $(CPPC_F_NOLOGO) \
+ $(CPPC_F_COMPILE_ONLY) \
+ $(CPPC_F_WARNING_MAX) \
+ $(CPPC_F_WARNING_ERR) \
+ $(CPPC_F_EXCEPTIONS) \
+ $(CPPC_F_RTTI)
+
+CPPDNC_TOOL_FLAGS		=	
+
+CPPDNC_FLAGS = \
+ $(CPPDNC_TOOL_FLAGS) \
+ $(CPPDNC_F_NOLOGO) \
+ $(CPPDNC_F_COMPILE_ONLY) \
+ $(CPPDNC_F_WARNING_MAX) \
+ $(CPPDNC_F_WARNING_ERR) \
+ $(CPPDNC_F_EXCEPTIONS) \
+ $(CPPDNC_F_RTTI)
+
+CSC_TOOL_FLAGS		=	
+
+CSC_FLAGS = \
+ $(CSC_TOOL_FLAGS) \
+ $(CSC_F_NOLOGO) \
+ $(CSC_F_COMPILE_ONLY) \
+ $(CSC_F_WARNING_MAX) \
+ $(CSC_F_WARNING_ERR) \
+
+# Arguments (= flags + defines + includes)
+
+CC_ARGS_MT_DEBUG				=	-MTd -D_DEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_DLL_DEBUG				=	-MDd -D_DEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_DLL_RELEASE				=	-MD -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_MT_RELEASE				=	-MT -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_DEBUG				=	-MLd -D_DEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_RELEASE				=	-ML -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+
+CPPC_ARGS_MT_DEBUG			=	-MTd -D_DEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_DLL_DEBUG			=	-MDd -D_DEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_DLL_RELEASE			=	-MD -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_MT_RELEASE			=	-MT -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_DEBUG			=	-MLd -D_DEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_RELEASE			=	-ML -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+
+CPPDNC_ARGS			=	 -MT $(CPPDNC_FLAGS) $(CPPDNC_DEFS) $(CPPDNC_INCLUDES)
+
+CSC_ARGS			=	 $(CSC_FLAGS) $(CSC_DEFS) $(CSC_INCLUDES)
+
+AR_ARGS				=	-nologo
+
+LD_ARGS				=	-nologo $(COMMON_LIB)
+
+################################################################################
+# Targets
+
+# libs
+TARGET_LIB_MT_DEBUG			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).mt.debug.lib
+TARGET_LIB_DLL_DEBUG			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).dll.debug.lib
+TARGET_LIB_DLL_RELEASE			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).dll.lib
+TARGET_LIB_MT_RELEASE			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).mt.lib
+TARGET_LIB_ST_DEBUG			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).debug.lib
+TARGET_LIB_ST_RELEASE			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).lib
+
+TARGET_LIB_CPPDN		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).net.dll
 
 
-TARGET_LIB_ST		=	$(OPENRJ_LIB)\openrj.$(COMP_ID).lib
-TARGET_LIB_MT		=	$(OPENRJ_LIB)\openrj.$(COMP_ID).mt.lib
-TARGET_LIB_DLL		=	$(OPENRJ_LIB)\openrj.$(COMP_ID).dll.lib
-TARGET_DLL			=	$(OPENRJ_BIN)\openrj.dll
-TARGET_CLI_C_ST		=	$(OPENRJ_BIN)\openrj_c_$(COMP_ID).st.exe
-TARGET_CLI_C_MT		=	$(OPENRJ_BIN)\openrj_c_$(COMP_ID).mt.exe
-TARGET_CLI_C_DLL	=	$(OPENRJ_BIN)\openrj_c_$(COMP_ID).dll.exe
-TARGET_CLI_CPP_ST	=	$(OPENRJ_BIN)\openrj_cpp_$(COMP_ID).st.exe
-TARGET_CLI_CPP_MT	=	$(OPENRJ_BIN)\openrj_cpp_$(COMP_ID).mt.exe
-TARGET_CLI_CPP_DLL	=	$(OPENRJ_BIN)\openrj_cpp_$(COMP_ID).dll.exe
-TARGET_CLI_STL_ST	=	$(OPENRJ_BIN)\openrj_stl_$(COMP_ID).st.exe
-TARGET_CLI_STL_MT	=	$(OPENRJ_BIN)\openrj_stl_$(COMP_ID).mt.exe
-TARGET_CLI_STL_DLL	=	$(OPENRJ_BIN)\openrj_stl_$(COMP_ID).dll.exe
+# test programs
+TARGET_TEST_C_MT_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).mt.debug.exe
+TARGET_TEST_CPP_MT_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.Cpp.$(COMP_TAG).mt.debug.exe
+TARGET_TEST_STL_MT_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.STL.$(COMP_TAG).mt.debug.exe
+TARGET_TEST_C_DLL_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).dll.debug.exe
+TARGET_TEST_CPP_DLL_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.Cpp.$(COMP_TAG).dll.debug.exe
+TARGET_TEST_STL_DLL_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.STL.$(COMP_TAG).dll.debug.exe
+TARGET_TEST_C_DLL_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).dll.exe
+TARGET_TEST_CPP_DLL_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.Cpp.$(COMP_TAG).dll.exe
+TARGET_TEST_STL_DLL_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.STL.$(COMP_TAG).dll.exe
+TARGET_TEST_C_MT_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).mt.exe
+TARGET_TEST_CPP_MT_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.Cpp.$(COMP_TAG).mt.exe
+TARGET_TEST_STL_MT_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.STL.$(COMP_TAG).mt.exe
+TARGET_TEST_C_ST_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).debug.exe
+TARGET_TEST_CPP_ST_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.Cpp.$(COMP_TAG).debug.exe
+TARGET_TEST_STL_ST_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.STL.$(COMP_TAG).debug.exe
+TARGET_TEST_C_ST_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).exe
+TARGET_TEST_CPP_ST_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.Cpp.$(COMP_TAG).exe
+TARGET_TEST_STL_ST_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.STL.$(COMP_TAG).exe
 
-OBJS_LIB_ST			=											\
-					.\orjapi.st.obj								\
-					.\orjmem.st.obj								\
-					.\orjstr.st.obj								\
-																\
+TARGET_TEST_CPPDN		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.NET.exe
 
-OBJS_LIB_MT			=											\
-					.\orjapi.mt.obj								\
-					.\orjmem.mt.obj								\
-					.\orjstr.mt.obj								\
-																\
+TARGETS = \
+ $(TARGET_LIB_MT_DEBUG) \
+ $(TARGET_LIB_DLL_DEBUG) \
+ $(TARGET_LIB_DLL_RELEASE) \
+ $(TARGET_LIB_MT_RELEASE) \
+ $(TARGET_LIB_ST_DEBUG) \
+ $(TARGET_LIB_ST_RELEASE) \
+ $(TARGET_LIB_CPPDN) \
+ $(TARGET_TEST_C_MT_DEBUG) \
+ $(TARGET_TEST_C_DLL_DEBUG) \
+ $(TARGET_TEST_C_DLL_RELEASE) \
+ $(TARGET_TEST_C_MT_RELEASE) \
+ $(TARGET_TEST_C_ST_DEBUG) \
+ $(TARGET_TEST_C_ST_RELEASE) \
+ $(TARGET_TEST_CPP_MT_DEBUG) \
+ $(TARGET_TEST_CPP_DLL_DEBUG) \
+ $(TARGET_TEST_CPP_DLL_RELEASE) \
+ $(TARGET_TEST_CPP_MT_RELEASE) \
+ $(TARGET_TEST_CPP_ST_DEBUG) \
+ $(TARGET_TEST_CPP_ST_RELEASE) \
+ $(TARGET_TEST_STL_MT_DEBUG) \
+ $(TARGET_TEST_STL_DLL_DEBUG) \
+ $(TARGET_TEST_STL_DLL_RELEASE) \
+ $(TARGET_TEST_STL_MT_RELEASE) \
+ $(TARGET_TEST_STL_ST_DEBUG) \
+ $(TARGET_TEST_STL_ST_RELEASE) \
+ $(TARGET_TEST_CPPDN) \
+ \
 
-OBJS_LIB_DLL		=											\
-					.\orjapi.dll.obj							\
-					.\orjmem.dll.obj							\
-					.\orjstr.dll.obj							\
-																\
+# objects
 
-INCLUDE_FILES	=												\
-					$(OPENRJ_INCLUDE)\openrj\openrj.h			\
-					$(OPENRJ_INCLUDE)\openrj\openrj_assert.h	\
-					$(OPENRJ_INCLUDE)\openrj\openrj_memory.h	\
-																\
-												
-INCLUDE_FILES_CPP	=												\
-						$(INCLUDE_FILES)							\
-						$(OPENRJ_INCLUDE)\openrj\cpp\openrj.hpp		\
-						$(OPENRJ_INCLUDE)\openrj\cpp\field.hpp		\
-						$(OPENRJ_INCLUDE)\openrj\cpp\record.hpp		\
-						$(OPENRJ_INCLUDE)\openrj\cpp\database.hpp	\
-																	\
+# for libs
 
-target:										\
-					$(TARGET_LIB_ST)		\
-					$(TARGET_LIB_MT)		\
-					$(TARGET_LIB_DLL)		\
-					$(TARGET_DLL)			\
-					$(TARGET_CLI_C_ST)		\
-					$(TARGET_CLI_C_MT)		\
-					$(TARGET_CLI_C_DLL)		\
-					$(TARGET_CLI_CPP_ST)	\
-					$(TARGET_CLI_CPP_MT)	\
-					$(TARGET_CLI_CPP_DLL)	\
-					$(TARGET_CLI_STL_ST)	\
-					$(TARGET_CLI_STL_MT)	\
-					$(TARGET_CLI_STL_DLL)	\
-											\
+OBJ_PROJ_orjapi__MT_DEBUG = $(PROJ_OBJ_DIR)\orjapi.mt.debug.obj
+OBJ_PROJ_orjmem__MT_DEBUG = $(PROJ_OBJ_DIR)\orjmem.mt.debug.obj
+OBJ_PROJ_orjstr__MT_DEBUG = $(PROJ_OBJ_DIR)\orjstr.mt.debug.obj
 
-test:
-	$(TARGET_CLI_C_ST)		$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_C_MT)		$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_C_DLL)		$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_CPP_ST)	$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_CPP_MT)	$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_CPP_DLL)	$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_STL_ST)	$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_STL_MT)	$(OPENRJ_SAMPLES)\pets\pets.orj
-	$(TARGET_CLI_STL_DLL)	$(OPENRJ_SAMPLES)\pets\pets.orj
-	
+OBJ_PROJ_MT_DEBUG = \
+ $(OBJ_PROJ_orjapi__MT_DEBUG) \
+ $(OBJ_PROJ_orjmem__MT_DEBUG) \
+ $(OBJ_PROJ_orjstr__MT_DEBUG) \
+ \
+
+OBJ_PROJ_orjapi__DLL_DEBUG = $(PROJ_OBJ_DIR)\orjapi.dll.debug.obj
+OBJ_PROJ_orjmem__DLL_DEBUG = $(PROJ_OBJ_DIR)\orjmem.dll.debug.obj
+OBJ_PROJ_orjstr__DLL_DEBUG = $(PROJ_OBJ_DIR)\orjstr.dll.debug.obj
+
+OBJ_PROJ_DLL_DEBUG = \
+ $(OBJ_PROJ_orjapi__DLL_DEBUG) \
+ $(OBJ_PROJ_orjmem__DLL_DEBUG) \
+ $(OBJ_PROJ_orjstr__DLL_DEBUG) \
+ \
+
+OBJ_PROJ_orjapi__DLL_RELEASE = $(PROJ_OBJ_DIR)\orjapi.dll.obj
+OBJ_PROJ_orjmem__DLL_RELEASE = $(PROJ_OBJ_DIR)\orjmem.dll.obj
+OBJ_PROJ_orjstr__DLL_RELEASE = $(PROJ_OBJ_DIR)\orjstr.dll.obj
+
+OBJ_PROJ_DLL_RELEASE = \
+ $(OBJ_PROJ_orjapi__DLL_RELEASE) \
+ $(OBJ_PROJ_orjmem__DLL_RELEASE) \
+ $(OBJ_PROJ_orjstr__DLL_RELEASE) \
+ \
+
+OBJ_PROJ_orjapi__MT_RELEASE = $(PROJ_OBJ_DIR)\orjapi.mt.obj
+OBJ_PROJ_orjmem__MT_RELEASE = $(PROJ_OBJ_DIR)\orjmem.mt.obj
+OBJ_PROJ_orjstr__MT_RELEASE = $(PROJ_OBJ_DIR)\orjstr.mt.obj
+
+OBJ_PROJ_MT_RELEASE = \
+ $(OBJ_PROJ_orjapi__MT_RELEASE) \
+ $(OBJ_PROJ_orjmem__MT_RELEASE) \
+ $(OBJ_PROJ_orjstr__MT_RELEASE) \
+ \
+
+OBJ_PROJ_orjapi__ST_DEBUG = $(PROJ_OBJ_DIR)\orjapi.debug.obj
+OBJ_PROJ_orjmem__ST_DEBUG = $(PROJ_OBJ_DIR)\orjmem.debug.obj
+OBJ_PROJ_orjstr__ST_DEBUG = $(PROJ_OBJ_DIR)\orjstr.debug.obj
+
+OBJ_PROJ_ST_DEBUG = \
+ $(OBJ_PROJ_orjapi__ST_DEBUG) \
+ $(OBJ_PROJ_orjmem__ST_DEBUG) \
+ $(OBJ_PROJ_orjstr__ST_DEBUG) \
+ \
+
+OBJ_PROJ_orjapi__ST_RELEASE = $(PROJ_OBJ_DIR)\orjapi.obj
+OBJ_PROJ_orjmem__ST_RELEASE = $(PROJ_OBJ_DIR)\orjmem.obj
+OBJ_PROJ_orjstr__ST_RELEASE = $(PROJ_OBJ_DIR)\orjstr.obj
+
+OBJ_PROJ_ST_RELEASE = \
+ $(OBJ_PROJ_orjapi__ST_RELEASE) \
+ $(OBJ_PROJ_orjmem__ST_RELEASE) \
+ $(OBJ_PROJ_orjstr__ST_RELEASE) \
+ \
+
+
+LIB_OBJS = \
+ $(OBJ_PROJ_MT_DEBUG) \
+ $(OBJ_PROJ_DLL_DEBUG) \
+ $(OBJ_PROJ_DLL_RELEASE) \
+ $(OBJ_PROJ_MT_RELEASE) \
+ $(OBJ_PROJ_ST_DEBUG) \
+ $(OBJ_PROJ_ST_RELEASE) \
+ \
+
+OBJ_CPPDN = \
+ .\AssemblyInfo.net.obj \
+ .\Database.net.obj \
+ .\Field.net.obj \
+ .\FileDatabase.net.obj \
+ .\MemoryDatabase.net.obj \
+ .\OpenRJException.net.obj \
+ .\OpenRJUtil.net.obj \
+ .\Record.net.obj \
+ \
+
+
+# for test programs
+
+OBJ_C_MT_DEBUG					=	.\C.mt.debug.obj
+OBJ_CPP_MT_DEBUG				=	.\Cpp.mt.debug.obj
+OBJ_STL_MT_DEBUG				=	.\STL.mt.debug.obj
+OBJ_C_DLL_DEBUG					=	.\C.dll.debug.obj
+OBJ_CPP_DLL_DEBUG				=	.\Cpp.dll.debug.obj
+OBJ_STL_DLL_DEBUG				=	.\STL.dll.debug.obj
+OBJ_C_DLL_RELEASE					=	.\C.dll.obj
+OBJ_CPP_DLL_RELEASE				=	.\Cpp.dll.obj
+OBJ_STL_DLL_RELEASE				=	.\STL.dll.obj
+OBJ_C_MT_RELEASE					=	.\C.mt.obj
+OBJ_CPP_MT_RELEASE				=	.\Cpp.mt.obj
+OBJ_STL_MT_RELEASE				=	.\STL.mt.obj
+OBJ_C_ST_DEBUG					=	.\C.debug.obj
+OBJ_CPP_ST_DEBUG				=	.\Cpp.debug.obj
+OBJ_STL_ST_DEBUG				=	.\STL.debug.obj
+OBJ_C_ST_RELEASE					=	.\C.obj
+OBJ_CPP_ST_RELEASE				=	.\Cpp.obj
+OBJ_STL_ST_RELEASE				=	.\STL.obj
+
+TEST_OBJS = \
+ $(OBJ_C_MT_DEBUG) \
+ $(OBJ_C_DLL_DEBUG) \
+ $(OBJ_C_DLL_RELEASE) \
+ $(OBJ_C_MT_RELEASE) \
+ $(OBJ_C_ST_DEBUG) \
+ $(OBJ_C_ST_RELEASE) \
+ $(OBJ_CPP_MT_DEBUG) \
+ $(OBJ_CPP_DLL_DEBUG) \
+ $(OBJ_CPP_DLL_RELEASE) \
+ $(OBJ_CPP_MT_RELEASE) \
+ $(OBJ_CPP_ST_DEBUG) \
+ $(OBJ_CPP_ST_RELEASE) \
+ $(OBJ_STL_MT_DEBUG) \
+ $(OBJ_STL_DLL_DEBUG) \
+ $(OBJ_STL_DLL_RELEASE) \
+ $(OBJ_STL_MT_RELEASE) \
+ $(OBJ_STL_ST_DEBUG) \
+ $(OBJ_STL_ST_RELEASE) \
+ \
+
+
+LIB_HEADERS	= \
+ $(PROJ_INCLUDE_DIR)\openrj\openrj.h \
+ $(PROJ_INCLUDE_DIR)\openrj\openrj_assert.h \
+ $(PROJ_INCLUDE_DIR)\openrj\openrj_memory.h \
+ \
+
+TEST_C_HEADERS = \
+ $(LIB_HEADERS) \
+ \
+
+TEST_CPP_HEADERS = \
+ $(LIB_HEADERS) \
+ $(PROJ_INCLUDE_DIR)\openrj\cpp\openrj.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\cpp\database.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\cpp\field.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\cpp\record.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\cpp\openrjfwd.hpp \
+ \
+
+TEST_STL_HEADERS = \
+ $(LIB_HEADERS) \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\openrj.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\database.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\field.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\record.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\openrjfwd.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\functional.hpp \
+ $(PROJ_INCLUDE_DIR)\openrj\stl\utility.hpp \
+ \
+
+
+target:		$(TARGETS)
+
+compile:	$(LIB_OBJS) $(TEST_OBJS)
+
+all: \
+ ch \
+ c++.net \
+ python \
+ target \
+ \
+
+usage:
+	@echo "make [usage | clean | compile | all | test | target] - default is 'all'"
 
 clean:
-	@-if exist *.obj del /f *.obj
-	@-if exist $(TARGET_LIB_ST) del /f $(TARGET_LIB_ST)
-	@-if exist $(TARGET_LIB_MT) del /f $(TARGET_LIB_MT)
-	@-if exist $(TARGET_LIB_DLL) del /f $(TARGET_LIB_DLL)
-	@-if exist $(TARGET_DLL) del /f $(TARGET_DLL)
-	@-if exist $(TARGET_CLI_C_ST) del /f $(TARGET_CLI_C_ST)
-	@-if exist $(TARGET_CLI_C_MT) del /f $(TARGET_CLI_C_MT)
-	@-if exist $(TARGET_CLI_C_DLL) del /f $(TARGET_CLI_C_DLL)
-	@-if exist $(TARGET_CLI_CPP_ST) del /f $(TARGET_CLI_CPP_ST)
-	@-if exist $(TARGET_CLI_CPP_MT) del /f $(TARGET_CLI_CPP_MT)
-	@-if exist $(TARGET_CLI_CPP_DLL) del /f $(TARGET_CLI_CPP_DLL)
-	@-if exist $(TARGET_CLI_STL_ST) del /f $(TARGET_CLI_STL_ST)
-	@-if exist $(TARGET_CLI_STL_MT) del /f $(TARGET_CLI_STL_MT)
-	@-if exist $(TARGET_CLI_STL_DLL) del /f $(TARGET_CLI_STL_DLL)
+	@-$(RM) $(TARGET_LIB_MT_DEBUG)
+	@-$(RM) $(TARGET_LIB_DLL_DEBUG)
+	@-$(RM) $(TARGET_LIB_DLL_RELEASE)
+	@-$(RM) $(TARGET_LIB_MT_RELEASE)
+	@-$(RM) $(TARGET_LIB_ST_DEBUG)
+	@-$(RM) $(TARGET_LIB_ST_RELEASE)
+	@-$(RM) $(TARGET_LIB_CPPDN)
+	@-$(RM) $(TARGET_TEST_C_MT_DEBUG)
+	@-$(RM) $(TARGET_TEST_C_DLL_DEBUG)
+	@-$(RM) $(TARGET_TEST_C_DLL_RELEASE)
+	@-$(RM) $(TARGET_TEST_C_MT_RELEASE)
+	@-$(RM) $(TARGET_TEST_C_ST_DEBUG)
+	@-$(RM) $(TARGET_TEST_C_ST_RELEASE)
+	@-$(RM) $(TARGET_TEST_CPP_MT_DEBUG)
+	@-$(RM) $(TARGET_TEST_CPP_DLL_DEBUG)
+	@-$(RM) $(TARGET_TEST_CPP_DLL_RELEASE)
+	@-$(RM) $(TARGET_TEST_CPP_MT_RELEASE)
+	@-$(RM) $(TARGET_TEST_CPP_ST_DEBUG)
+	@-$(RM) $(TARGET_TEST_CPP_ST_RELEASE)
+	@-$(RM) $(TARGET_TEST_STL_MT_DEBUG)
+	@-$(RM) $(TARGET_TEST_STL_DLL_DEBUG)
+	@-$(RM) $(TARGET_TEST_STL_DLL_RELEASE)
+	@-$(RM) $(TARGET_TEST_STL_MT_RELEASE)
+	@-$(RM) $(TARGET_TEST_STL_ST_DEBUG)
+	@-$(RM) $(TARGET_TEST_STL_ST_RELEASE)
+	@-$(RM) $(OBJ_PROJ_MT_DEBUG)
+	@-$(RM) $(OBJ_PROJ_DLL_DEBUG)
+	@-$(RM) $(OBJ_PROJ_DLL_RELEASE)
+	@-$(RM) $(OBJ_PROJ_MT_RELEASE)
+	@-$(RM) $(OBJ_PROJ_ST_DEBUG)
+	@-$(RM) $(OBJ_PROJ_ST_RELEASE)
+	@-$(RM) $(OBJ_C_MT_DEBUG)
+	@-$(RM) $(OBJ_C_DLL_DEBUG)
+	@-$(RM) $(OBJ_C_DLL_RELEASE)
+	@-$(RM) $(OBJ_C_MT_RELEASE)
+	@-$(RM) $(OBJ_C_ST_DEBUG)
+	@-$(RM) $(OBJ_C_ST_RELEASE)
+	@-$(RM) $(OBJ_CPP_MT_DEBUG)
+	@-$(RM) $(OBJ_CPP_DLL_DEBUG)
+	@-$(RM) $(OBJ_CPP_DLL_RELEASE)
+	@-$(RM) $(OBJ_CPP_MT_RELEASE)
+	@-$(RM) $(OBJ_CPP_ST_DEBUG)
+	@-$(RM) $(OBJ_CPP_ST_RELEASE)
+	@-$(RM) $(OBJ_STL_MT_DEBUG)
+	@-$(RM) $(OBJ_STL_DLL_DEBUG)
+	@-$(RM) $(OBJ_STL_DLL_RELEASE)
+	@-$(RM) $(OBJ_STL_MT_RELEASE)
+	@-$(RM) $(OBJ_STL_ST_DEBUG)
+	@-$(RM) $(OBJ_STL_ST_RELEASE)
+	@-$(RM) $(TARGET_TEST_CPPDN)
+	@-$(RM) $(OBJ_CH)
+	@-$(RM) $(TARGET_CH_SHARED_LIB)
+	@-$(RM) $(OBJ_PYTHON)
+	@-$(RM) $(TARGET_PYTHON_SHARED_LIB)
+	@-$(RM) $(TARGET_RUBY_SHARED_LIB)
+
+test_:
+	$(TARGET_TEST_C_MT_DEBUG) --unittest
+	$(TARGET_TEST_C_DLL_DEBUG) --unittest
+	$(TARGET_TEST_C_DLL_RELEASE) --unittest
+	$(TARGET_TEST_C_MT_RELEASE) --unittest
+	$(TARGET_TEST_C_ST_DEBUG) --unittest
+	$(TARGET_TEST_C_ST_RELEASE) --unittest
+	$(TARGET_TEST_CPP_MT_DEBUG) --unittest
+	$(TARGET_TEST_CPP_DLL_DEBUG) --unittest
+	$(TARGET_TEST_CPP_DLL_RELEASE) --unittest
+	$(TARGET_TEST_CPP_MT_RELEASE) --unittest
+	$(TARGET_TEST_CPP_ST_DEBUG) --unittest
+	$(TARGET_TEST_CPP_ST_RELEASE) --unittest
+	$(TARGET_TEST_STL_MT_DEBUG) --unittest
+	$(TARGET_TEST_STL_DLL_DEBUG) --unittest
+	$(TARGET_TEST_STL_DLL_RELEASE) --unittest
+	$(TARGET_TEST_STL_MT_RELEASE) --unittest
+	$(TARGET_TEST_STL_ST_DEBUG) --unittest
+	$(TARGET_TEST_STL_ST_RELEASE) --unittest
+	$(TARGET_TEST_CPPDN) --unittest
+
+test:	target test_
+
+# Ch parts
+
+PROJ_CH_DIR					=	$(PROJ_MAPPINGS_DIR)\ch
+
+SRC_CH_C					=	$(PROJ_CH_DIR)\libopenrjch.c
+OBJ_CH						=	$(PROJ_CH_DIR)\libopenrj.obj
+TARGET_CH_SHARED_LIB		=	$(PROJ_CH_DIR)\$(PROJ_TAG).dll
+
+CH_CC						=	$(CC)
+CH_AR						=	$(AR)
+CH_LD						=	$(LD)
+
+CH_CC_FLAGS					=	$(CC_FLAGS) -MD
+CH_CC_DEFS					=	$(CC_DEFS)
+CH_CC_INCLUDES				=	$(CC_INCLUDES) -I$(CH_EXTERN)\include
+CH_LD_LIB					=	-libpath:$(CH_EXTERN)\lib
+CH_CC_ARGS					=	$(CH_CC_FLAGS) $(CH_CC_DEFS) $(CH_CC_INCLUDES)
+CH_LD_ARGS					=	$(LD_ARGS) $(CH_LD_LIB) -dll  ch.lib chsdk.lib advapi32.lib
 
 
-# Library dependencies
+$(OBJ_CH):	$(SRC_CH_C) makefile
+	$(CH_CC) $(CH_CC_ARGS) -Fo$@ $(SRC_CH_C)
 
-$(TARGET_LIB_ST):		$(OBJS_LIB_ST)
-	$(AR) -nologo -out:$@ $(OBJS_LIB_ST)
+$(TARGET_CH_SHARED_LIB):	$(OBJ_CH) $(TARGET_LIB_DLL_RELEASE) makefile
+	$(CH_LD) $(CH_LD_ARGS) -out:$@ $(OBJ_CH) $(TARGET_LIB_DLL_RELEASE)
 
-$(TARGET_LIB_MT):		$(OBJS_LIB_MT)
-	$(AR) -nologo -out:$@ $(OBJS_LIB_MT)
+ch:	$(TARGET_CH_SHARED_LIB)
 
-$(TARGET_LIB_DLL):		$(OBJS_LIB_DLL)
-	$(AR) -nologo -out:$@ $(OBJS_LIB_DLL)
+ch-test:	ch
+	cd $(PROJ_CH_DIR)
+	ch $(PROJ_CH_DIR)\test.ch
 
-$(TARGET_DLL):		$(TARGET_LIB_DLL) .\openrj-dll.obj
-	$(LD) $(LD_ARGS) -nologo -dll -out:$@ $(TARGET_LIB_DLL) .\openrj-dll.obj
+# Python parts
 
-.\openrj-dll.obj:	$(OPENRJ_MAPPINGS)\DLL\openrj-dll.c
-	$(CC) $(CC_ARGS_ST) -Fo$@ $(OPENRJ_MAPPINGS)\DLL\openrj-dll.c
+PROJ_PYTHON_DIR				=	$(PROJ_MAPPINGS_DIR)\python
 
-.\orjapi.st.obj:	$(OPENRJ_SRC)\orjapi.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_ST) -Fo$@ $(OPENRJ_SRC)\orjapi.c 
+SRC_PYTHON_C				=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG)_python.c
+SRC_PYTHON_DEF				=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG)_python.def
+OBJ_PYTHON					=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG)_python.obj
+TARGET_PYTHON_SHARED_LIB	=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG).dll
 
-.\orjapi.mt.obj:	$(OPENRJ_SRC)\orjapi.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_MT) -Fo$@ $(OPENRJ_SRC)\orjapi.c 
+PYTHON_CC					=	$(CC)
+PYTHON_AR					=	$(AR)
+PYTHON_LD					=	$(LD)
 
-.\orjapi.dll.obj:	$(OPENRJ_SRC)\orjapi.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_DLL) -Fo$@ $(OPENRJ_SRC)\orjapi.c 
+PYTHON_CC_FLAGS				=	$(CC_FLAGS)
+PYTHON_CC_DEFS				=	$(CC_DEFS)
+PYTHON_CC_INCLUDES			=	$(CC_INCLUDES) -I$(PYTHON_ROOT)\include
+PYTHON_LD_LIB				=	-libpath:$(PYTHON_ROOT)\libs
+PYTHON_CC_ARGS				=	$(PYTHON_CC_FLAGS) $(PYTHON_CC_DEFS) $(PYTHON_CC_INCLUDES)
+PYTHON_LD_ARGS				=	$(LD_ARGS) $(PYTHON_LD_LIB) -dll -def:$(SRC_PYTHON_DEF)
 
-.\orjmem.st.obj:	$(OPENRJ_SRC)\orjmem.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_ST) -Fo$@ $(OPENRJ_SRC)\orjmem.c 
 
-.\orjmem.mt.obj:	$(OPENRJ_SRC)\orjmem.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_MT) -Fo$@ $(OPENRJ_SRC)\orjmem.c 
+$(OBJ_PYTHON):	$(SRC_PYTHON_C) makefile
+	$(PYTHON_CC) $(PYTHON_CC_ARGS) -Fo$@ $(SRC_PYTHON_C)
 
-.\orjmem.dll.obj:	$(OPENRJ_SRC)\orjmem.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_DLL) -Fo$@ $(OPENRJ_SRC)\orjmem.c 
+$(TARGET_PYTHON_SHARED_LIB):	$(OBJ_PYTHON) $(TARGET_LIB_ST_RELEASE) makefile
+	$(PYTHON_LD) $(PYTHON_LD_ARGS) -out:$@ $(OBJ_PYTHON) $(TARGET_LIB_ST_RELEASE)
 
-.\orjstr.st.obj:	$(OPENRJ_SRC)\orjstr.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_ST) -Fo$@ $(OPENRJ_SRC)\orjstr.c 
+python:	$(TARGET_PYTHON_SHARED_LIB)
 
-.\orjstr.mt.obj:	$(OPENRJ_SRC)\orjstr.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_MT) -Fo$@ $(OPENRJ_SRC)\orjstr.c 
+python-test:	python
+	cd $(PROJ_PYTHON_DIR)
+	python $(PROJ_PYTHON_DIR)\test.py
 
-.\orjstr.dll.obj:	$(OPENRJ_SRC)\orjstr.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_DLL) -Fo$@ $(OPENRJ_SRC)\orjstr.c 
+# Ruby parts
 
-# Client dependencies
+TARGET_RUBY_SHARED_LIB	=	$(PROJ_MAPPINGS_DIR)\ruby\$(PROJ_TAG).so
 
-$(TARGET_CLI_C_ST): .\C.st.obj $(TARGET_LIB_ST)
-	$(LD) $(LD_ARGS) -out:$@ .\C.st.obj $(TARGET_LIB_ST)
+$(TARGET_RUBY_SHARED_LIB):	$(PROJ_MAPPINGS_DIR)\ruby\openrj_ruby.c makefile
+	@if not exist .\ruby-cc\NUL mkdir $(RUBY_BIN)
+	cd .\ruby-cc
+	ruby $(PROJ_MAPPINGS_DIR)\ruby\extconf.rb --with-openrj-dir=$(PROJ_BASE_DIR)
+	cd ..
+	make -f .\ruby-cc\Makefile
+	move $(PROJ_TAG).so $(TARGET_RUBY_SHARED_LIB)
 
-$(TARGET_CLI_C_MT): .\C.mt.obj $(TARGET_LIB_MT)
-	$(LD) $(LD_ARGS) -out:$@ .\C.mt.obj $(TARGET_LIB_MT)
+ruby:	$(TARGET_RUBY_SHARED_LIB)
 
-$(TARGET_CLI_C_DLL): .\C.dll.obj $(TARGET_LIB_DLL)
-	$(LD) $(LD_ARGS) -out:$@ .\C.dll.obj $(TARGET_LIB_DLL)
-	
-.\C.st.obj: $(OPENRJ_TEST)\C\C.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_ST) -Fo$@ $(OPENRJ_TEST)\C\C.c
-
-.\C.mt.obj: $(OPENRJ_TEST)\C\C.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_MT) -Fo$@ $(OPENRJ_TEST)\C\C.c
-
-.\C.dll.obj: $(OPENRJ_TEST)\C\C.c $(INCLUDE_FILES) makefile
-	$(CC) $(CC_ARGS_DLL) -Fo$@ $(OPENRJ_TEST)\C\C.c
-
-$(TARGET_CLI_CPP_ST): .\Cpp.st.obj $(TARGET_LIB_ST)
-	$(LD) $(LD_ARGS) -out:$@ .\Cpp.st.obj $(TARGET_LIB_ST)
-$(TARGET_CLI_CPP_MT): .\Cpp.mt.obj $(TARGET_LIB_MT)
-	$(LD) $(LD_ARGS) -out:$@ .\Cpp.mt.obj $(TARGET_LIB_MT)
-$(TARGET_CLI_CPP_DLL): .\Cpp.dll.obj $(TARGET_LIB_DLL)
-	$(LD) $(LD_ARGS) -out:$@ .\Cpp.dll.obj $(TARGET_LIB_DLL)
-	
-.\Cpp.st.obj: $(OPENRJ_TEST)\Cpp\Cpp.cpp $(INCLUDE_FILES_CPP) makefile
-	$(CPPC) $(CPPC_ARGS_ST) -Fo$@ $(OPENRJ_TEST)\Cpp\Cpp.cpp
-.\Cpp.mt.obj: $(OPENRJ_TEST)\Cpp\Cpp.cpp $(INCLUDE_FILES_CPP) makefile
-	$(CPPC) $(CPPC_ARGS_MT) -Fo$@ $(OPENRJ_TEST)\Cpp\Cpp.cpp
-.\Cpp.dll.obj: $(OPENRJ_TEST)\Cpp\Cpp.cpp $(INCLUDE_FILES_CPP) makefile
-	$(CPPC) $(CPPC_ARGS_DLL) -Fo$@ $(OPENRJ_TEST)\Cpp\Cpp.cpp
-
-$(TARGET_CLI_STL_ST): .\STL.st.obj $(TARGET_LIB_ST)
-	$(LD) $(LD_ARGS) -out:$@ .\STL.st.obj $(TARGET_LIB_ST)
-$(TARGET_CLI_STL_MT): .\STL.mt.obj $(TARGET_LIB_MT)
-	$(LD) $(LD_ARGS) -out:$@ .\STL.mt.obj $(TARGET_LIB_MT)
-$(TARGET_CLI_STL_DLL): .\STL.dll.obj $(TARGET_LIB_DLL)
-	$(LD) $(LD_ARGS) -out:$@ .\STL.dll.obj $(TARGET_LIB_DLL)
-	
-.\STL.st.obj: $(OPENRJ_TEST)\STL\STL.cpp $(INCLUDE_FILES_STL) makefile
-	$(CPPC) $(CPPC_ARGS_ST) -Fo$@ $(OPENRJ_TEST)\STL\STL.cpp
-.\STL.mt.obj: $(OPENRJ_TEST)\STL\STL.cpp $(INCLUDE_FILES_STL) makefile
-	$(CPPC) $(CPPC_ARGS_MT) -Fo$@ $(OPENRJ_TEST)\STL\STL.cpp
-.\STL.dll.obj: $(OPENRJ_TEST)\STL\STL.cpp $(INCLUDE_FILES_STL) makefile
-	$(CPPC) $(CPPC_ARGS_DLL) -Fo$@ $(OPENRJ_TEST)\STL\STL.cpp
+ruby-test:	ruby
+	ruby $(PROJ_MAPPINGS_DIR)\ruby\test.rb --unittest
 
 
 
+# build targets
+
+# library
+
+$(TARGET_LIB_MT_DEBUG): $(OBJ_PROJ_MT_DEBUG) makefile
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
+	$(AR) $(AR_ARGS) -out:$@ $(OBJ_PROJ_MT_DEBUG)
+
+$(OBJ_PROJ_orjapi__MT_DEBUG): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__MT_DEBUG): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__MT_DEBUG): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjstr.c
+
+$(TARGET_LIB_DLL_DEBUG): $(OBJ_PROJ_DLL_DEBUG) makefile
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
+	$(AR) $(AR_ARGS) -out:$@ $(OBJ_PROJ_DLL_DEBUG)
+
+$(OBJ_PROJ_orjapi__DLL_DEBUG): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__DLL_DEBUG): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__DLL_DEBUG): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjstr.c
+
+$(TARGET_LIB_DLL_RELEASE): $(OBJ_PROJ_DLL_RELEASE) makefile
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
+	$(AR) $(AR_ARGS) -out:$@ $(OBJ_PROJ_DLL_RELEASE)
+
+$(OBJ_PROJ_orjapi__DLL_RELEASE): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__DLL_RELEASE): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__DLL_RELEASE): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjstr.c
+
+$(TARGET_LIB_MT_RELEASE): $(OBJ_PROJ_MT_RELEASE) makefile
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
+	$(AR) $(AR_ARGS) -out:$@ $(OBJ_PROJ_MT_RELEASE)
+
+$(OBJ_PROJ_orjapi__MT_RELEASE): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__MT_RELEASE): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__MT_RELEASE): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjstr.c
+
+$(TARGET_LIB_ST_DEBUG): $(OBJ_PROJ_ST_DEBUG) makefile
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
+	$(AR) $(AR_ARGS) -out:$@ $(OBJ_PROJ_ST_DEBUG)
+
+$(OBJ_PROJ_orjapi__ST_DEBUG): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__ST_DEBUG): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__ST_DEBUG): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_DEBUG) -Fo$@ $(PROJ_SRC_DIR)\orjstr.c
+
+$(TARGET_LIB_ST_RELEASE): $(OBJ_PROJ_ST_RELEASE) makefile
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
+	$(AR) $(AR_ARGS) -out:$@ $(OBJ_PROJ_ST_RELEASE)
+
+$(OBJ_PROJ_orjapi__ST_RELEASE): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__ST_RELEASE): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__ST_RELEASE): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_RELEASE) -Fo$@ $(PROJ_SRC_DIR)\orjstr.c
+
+$(TARGET_LIB_CPPDN): $(OBJ_CPPDN) $(TARGET_LIB_MT_RELEASE) makefile
+	$(LD) -nologo -dll -out:$@ $(OBJ_CPPDN) $(TARGET_LIB_MT_RELEASE) user32.lib kernel32.lib $(TARGET_LIB_DLL) /NOENTRY msvcrt.lib /NODEFAULTLIB:nochkclr.obj /INCLUDE:__DllMainCRTStartup@12
+
+.\AssemblyInfo.net.obj:		$(PROJ_MAPPINGS_DIR)\C++.NET\AssemblyInfo.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\AssemblyInfo.cpp
+.\Database.net.obj:			$(PROJ_MAPPINGS_DIR)\C++.NET\Database.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\Database.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\Database.cpp
+.\Field.net.obj:			$(PROJ_MAPPINGS_DIR)\C++.NET\Field.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\Field.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\Field.cpp
+.\FileDatabase.net.obj:			$(PROJ_MAPPINGS_DIR)\C++.NET\FileDatabase.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\FileDatabase.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\FileDatabase.cpp
+.\MemoryDatabase.net.obj:			$(PROJ_MAPPINGS_DIR)\C++.NET\MemoryDatabase.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\MemoryDatabase.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\MemoryDatabase.cpp
+.\OpenRJException.net.obj:	$(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJException.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJException.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJException.cpp
+.\Record.net.obj:			$(PROJ_MAPPINGS_DIR)\C++.NET\Record.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\Record.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\Record.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\Record.cpp
+.\OpenRJUtil.net.obj:	$(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJUtil.cpp $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJUtil.h $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJ.h makefile
+	$(CPPDNC) $(CPPDNC_ARGS) -Fo$@ $(PROJ_MAPPINGS_DIR)\C++.NET\OpenRJUtil.cpp
+
+
+# C test client
+
+$(TARGET_TEST_C_MT_DEBUG):	$(OBJ_C_MT_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_C_MT_DEBUG) $(TARGET_LIB_MT_DEBUG)
+
+
+$(OBJ_C_MT_DEBUG):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\C\C.c
+
+$(TARGET_TEST_C_DLL_DEBUG):	$(OBJ_C_DLL_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_C_DLL_DEBUG) $(TARGET_LIB_DLL_DEBUG)
+
+
+$(OBJ_C_DLL_DEBUG):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\C\C.c
+
+$(TARGET_TEST_C_DLL_RELEASE):	$(OBJ_C_DLL_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_C_DLL_RELEASE) $(TARGET_LIB_DLL_RELEASE)
+
+
+$(OBJ_C_DLL_RELEASE):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_DLL_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\C\C.c
+
+$(TARGET_TEST_C_MT_RELEASE):	$(OBJ_C_MT_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_C_MT_RELEASE) $(TARGET_LIB_MT_RELEASE)
+
+
+$(OBJ_C_MT_RELEASE):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_MT_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\C\C.c
+
+$(TARGET_TEST_C_ST_DEBUG):	$(OBJ_C_ST_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_C_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
+
+
+$(OBJ_C_ST_DEBUG):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\C\C.c
+
+$(TARGET_TEST_C_ST_RELEASE):	$(OBJ_C_ST_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_C_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+
+
+$(OBJ_C_ST_RELEASE):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\C\C.c
 
 
 
+# C++ test client
+
+$(TARGET_TEST_CPP_MT_DEBUG):	$(OBJ_CPP_MT_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_CPP_MT_DEBUG) $(TARGET_LIB_MT_DEBUG)
+
+$(OBJ_CPP_MT_DEBUG):	$(PROJ_TEST_DIR)\Cpp\Cpp.cpp $(TEST_CPP_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_MT_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\Cpp\Cpp.cpp
+
+$(TARGET_TEST_CPP_DLL_DEBUG):	$(OBJ_CPP_DLL_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_CPP_DLL_DEBUG) $(TARGET_LIB_DLL_DEBUG)
+
+$(OBJ_CPP_DLL_DEBUG):	$(PROJ_TEST_DIR)\Cpp\Cpp.cpp $(TEST_CPP_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_DLL_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\Cpp\Cpp.cpp
+
+$(TARGET_TEST_CPP_DLL_RELEASE):	$(OBJ_CPP_DLL_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_CPP_DLL_RELEASE) $(TARGET_LIB_DLL_RELEASE)
+
+$(OBJ_CPP_DLL_RELEASE):	$(PROJ_TEST_DIR)\Cpp\Cpp.cpp $(TEST_CPP_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_DLL_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\Cpp\Cpp.cpp
+
+$(TARGET_TEST_CPP_MT_RELEASE):	$(OBJ_CPP_MT_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_CPP_MT_RELEASE) $(TARGET_LIB_MT_RELEASE)
+
+$(OBJ_CPP_MT_RELEASE):	$(PROJ_TEST_DIR)\Cpp\Cpp.cpp $(TEST_CPP_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_MT_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\Cpp\Cpp.cpp
+
+$(TARGET_TEST_CPP_ST_DEBUG):	$(OBJ_CPP_ST_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_CPP_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
+
+$(OBJ_CPP_ST_DEBUG):	$(PROJ_TEST_DIR)\Cpp\Cpp.cpp $(TEST_CPP_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_ST_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\Cpp\Cpp.cpp
+
+$(TARGET_TEST_CPP_ST_RELEASE):	$(OBJ_CPP_ST_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_CPP_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+
+$(OBJ_CPP_ST_RELEASE):	$(PROJ_TEST_DIR)\Cpp\Cpp.cpp $(TEST_CPP_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_ST_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\Cpp\Cpp.cpp
 
 
 
+# STL test client
+
+$(TARGET_TEST_STL_MT_DEBUG):	$(OBJ_STL_MT_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_STL_MT_DEBUG) $(TARGET_LIB_MT_DEBUG)
+
+$(OBJ_STL_MT_DEBUG):	$(PROJ_TEST_DIR)\STL\STL.cpp $(TEST_STL_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_MT_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\STL\STL.cpp
+
+$(TARGET_TEST_STL_DLL_DEBUG):	$(OBJ_STL_DLL_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_STL_DLL_DEBUG) $(TARGET_LIB_DLL_DEBUG)
+
+$(OBJ_STL_DLL_DEBUG):	$(PROJ_TEST_DIR)\STL\STL.cpp $(TEST_STL_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_DLL_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\STL\STL.cpp
+
+$(TARGET_TEST_STL_DLL_RELEASE):	$(OBJ_STL_DLL_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_STL_DLL_RELEASE) $(TARGET_LIB_DLL_RELEASE)
+
+$(OBJ_STL_DLL_RELEASE):	$(PROJ_TEST_DIR)\STL\STL.cpp $(TEST_STL_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_DLL_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\STL\STL.cpp
+
+$(TARGET_TEST_STL_MT_RELEASE):	$(OBJ_STL_MT_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_STL_MT_RELEASE) $(TARGET_LIB_MT_RELEASE)
+
+$(OBJ_STL_MT_RELEASE):	$(PROJ_TEST_DIR)\STL\STL.cpp $(TEST_STL_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_MT_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\STL\STL.cpp
+
+$(TARGET_TEST_STL_ST_DEBUG):	$(OBJ_STL_ST_DEBUG) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_STL_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
+
+$(OBJ_STL_ST_DEBUG):	$(PROJ_TEST_DIR)\STL\STL.cpp $(TEST_STL_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_ST_DEBUG) -Fo$@ $(PROJ_TEST_DIR)\STL\STL.cpp
+
+$(TARGET_TEST_STL_ST_RELEASE):	$(OBJ_STL_ST_RELEASE) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -out:$@ $(OBJ_STL_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+
+$(OBJ_STL_ST_RELEASE):	$(PROJ_TEST_DIR)\STL\STL.cpp $(TEST_STL_HEADERS) $(SRC_PROJ_HPP) makefile
+	$(CPPC) $(CPPC_ARGS_ST_RELEASE) -Fo$@ $(PROJ_TEST_DIR)\STL\STL.cpp
+
+
+
+# .NET test client
+
+$(TARGET_TEST_CPPDN): $(TARGET_LIB_CPPDN) $(PROJ_TEST_DIR)\dotNET\OpenRJTest.cs makefile
+	$(CSC) $(CSC_ARGS) -out:$@ -target:exe -reference:$(TARGET_LIB_CPPDN) $(PROJ_TEST_DIR)\dotNET\OpenRJTest.cs
+
+c++.net:	$(TARGET_TEST_CPPDN)
+
+################################################################################

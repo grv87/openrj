@@ -1,14 +1,40 @@
-// Database.h
+/* /////////////////////////////////////////////////////////////////////////////
+ * File:        Database.h
+ *
+ * Purpose:     Definition of the Database class
+ *
+ * Created:     3rd August 2004
+ * Updated:     15th January 2005
+ *
+ * Author:      Matthew Wilson
+ *
+ * Copyright:   Synesis Software Pty Ltd, 2004-2005. All rights reserved.
+ *
+ * Home:        http://www.openrj.orj/
+ *
+ * ////////////////////////////////////////////////////////////////////////// */
 
 #pragma once
 
+/* /////////////////////////////////////////////////////////////////////////////
+ * Includes
+ */
+
 #include "OpenRJ.h"
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Forward declarations
+ */
 
 namespace OpenRJ
 {
 	public __gc class Field;
 	public __gc class Record;
 }
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Classes
+ */
 
 namespace OpenRJ
 {
@@ -24,8 +50,9 @@ namespace OpenRJ
 	{
 	/// \name Construction
 	/// @{
+	protected:
+		Database(::openrj::ORJDatabaseA const *database);
 	public:
-		Database(String *path, unsigned int flags);
 		~Database();
 	/// @}
 
@@ -40,8 +67,6 @@ namespace OpenRJ
 	/// \name Properties
 	/// @{
 	public:
-		/// The path of the database
-		__property String			*get_Path();
 		/// The number of lines in the database
 		__property int				get_NumLines();
 		/// The number of fields in the database
@@ -54,13 +79,15 @@ namespace OpenRJ
 
 		/// Access the records by index
 		__property virtual Record	*get_Item(int index);
-
-		/// Converts the database to a string form
-		String						*ToString();
 	/// @}
 
+	/// \name Members
+	/// @{
 	private:
 		::openrj::ORJDatabaseA const	*m_database;
 		ArrayList						*m_records;
+	/// @}
 	};
 }
+
+/* ////////////////////////////////////////////////////////////////////////// */

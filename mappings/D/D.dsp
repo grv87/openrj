@@ -62,12 +62,12 @@ MTL=midl.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
-# Begin Group "etc"
+# Begin Group "c"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\etc\c\openrj\openrj.d
+SOURCE=.\std\c\openrj.d
 # End Source File
 # End Group
 # Begin Source File

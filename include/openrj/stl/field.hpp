@@ -1,21 +1,21 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    field.hpp
+ * File:    openrj/stl/field.hpp
  *
- * Purpose: Field class, in the STL mapping of the Open-RJ library.
+ * Purpose: field class, in the STL mapping of the Open-RJ library.
  *
  * Created: 28th September 2004
- * Updated: 29th September 2004
+ * Updated: 18th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -42,18 +42,18 @@
  *
  */
 
-#ifndef OPENRJ_INCL_OPENRJ_STL_H_FIELD
-#define OPENRJ_INCL_OPENRJ_STL_H_FIELD
+#ifndef OPENRJ_INCL_OPENRJ_STL_HPP_FIELD
+#define OPENRJ_INCL_OPENRJ_STL_HPP_FIELD
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
-# define OPENRJ_VER_OPENRJ_STL_H_FIELD_MAJOR    1
-# define OPENRJ_VER_OPENRJ_STL_H_FIELD_MINOR    0
-# define OPENRJ_VER_OPENRJ_STL_H_FIELD_REVISION 2
-# define OPENRJ_VER_OPENRJ_STL_H_FIELD_EDIT     4
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MAJOR      1
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MINOR      2
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_REVISION   3
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_EDIT       11
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -102,89 +102,32 @@ public:
 /// @{
 public:
     /// Conversion constructor
-    field(ORJField const *field)
-        : m_field(field)
-    {
-        openrj_assert(NULL != field);
-        openrj_assert(0 == field->mbz0);
-        openrj_assert(static_cast<ptrdiff_t>(field->name.len) >= 0);
-        openrj_assert(static_cast<ptrdiff_t>(field->value.len) >= 0);
-    }
-
+    explicit field(ORJField const *field);
     /// Default constructor
-    field()
-        : m_field(NULL)
-    {}
-
+    field();
     /// Copy constructor
-    field(field const &rhs)
-        : m_field(rhs.m_field)
-    {
-        openrj_assert(NULL == m_field || 0 == rhs.m_field->mbz0);
-        openrj_assert(NULL == m_field || static_cast<ptrdiff_t>(rhs.m_field->name.len) >= 0);
-        openrj_assert(NULL == m_field || static_cast<ptrdiff_t>(rhs.m_field->value.len) >= 0);
-    }
-
+    field(field const &rhs);
     /// Copy assignment operator
-    field &operator =(field const &rhs)
-    {
-        m_field = rhs.m_field;
-
-        return *this;
-    }
+    field &operator =(field const &rhs);
 /// @}
 
 /// \name Attributes
 /// @{
 public:
     /// \brief The name of the field
-    string_t name() const
-    {
-        if(NULL == m_field)
-        {
-            return string_t();
-        }
-
-        openrj_assert(NULL != m_field);
-        openrj_assert(0 == m_field->mbz0);
-        openrj_assert(static_cast<ptrdiff_t>(m_field->name.len) >= 0);
-        openrj_assert(static_cast<ptrdiff_t>(m_field->value.len) >= 0);
-
-        return string_t(m_field->name.ptr, m_field->name.len);
-    }
+    string_t name() const;
     /// \brief The value of the field
-    string_t value() const
-    {
-        if(NULL == m_field)
-        {
-            return string_t();
-        }
-
-        openrj_assert(NULL != m_field);
-        openrj_assert(0 == m_field->mbz0);
-        openrj_assert(static_cast<ptrdiff_t>(m_field->name.len) >= 0);
-        openrj_assert(static_cast<ptrdiff_t>(m_field->value.len) >= 0);
-
-        return string_t(m_field->value.ptr, m_field->value.len);
-    }
+    string_t value() const;
 /// @}
 
 /// \name Attributes
 /// @{
 public:
     /// \brief Provides access to the underlying field pointer
-    ORJField const  *get_field() const
-    {
-        return m_field;
-    }
-    /// \brief Provides access to the field's record, in the form of its 
+    ORJField const  *get_field() const;
+    /// \brief Provides access to the field's record, in the form of its
     /// underlying field pointer
-    ORJRecord const *get_record() const
-    {
-        openrj_assert(NULL != m_field);
-
-        return ORJ_Field_GetRecordA(m_field);
-    }
+    ORJRecord const *get_record() const;
 /// @}
 
 // Members
@@ -196,7 +139,7 @@ private:
  * Shims
  */
 
-inline stlsoft::shim_string<char> c_str_ptr(field const &f)
+inline stlsoft::basic_shim_string<char> c_str_ptr(field const &f)
 {
     ORJField const  *pf =   f.get_field();
     string_t        s;
@@ -207,7 +150,7 @@ inline stlsoft::shim_string<char> c_str_ptr(field const &f)
     s.append(1, '=');
     s.append(pf->value.ptr, pf->value.len);
 
-    return stlsoft::shim_string<char>(s.c_str(), s.length());
+    return stlsoft::basic_shim_string<char>(s.c_str(), s.length());
 }
 
 template <class S>
@@ -216,6 +159,80 @@ inline S &operator <<(S &s, field const &field)
     s << field.name() << "=" << field.value();
 
     return s;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Implementation
+ */
+
+inline field::field(ORJField const *field)
+    : m_field(field)
+{
+    openrj_assert(NULL != field);
+    openrj_assert(0 == field->mbz0);
+    openrj_assert(static_cast<ptrdiff_t>(field->name.len) >= 0);
+    openrj_assert(static_cast<ptrdiff_t>(field->value.len) >= 0);
+}
+
+inline field::field()
+    : m_field(NULL)
+{}
+
+inline field::field(field const &rhs)
+    : m_field(rhs.m_field)
+{
+    openrj_assert(NULL == m_field || 0 == rhs.m_field->mbz0);
+    openrj_assert(NULL == m_field || static_cast<ptrdiff_t>(rhs.m_field->name.len) >= 0);
+    openrj_assert(NULL == m_field || static_cast<ptrdiff_t>(rhs.m_field->value.len) >= 0);
+}
+
+inline field &field::operator =(field const &rhs)
+{
+    m_field = rhs.m_field;
+
+    return *this;
+}
+
+inline string_t field::name() const
+{
+    if(NULL == m_field)
+    {
+        return string_t();
+    }
+
+    openrj_assert(NULL != m_field);
+    openrj_assert(0 == m_field->mbz0);
+    openrj_assert(static_cast<ptrdiff_t>(m_field->name.len) >= 0);
+    openrj_assert(static_cast<ptrdiff_t>(m_field->value.len) >= 0);
+
+    return string_t(m_field->name.ptr, m_field->name.len);
+}
+
+inline string_t field::value() const
+{
+    if(NULL == m_field)
+    {
+        return string_t();
+    }
+
+    openrj_assert(NULL != m_field);
+    openrj_assert(0 == m_field->mbz0);
+    openrj_assert(static_cast<ptrdiff_t>(m_field->name.len) >= 0);
+    openrj_assert(static_cast<ptrdiff_t>(m_field->value.len) >= 0);
+
+    return string_t(m_field->value.ptr, m_field->value.len);
+}
+
+inline ORJField const *field::get_field() const
+{
+    return m_field;
+}
+
+inline ORJRecord const *field::get_record() const
+{
+    openrj_assert(NULL != m_field);
+
+    return ORJ_Field_GetRecordA(m_field);
 }
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -232,6 +249,6 @@ namespace stlsoft
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
-#endif /* !OPENRJ_INCL_OPENRJ_STL_H_FIELD */
+#endif /* !OPENRJ_INCL_OPENRJ_STL_HPP_FIELD */
 
 /* ////////////////////////////////////////////////////////////////////////// */

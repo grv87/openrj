@@ -1,53 +1,38 @@
-// Implementation file for OpenRJ::Database class
+/* /////////////////////////////////////////////////////////////////////////////
+ * File:        Database.cpp
+ *
+ * Purpose:     Implementation file for OpenRJ::Database class
+ *
+ * Created:     3rd August 2004
+ * Updated:     17th January 2005
+ *
+ * Author:      Matthew Wilson
+ *
+ * Copyright:   Synesis Software Pty Ltd, 2004-2005. All rights reserved.
+ *
+ * Home:        http://www.openrj.orj/
+ *
+ * ////////////////////////////////////////////////////////////////////////// */
+
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Includes
+ */
 
 #include "stdafx.h"
 
 #include "Database.h"
 #include "Record.h"
-#include "DatabaseException.h"
+#include "OpenRJException.h"
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Namespace
+ */
 
 namespace OpenRJ
 {
-	namespace
-	{
-		void	*_fnAlloc(::openrj::IORJAllocator *m, size_t cb)
-		{
-			return NULL;
-		}
-		void	*_fnRealloc(::openrj::IORJAllocator *m, void *pv, size_t cb)
-		{
-			return NULL;
-		}
-		void	_fnFree(::openrj::IORJAllocator *m, void *pv)
-		{
-		}
-
-		::openrj::ORJDatabaseA const *create_database_(char const *jarName, unsigned flags)
-		{
-			::openrj::IORJAllocator	allocator_ = 
-			{
-					_fnAlloc
-				,	_fnRealloc
-				,	_fnFree
-			};
-			::openrj::IORJAllocator	*allocator	=	0; // &allocator_;
-
-			::openrj::ORJDatabaseA const	*database;
-			::openrj::ORJError				error;
-			::openrj::ORJRC					rc	=	::openrj::ORJ_ReadDatabaseA(jarName, allocator, flags, &database, &error);
-
-			if(::openrj::ORJ_RC_SUCCESS != rc)
-			{
-				// throw something here
-				throw new DatabaseException(rc, error);
-			}
-
-			return database;
-		}
-	}
-
-	Database::Database(String *path, unsigned int flags)
-		: m_database(create_database_(::dotnetstl::c_string_accessor<char>(path), flags))
+	Database::Database(::openrj::ORJDatabaseA const *database)
+		: m_database(database)
 		, m_records(NULL)
 	{
 		m_records	=	new ArrayList(m_database->numRecords);
@@ -81,11 +66,6 @@ namespace OpenRJ
 		Close();
 	}
 
-	String *Database::get_Path()
-	{
-		return 0;
-	}
-
 	int Database::get_NumLines()
 	{
 		return m_database->numLines;
@@ -116,10 +96,6 @@ namespace OpenRJ
 
 		return static_cast<Record*>(m_records->get_Item(index));
 	}
-
-	String *Database::ToString()
-	{
-		return String::Concat(new String("Open-RJ Database; path="), get_Path());
-	}
-
 }
+
+/* ////////////////////////////////////////////////////////////////////////// */

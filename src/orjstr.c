@@ -4,18 +4,18 @@
  * Purpose: Provides (English) string mappings for errors
  *
  * Created: 26th July 2004
- * Updated: 3rd August 2004
+ * Updated: 3rd March 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
 # define OPENRJ_VER_C_ORJMEM_MINOR      0
-# define OPENRJ_VER_C_ORJMEM_REVISION   1
-# define OPENRJ_VER_C_ORJMEM_EDIT       2
+# define OPENRJ_VER_C_ORJMEM_REVISION   4
+# define OPENRJ_VER_C_ORJMEM_EDIT       6
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -58,8 +58,8 @@
  */
 
 #include <openrj/openrj.h>
-#include <openrj/openrj_assert.h>
-#include <openrj/openrj_memory.h>
+/* #include <openrj/openrj_assert.h> */
+/* #include <openrj/openrj_memory.h> */
 
 #include <stdlib.h>
 
@@ -73,11 +73,16 @@
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
-typedef struct tagErrorString
+#ifdef OPENRJ_DOCUMENTATION_SKIP_SECTION
+struct ErrorString
+#else /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+typedef struct ErrorString  ErrorString;
+struct ErrorString
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 {
     int         errorCode;
     char const  *errorString;
-} ErrorString;
+};
 
 
 static const ErrorString    errors[] =
@@ -98,11 +103,11 @@ static const ErrorString    errors[] =
 static const ErrorString    parseErrors[] =
 {
 /*[OPENRJ:ParseErrors-start]*/
-        {   ORJ_PARSE_SUCCESS                       ,   "Parsing was successful"                                                         }
-    ,   {   ORJ_PARSE_RECORDSEPARATORINCONTINUATION ,   "A record separator was encountered during a content line continuation"          }
-    ,   {   ORJ_PARSE_UNFINISHEDLINE                ,   "The last line in the database was not terminated by a line-feed"                }
-    ,   {   ORJ_PARSE_UNFINISHEDFIELD               ,   "The last record in the database file was not terminated by a record separator"  }
-    ,   {   ORJ_PARSE_UNFINISHEDRECORD              ,   "The last record in the database file was not terminated by a record separator"  }
+        {   ORJ_PARSE_SUCCESS                       ,   "Parsing was successful"                                                            }
+    ,   {   ORJ_PARSE_RECORDSEPARATORINCONTINUATION ,   "A record separator was encountered during a content line continuation"             }
+    ,   {   ORJ_PARSE_UNFINISHEDLINE                ,   "The last line in the database was not terminated by a line-feed"                   }
+    ,   {   ORJ_PARSE_UNFINISHEDFIELD               ,   "The last field in the database file was not well-formed"                           }
+    ,   {   ORJ_PARSE_UNFINISHEDRECORD              ,   "The last record in the database file was not terminated by a record separator"     }
 /*[OPENRJ:ParseErrors-end]*/
 };
 

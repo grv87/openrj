@@ -1,8 +1,31 @@
-// OpenRJ.h
+/* /////////////////////////////////////////////////////////////////////////////
+ * File:        OpenRJ.h
+ *
+ * Purpose:     Root include for the Open-RJ/C++.NET mapping
+ *
+ * Created:     3rd August 2004
+ * Updated:     16th January 2005
+ *
+ * Author:      Matthew Wilson
+ *
+ * Copyright:   Synesis Software Pty Ltd, 2004-2005. All rights reserved.
+ *
+ * Home:        http://www.openrj.orj/
+ *
+ * ////////////////////////////////////////////////////////////////////////// */
+
 
 #pragma once
 
+/* /////////////////////////////////////////////////////////////////////////////
+ * Includes
+ */
+
+//#define OPENRJ_NO_FILE_HANDLING
+
 #include <openrj/openrj.h>
+
+/* ////////////////////////////////////////////////////////////////////////// */
 
 namespace OpenRJ
 {
@@ -41,3 +64,5 @@ namespace OpenRJ
 	}
 
 } // namespace OpenRJ
+
+/* ////////////////////////////////////////////////////////////////////////// */

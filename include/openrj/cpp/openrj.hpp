@@ -4,18 +4,18 @@
  * Purpose: Root header file for the C++ mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 29th September 2004
+ * Updated: 18th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MAJOR       1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        4
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       3
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    2
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        9
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -64,6 +64,14 @@
 #include <openrj/openrj_assert.h>
 
 #include <exception>
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Compiler warnings
+ */
+
+#ifdef __BORLANDC__
+# pragma warn -8026
+#endif /* __BORLANDC__ */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Compatibility
@@ -82,10 +90,11 @@ namespace openrj
     /// The Open-RJ C++ namespace - \c openrj::cpp
     namespace cpp
     {
-        class String;
         class Field;
         class Record;
-        class Database;
+        class DatabaseBase;
+        class FileDatabase;
+        class MemoryDatabase;
 
 #if !defined(ORJ_NO_EXCEPTIONS)
         /// \brief The exception type thrown by the Open-RJ - C++ mapping
@@ -112,6 +121,19 @@ namespace openrj
             ORJError const &error() const
             {
                 return m_error;
+            }
+
+        public:
+            char const  *what() const throw()
+            {
+                if(ORJ_RC_PARSEERROR == m_rc)
+                {
+                    return ::stlsoft::c_str_ptr(m_error.parseError);
+                }
+                else
+                {
+                    return ::stlsoft::c_str_ptr(m_rc);
+                }
             }
 
         private:

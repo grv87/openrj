@@ -60,18 +60,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Ruby"=.\Mappings\Ruby\vc6\Ruby.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "STL"=.\Test\STL\vc6\STL.dsp - Package Owner=<4>
 
 Package=<5>
@@ -88,6 +76,42 @@ Package=<4>
 ###############################################################################
 
 Project: "openrj"=.\build\vc6\openrj.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "openrj_Ch"=.\mappings\Ch\vc6\openrj_Ch.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "openrj_Python"=.\mappings\Python\vc6\openrj_python.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "openrj_Ruby"=.\mappings\Ruby\vc6\openrj_ruby.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
