@@ -1,0 +1,34 @@
+New for 1.0.1 Stable:
+
+Core Library:
+    - addition of ORJ_GetErrorStringA() and 
+ORJ_GetParseErrorStringA() functions
+    - addition of fieldName parameter to 
+ORJ_Record_FindFieldByNameA() function, allowing search by field 
+name *or* field name + value
+
+C++ Mapping:
+    - renamed database_exception class to DatabaseException
+    - addition of GetField(), GetRecord() and string access & 
+stream insertion shims for Field class
+
+D Mapping:
+    - addition of D mapping
+
+Ruby Mapping:
+    - addition of ORDER_FIELDS and ELIDE_BLANK_RECORDS constants 
+to module
+    - addition of FieldNameError exception class
+    - addition of [], to_s and == to Database class
+    - addition of [], include?, member?, to_s and == to Record 
+class
+    - addition of to_s and == to Field class
+
+STL Mapping:
+    - minor fixes and refactoring
+
+###
+
+Initial Release 1.0.1 Beta 1:
+
+Initial Release

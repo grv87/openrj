@@ -1,0 +1,40 @@
+%% Sample Open-RJ database - Cats and Dogs
+%% Created:   28th September 2004
+%% Updated:   29th September 2004
+Name:		Barney
+Species:	Dog
+Breed:		Bijon \
+			Frieze
+%%
+Name:		Elsa
+Species:	Dog
+Breed:		Mixed
+%%
+Name:		Fluffy Kitten
+Species:	Cat
+%%
+Name:		Moet
+Species:	Dog
+Breed:		Boxer
+%%
+Name:		Rebel
+Species:	Dog
+Breed:		German \
+			Shepherd
+%%
+Name:		Pepper
+Species:	Dog
+Breed:		Border Collie
+%%
+Name:		Samson
+Species:	Dog
+Breed:		Ridgeback
+%%
+Name:		Sheltie
+Species:	Dog
+Breed:		Shetland \
+			Sheepdog
+%%
+Name:		Sparky
+Species:	Cat
+%%
