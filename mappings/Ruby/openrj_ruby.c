@@ -4,18 +4,18 @@
  * Purpose: Implementation file of the Open-RJ Ruby mapping.
  *
  * Created: 15th June 2004
- * Updated: 29th September 2004
+ * Updated: 18th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_RUBY_MAJOR     1
-# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     6
+# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     7
 # define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  2
-# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      11
+# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      16
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -75,15 +75,33 @@
  */
 
 #ifdef _MSC_VER
+# pragma warning(1 : 4100)
+# pragma warning(1 : 4101)
+# pragma warning(1 : 4130)
+# pragma warning(1 : 4131)
+# pragma warning(1 : 4132)
+# pragma warning(1 : 4189)
+# pragma warning(1 : 4209)
+# pragma warning(1 : 4213)
+# pragma warning(1 : 4214)
+# pragma warning(1 : 4220)
 # pragma warning(disable : 4127)
 # pragma warning(disable : 4505)
 #endif /* _MSC_VER */
+
+#define _DEBUG
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Helper functions & macros
  */
 
-/* Extract from Synesis Software's SyBase.h */
+/* Extract from STLSoft's stlsoft.h */
+
+#if !defined(STLSOFT_SUPPRESS_UNUSED)
+# define STLSOFT_SUPPRESS_UNUSED(x)     ((void)x)
+#endif /* !STLSOFT_SUPPRESS_UNUSED */
+
+/* Extract from Synesis Software's SLBase.h */
 #ifndef NUM_ELEMENTS
 # define NUM_ELEMENTS(x)            (sizeof(x) / sizeof(0[(x)]))
 #endif /* NUM_ELEMENTS */
@@ -92,25 +110,32 @@
  * Simple debugging
  */
 
+/* #undef _MSC_VER */
+/* #undef WIN32 */
+/* #define DEBUG */
+
 static void TraceToDebugger(char const *fmt, ...)
 {
     va_list args;
+#ifdef WIN32
     char    sz[2048];
+#endif /* ? WIN32 */
 
     va_start(args, fmt);
 
-#if defined(WIN32)
+#ifdef WIN32
+# ifdef _MSC_VER
     _vsnprintf(sz, NUM_ELEMENTS(sz) - 1, fmt, args);
+# else /* ? compiler */
+    vsprintf(sz, fmt, args);
+# endif /* compiler */
     OutputDebugStringA(sz);
 #else /* ? OS */
-    vprintf(
+	vfprintf(stdout, fmt, args);
 #endif /* OS */
-
 
     va_end(args);
 }
-
-//#define _DEBUG
 
 #if !defined(NDEBUG) && \
     (   defined(_DEBUG) || \
@@ -122,17 +147,19 @@ static void Trace_Stub(char const *fmt, ...)
     ((void)fmt);
 }
 # define TRACETODEBUGGER    (1) ? ((void)0) : Trace_Stub
-#endif /* debug */    
+#endif /* debug */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Classes & Modules
  */
 
-static VALUE    mOpenRJ;                /* The Open-RJ module:  ::OpenRJ                            */
+static VALUE    mOpenRJ;                /* The Open-RJ module:			::OpenRJ                    */
 static VALUE    c__DatabaseHolder__;    /* Internal class used to manage the ORJDatabaseA pointer   */
-static VALUE    cDatabase;              /* The Database class:  ::OpenRJ::Database                  */
-static VALUE    cRecord;                /* The Record class:    ::OpenRJ::Record                    */
-static VALUE    cField;                 /* The Field class:     ::OpenRJ::Field                     */
+static VALUE    cDatabaseBase;			/* The DatabaseBase class:		::OpenRJ::DatabaseBase      */
+static VALUE    cFileDatabase;          /* The FileDatabase class:		::OpenRJ::FileDatabase      */
+static VALUE    cMemoryDatabase;        /* The MemoryDatabase class:	::OpenRJ::MemoryDatabase    */
+static VALUE    cRecord;                /* The Record class:			::OpenRJ::Record            */
+static VALUE    cField;                 /* The Field class:				::OpenRJ::Field             */
 static VALUE    cFieldNameError;        /* Exception class, thrown when bad field name given        */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -190,7 +217,7 @@ static ORJDatabase const *__DatabaseHolder___get_database_(VALUE __database__)
 /* /////////////////////////////////////////////////////////////////////////////
  * Field
  *
- * Instances of this class return their member 
+ * Instances of this class return their member
  */
 
 #if 0
@@ -260,8 +287,12 @@ static VALUE Field_to_s(VALUE self)
     size_t                  cch     =   100 + field->name.len + 1 + field->value.len + 1;
     char                    *sz     =   (char*)alloca(1 + cch);
 
+#ifdef _MSC_VER
     cch = _snprintf(sz
                 ,   cch
+#else /* ? compiler */
+    cch = sprintf(	sz
+#endif /* compiler */
                 ,   "OpenRJ::Field:0x%08x (name: %.*s; value: %.*s)"
                 ,   self
                 ,   field->name.len
@@ -407,7 +438,7 @@ static VALUE Record_subscript_fixnum(VALUE self, int index, int bThrowOnFail)
 
 /** Returns the field matching the given identity. Identity may be
  * integer index, or a string representing the name of the field
- * 
+ *
  */
 static VALUE Record_subscript(VALUE self, VALUE index)
 {
@@ -509,7 +540,7 @@ static VALUE Record_include_object(ORJRecord const *record, VALUE index)
 static VALUE Record_includeQ(VALUE self, VALUE index)
 {
     ORJRecord const *record =   Record_get_record_(self);
-    
+
     switch(rb_type(index))
     {
         case    T_STRING:
@@ -533,8 +564,12 @@ static VALUE Record_to_s(VALUE self)
     char            sz[1001];
     int             cch;
 
+#ifdef _MSC_VER
     cch = _snprintf(sz
                 ,   NUM_ELEMENTS(sz)
+#else /* ? compiler */
+    cch = sprintf(	sz
+#endif /* compiler */
                 ,   "OpenRJ::Record:0x%08x (#fields: %d)"
                 ,   self
                 ,   record->numFields);
@@ -594,6 +629,7 @@ static void Database_free_(void *p)
     ((void)p);
 }
 
+#if 0
 /** Creates a Database instance, and adds in the two member variables. */
 static VALUE Database_initialize(VALUE self, VALUE jarName_, VALUE flags_)
 {
@@ -646,7 +682,8 @@ static VALUE Database_initialize(VALUE self, VALUE jarName_, VALUE flags_)
     else
     {
         VALUE               __database__    =   Create___DatabaseHolder__(database);
-        ORJDatabase const   *bd_2           =   __DatabaseHolder___get_database_(__database__);
+
+		openrj_assert(__DatabaseHolder___get_database_(__database__) == database);
 
         rb_iv_set(self, "@__database__", __database__);
         rb_iv_set(self, "@path", jarName_);
@@ -657,15 +694,16 @@ static VALUE Database_initialize(VALUE self, VALUE jarName_, VALUE flags_)
 
     return self;
 }
+#endif /* 0 */
 
 static VALUE Database_each_record(VALUE self)
 {
     TRACETODEBUGGER("Database_each_record()\n");
     {
-        VALUE           __database__    =   rb_iv_get(self, "@__database__");
-        ORJDatabase const *database     =   __DatabaseHolder___get_database_(__database__);
-        ORJRecord const *begin          =   &database->records[0];
-        ORJRecord const *end            =   &database->records[database->numRecords];
+        VALUE				__database__    =   rb_iv_get(self, "@__database__");
+        ORJDatabase const	*database		=   __DatabaseHolder___get_database_(__database__);
+        ORJRecord const		*begin          =   &database->records[0];
+        ORJRecord const		*end            =   &database->records[database->numRecords];
 
         TRACETODEBUGGER("Database_each_record() - 2; num records: %u\n", database->numRecords);
 
@@ -684,19 +722,24 @@ static VALUE Database_each_record(VALUE self)
 
 static VALUE Database_each_field(VALUE self)
 {
-    VALUE               __database__    =   rb_iv_get(self, "@__database__");
-    ORJDatabase const   *database       =   __DatabaseHolder___get_database_(__database__);
-    ORJField const      *begin          =   &database->fields[0];
-    ORJField const      *end            =   &database->fields[database->numFields];
-
-    for(; begin != end; ++begin)
+    TRACETODEBUGGER("Database_each_field()\n");
     {
-        ORJRecord const *record =   ORJ_Field_GetRecordA(begin);
+		VALUE               __database__    =   rb_iv_get(self, "@__database__");
+		ORJDatabase const   *database       =   __DatabaseHolder___get_database_(__database__);
+		ORJField const      *begin          =   &database->fields[0];
+		ORJField const      *end            =   &database->fields[database->numFields];
 
-        rb_yield(Field_create_(__database__, Qnil, begin));
-    }
+		for(; begin != end; ++begin)
+		{
+#if 0
+			ORJRecord const *record =   ORJ_Field_GetRecordA(begin);
+#endif /* 0 */
 
-    return self;
+			rb_yield(Field_create_(__database__, Qnil, begin));
+		}
+
+		return self;
+	}
 }
 
 static VALUE Database_subscript(VALUE self, VALUE index_)
@@ -727,8 +770,12 @@ static VALUE Database_to_s(VALUE self)
     char                sz[1001];
     int                 cch;
 
+#ifdef _MSC_VER
     cch = _snprintf(sz
                 ,   NUM_ELEMENTS(sz)
+#else /* ? compiler */
+    cch = sprintf(	sz
+#endif /* compiler */
                 ,   "OpenRJ::Database:0x%08x (%s; #records: %d; #fields: %d; flags: 0x%08x)"
                 ,   self
                 ,   StringValuePtr(path)
@@ -778,6 +825,143 @@ static VALUE Database_equals(VALUE lhs, VALUE rhs)
 }
 
 /* /////////////////////////////////////////////////////////////////////////////
+ * FileDatabase
+ */
+
+static VALUE FileDatabase_initialize(VALUE self, VALUE jarName_, VALUE flags_)
+{
+    char const          *jarName;
+    IORJAllocator       *ator;
+    unsigned            flags;
+    ORJDatabaseA const  *database;
+    ORJError            error;
+    ORJRC               rc;
+
+    TRACETODEBUGGER("FileDatabase_initialize()\n");
+
+    if(Qnil == flags_)
+    {
+        flags = 0;
+    }
+    else
+    {
+        Check_Type(flags_, T_FIXNUM);
+
+        flags = FIX2INT(flags_);
+    }
+
+    Check_Type(jarName_, T_STRING);
+
+    jarName     =   StringValuePtr(jarName_);
+    ator        =   NULL;
+    database    =   NULL;
+
+    TRACETODEBUGGER("FileDatabase_initialize(); jarName: %s; flags: 0x%08x\n", jarName, flags);
+
+    rc = ORJ_ReadDatabaseA(jarName, ator, flags, &database, &error);
+
+    if(ORJ_RC_SUCCESS != rc)
+    {
+        /* Throw */
+        char    szError[1001];
+
+        if(rc == ORJ_RC_PARSEERROR)
+        {
+            sprintf(szError, "Parsing error in database, at line %u, column %u; parse error: %u, %s", error.invalidLine, error.invalidColumn, error.parseError, ORJ_GetParseErrorStringA(error.parseError));
+        }
+        else
+        {
+            sprintf(szError, "Failed to open database; error: %u, %s", rc, ORJ_GetErrorStringA(rc));
+        }
+
+        rb_throw(szError, Qnil);
+    }
+    else
+    {
+        VALUE               __database__    =   Create___DatabaseHolder__(database);
+
+		openrj_assert(__DatabaseHolder___get_database_(__database__) == database);
+
+        rb_iv_set(self, "@__database__", __database__);
+        rb_iv_set(self, "@path", jarName_);
+        rb_iv_set(self, "@numLines", rb_uint2inum(database->numLines));
+        rb_iv_set(self, "@numFields", rb_uint2inum(database->numFields));
+        rb_iv_set(self, "@numRecords", rb_uint2inum(database->numRecords));
+    }
+
+    return self;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * MemoryDatabase
+ */
+
+static VALUE MemoryDatabase_initialize(VALUE self, VALUE contents_, VALUE flags_)
+{
+    char const          *contents;
+	size_t				cbContents;
+    IORJAllocator       *ator;
+    unsigned            flags;
+    ORJDatabaseA const  *database;
+    ORJError            error;
+    ORJRC               rc;
+
+    TRACETODEBUGGER("MemoryDatabase_initialize()\n");
+
+    if(Qnil == flags_)
+    {
+        flags = 0;
+    }
+    else
+    {
+        Check_Type(flags_, T_FIXNUM);
+
+        flags = FIX2INT(flags_);
+    }
+
+    Check_Type(contents_, T_STRING);
+
+    contents    =   StringValuePtr(contents_);
+	cbContents	=	strlen(contents);
+    ator        =   NULL;
+    database    =   NULL;
+
+    TRACETODEBUGGER("MemoryDatabase_initialize(); contents: %s; flags: 0x%08x\n", contents, flags);
+
+    rc = ORJ_CreateDatabaseFromMemoryA(contents, cbContents, ator, flags, &database, &error);
+
+    if(ORJ_RC_SUCCESS != rc)
+    {
+        /* Throw */
+        char    szError[1001];
+
+        if(rc == ORJ_RC_PARSEERROR)
+        {
+            sprintf(szError, "Parsing error in database, at line %u, column %u; parse error: %u, %s", error.invalidLine, error.invalidColumn, error.parseError, ORJ_GetParseErrorStringA(error.parseError));
+        }
+        else
+        {
+            sprintf(szError, "Failed to open database; error: %u, %s", rc, ORJ_GetErrorStringA(rc));
+        }
+
+        rb_throw(szError, Qnil);
+    }
+    else
+    {
+        VALUE               __database__    =   Create___DatabaseHolder__(database);
+
+		openrj_assert(__DatabaseHolder___get_database_(__database__) == database);
+
+        rb_iv_set(self, "@__database__", __database__);
+        rb_iv_set(self, "@numLines", rb_uint2inum(database->numLines));
+        rb_iv_set(self, "@numFields", rb_uint2inum(database->numFields));
+        rb_iv_set(self, "@numRecords", rb_uint2inum(database->numRecords));
+    }
+
+    return self;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////
  * module functions
  */
 
@@ -796,14 +980,8 @@ static VALUE openrj_usage(VALUE self)
         ,   "  Functions:"
         ,   "    usage() - shows this usage"
         ,   "  Classes:"
-        ,   "    Class: Database"
-        ,   "      Construction:"
-        ,   "        new (jarName, flags)"
-        ,   "          jarName               - the name of the database file"
-        ,   "          flags                 - flags to alter the behaviour of the loading,"
-        ,   "                                  or the form of the loaded database"
+        ,   "    Class: DatabaseBase - an abstract base for FileDatabase and MemoryDatabase"
         ,   "      Attributes:"
-        ,   "        path                    - the database file path"
         ,   "        numLines                - the number of lines in the database file"
         ,   "        numFields               - the total number of fields in the database"
         ,   "        numRecords              - the total number of records in the database"
@@ -815,6 +993,24 @@ static VALUE openrj_usage(VALUE self)
         ,   "                                  (integer). It throws IndexError if the index is"
         ,   "                                  out of bounds."
         ,   "        to_s                    - returns a string form of the database"
+        ,   "    Class: FileDatabase - derived from DatabaseBase"
+        ,   "      Construction:"
+        ,   "        new (jarName, flags)"
+        ,   "          jarName               - the name of the database file"
+        ,   "          flags                 - flags to alter the behaviour of the loading,"
+        ,   "                                  or the form of the loaded database"
+        ,   "      Attributes:"
+        ,   "        path                    - the database file path"
+        ,   ""
+        ,   "    - note: To maintain backwards compatibility with version 1.0 - 1.1, the alias"
+        ,   "            Database refers to FileDatabase"
+        ,   ""
+        ,   "    Class: MemoryDatabase - derived from DatabaseBase"
+        ,   "      Construction:"
+        ,   "        new (contents, flags)"
+        ,   "          contents              - the text contents of the database"
+        ,   "          flags                 - flags to alter the behaviour of the loading,"
+        ,   "                                  or the form of the loaded database"
         ,   "    Class: FieldNameError"
         ,   "    Class: Record"
         ,   "      Attributes:"
@@ -860,6 +1056,8 @@ static VALUE openrj_usage(VALUE self)
         rb_ary_push(ar, rb_str_new2(*begin));
     }
 
+	STLSOFT_SUPPRESS_UNUSED(self);
+
     return ar;
 }
 
@@ -895,22 +1093,33 @@ void Init_openrj()
     /* FieldNameError */
     cFieldNameError     = rb_define_class_under(mOpenRJ, "FieldNameError", rb_eStandardError);
 
-    /* Database class */
-    TRACETODEBUGGER("Creating Database class\n");
-    cDatabase = rb_define_class_under(mOpenRJ, "Database", rb_cObject);
-    rb_include_module(cDatabase, rb_mEnumerable);
-    rb_define_method(cDatabase, "initialize", Database_initialize, 2);
-    rb_define_method(cDatabase, "each", Database_each_record, 0);
-    rb_define_method(cDatabase, "each_record", Database_each_record, 0);
-    rb_define_method(cDatabase, "each_field", Database_each_field, 0);
-    rb_define_method(cDatabase, "[]", Database_subscript, 1);
-    rb_define_method(cDatabase, "to_s", Database_to_s, 0);
-    rb_define_method(cDatabase, "==", Database_equals, 1);
-    rb_define_method(cDatabase, "eql?", Database_equals, 1);
-    rb_define_attr(cDatabase,   "path", 1, 0);
-    rb_define_attr(cDatabase,   "numLines", 1, 0);
-    rb_define_attr(cDatabase,   "numFields", 1, 0);
-    rb_define_attr(cDatabase,   "numRecords", 1, 0);
+    /* DatabaseBase class */
+    TRACETODEBUGGER("Creating DatabaseBase class\n");
+    cDatabaseBase = rb_define_class_under(mOpenRJ, "DatabaseBase", rb_cObject);
+    rb_include_module(cDatabaseBase, rb_mEnumerable);
+    rb_define_method(cDatabaseBase, "each", Database_each_record, 0);
+    rb_define_method(cDatabaseBase, "each_record", Database_each_record, 0);
+    rb_define_method(cDatabaseBase, "each_field", Database_each_field, 0);
+    rb_define_method(cDatabaseBase, "[]", Database_subscript, 1);
+    rb_define_method(cDatabaseBase, "to_s", Database_to_s, 0);
+    rb_define_method(cDatabaseBase, "==", Database_equals, 1);
+    rb_define_method(cDatabaseBase, "eql?", Database_equals, 1);
+    rb_define_attr(cDatabaseBase,   "numLines", 1, 0);
+    rb_define_attr(cDatabaseBase,   "numFields", 1, 0);
+    rb_define_attr(cDatabaseBase,   "numRecords", 1, 0);
+
+    TRACETODEBUGGER("Creating FileDatabase class\n");
+    cFileDatabase = rb_define_class_under(mOpenRJ, "FileDatabase", cDatabaseBase);
+    rb_define_attr(cFileDatabase,   "path", 1, 0);
+    rb_define_method(cFileDatabase, "initialize", FileDatabase_initialize, 2);
+
+    TRACETODEBUGGER("Creating MemoryDatabase class\n");
+    cMemoryDatabase = rb_define_class_under(mOpenRJ, "MemoryDatabase", cDatabaseBase);
+    rb_define_method(cMemoryDatabase, "initialize", MemoryDatabase_initialize, 3);
+
+	/* Database class */
+    TRACETODEBUGGER("Creating Database class (an alias for FileDatabase)\n");
+    rb_define_class_under(mOpenRJ, "Database", cFileDatabase);
 
     /* Record class */
     TRACETODEBUGGER("Creating Record class\n");
@@ -930,12 +1139,12 @@ void Init_openrj()
     TRACETODEBUGGER("Creating Field class\n");
     cField = rb_define_class_under(mOpenRJ, "Field", rb_cObject);
     rb_include_module(cField, rb_mComparable);
-    rb_define_method(cField, "name", Field_name_get, 0);
-    rb_define_method(cField, "value", Field_value_get, 0);
-    rb_define_method(cField,  "to_s", Field_to_s, 0);
-    rb_define_method(cField,  "==", Field_equals, 1);
-    rb_define_method(cField,  "eql?", Field_equals, 1);
-    rb_define_attr(cField, "record", 1, 0);
+    rb_define_method(cField,	"name", Field_name_get, 0);
+    rb_define_method(cField,	"value", Field_value_get, 0);
+    rb_define_method(cField,	"to_s", Field_to_s, 0);
+    rb_define_method(cField,	"==", Field_equals, 1);
+    rb_define_method(cField,	"eql?", Field_equals, 1);
+    rb_define_attr(cField,		"record", 1, 0);
 
     TRACETODEBUGGER("Initialised openrj extension for Ruby\n");
 }

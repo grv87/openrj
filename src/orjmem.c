@@ -4,18 +4,18 @@
  * Purpose: Implementation file of the memory handling for the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 18th June 2004
+ * Updated: 18th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
 # define OPENRJ_VER_C_ORJMEM_MINOR      1
-# define OPENRJ_VER_C_ORJMEM_REVISION   1
-# define OPENRJ_VER_C_ORJMEM_EDIT       2
+# define OPENRJ_VER_C_ORJMEM_REVISION   2
+# define OPENRJ_VER_C_ORJMEM_EDIT       4
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

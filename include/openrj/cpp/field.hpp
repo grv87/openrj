@@ -4,18 +4,18 @@
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 28th September 2004
+ * Updated: 18th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -52,8 +52,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    2
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 1
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     5
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 3
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     8
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ public:
     {
         return m_field;
     }
-    /// \brief Provides access to the field's record, in the form of its 
+    /// \brief Provides access to the field's record, in the form of its
     /// underlying field pointer
     ORJRecord const *GetRecord() const
     {
@@ -156,11 +156,11 @@ private:
  * Shims
  */
 
-inline stlsoft::shim_string<char> c_str_ptr(Field const &f)
+inline ::stlsoft::basic_shim_string<char> c_str_ptr(Field const &f)
 {
-    ORJField const              *pf =   f.GetField();
-    size_t                      cch =   pf->name.len + 1 + pf->value.len;
-    stlsoft::shim_string<char>  ss(cch);
+    ORJField const                      *pf =   f.GetField();
+    size_t                              cch =   pf->name.len + 1 + pf->value.len;
+    ::stlsoft::basic_shim_string<char>  ss(cch);
 
     if(cch < ss.size())
     {

@@ -1,10 +1,33 @@
-// Implementation file for OpenRJ::Record class
+/* /////////////////////////////////////////////////////////////////////////////
+ * File:        Record.cpp
+ *
+ * Purpose:     Implementation file for OpenRJ::Record class
+ *
+ * Created:     3rd August 2004
+ * Updated:     18th February 2005
+ *
+ * Author:      Matthew Wilson
+ *
+ * Copyright:   Synesis Software Pty Ltd, 2004-2005. All rights reserved.
+ *
+ * Home:        http://www.openrj.orj/
+ *
+ * ////////////////////////////////////////////////////////////////////////// */
+
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Includes
+ */
 
 #include "stdafx.h"
 
 #include "Record.h"
 #include "Field.h"
 #include "Database.h"
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Namespace
+ */
 
 namespace OpenRJ
 {
@@ -18,7 +41,7 @@ namespace OpenRJ
 
 		for(; begin != end; ++begin)
 		{
-			m_fields->Add(new Field(begin, this, database));
+			m_fields->Add(new Field(begin, this));
 		}
 	}
 
@@ -43,7 +66,14 @@ namespace OpenRJ
 		return static_cast<Field*>(m_fields->get_Item(index));
 	}
 
+// TODO: Show how, when using the String* returning form (using new String(pField->value.ptr, 0, pField->value.len);)
+// that it confuses the C# client. :-(
+
+#ifdef INDEXER_RETURNS_STRING
+	String *Record::get_Item(String *fieldName)
+#else /* ? INDEXER_RETURNS_STRING */
 	::OpenRJ::Field *Record::get_Item(String *fieldName)
+#endif /* INDEXER_RETURNS_STRING */
 	{
 		::openrj::ORJFieldA const	*pField =	::openrj::ORJ_Record_FindFieldByNameA(m_record, ::dotnetstl::c_string_accessor<char>(fieldName), NULL);
 
@@ -71,7 +101,11 @@ namespace OpenRJ
 			throw new IndexOutOfRangeException("Unexpected condition");
 		}
 
+#ifdef INDEXER_RETURNS_STRING
+		return new String(pField->value.ptr, 0, pField->value.len);
+#else /* ? INDEXER_RETURNS_STRING */
 		return field;
+#endif /* INDEXER_RETURNS_STRING */
 	}
 
 	IEnumerator *Record::GetEnumerator()
@@ -81,8 +115,10 @@ namespace OpenRJ
 
 	String *Record::ToString()
 	{
-//		String	*s = 
+//		String	*s =
 
 		return "";
 	}
 }
+
+/* ////////////////////////////////////////////////////////////////////////// */

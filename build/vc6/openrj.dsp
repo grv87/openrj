@@ -47,7 +47,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /W4 /GX /O2 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /FR /YX /FD /c
+# ADD CPP /nologo /MT /W4 /GX /O1 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /FR /YX /FD /c
 # ADD BASE RSC /l 0xc09 /d "NDEBUG"
 # ADD RSC /l 0xc09 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -55,7 +55,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug"
 
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.debug.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug MultiThreaded"
 
@@ -101,7 +101,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\openrj_debug.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.MT.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.debug.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Release MultiThreaded"
 
@@ -116,7 +116,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "ReleaseMT"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /FR /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O1 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /FR /YX /FD /c
 # ADD BASE RSC /l 0xc09 /d "NDEBUG"
 # ADD RSC /l 0xc09 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -124,7 +124,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.MT.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug MultiThreaded DLL"
 
@@ -146,8 +146,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.MT.debug.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.MT.DLL.debug.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.debug.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Release MultiThreaded DLL"
 
@@ -162,15 +162,15 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "ReleaseMTDLL"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /FR /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /FR /YX /FD /c
 # ADD BASE RSC /l 0xc09 /d "NDEBUG"
 # ADD RSC /l 0xc09 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.MT.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.MT.DLL.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Release pseudoUNIX"
 
@@ -185,7 +185,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "ReleaseUNIX"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W4 /GX /O2 /I "..\..\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /W4 /GX /O2 /I "..\..\include" /I "$(UNIXEM)\include" /D "unix" /D "_MBCS" /D "UNIX" /D "_WIN32" /D "NDEBUG" /D "_LIB" /FR /YX /FD /c
+# ADD CPP /nologo /W4 /GX /O1 /I "..\..\include" /I "$(UNIXEM)\include" /D "unix" /D "_MBCS" /D "UNIX" /D "_WIN32" /D "NDEBUG" /D "_LIB" /FR /YX /FD /c
 # ADD BASE RSC /l 0xc09 /d "NDEBUG"
 # ADD RSC /l 0xc09 /d "NDEBUG"
 BSC32=bscmake.exe

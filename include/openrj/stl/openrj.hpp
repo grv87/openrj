@@ -1,21 +1,21 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    openrj.hpp
+ * File:    openrj/stl/openrj.hpp
  *
- * Purpose: Root header file for the C++ mapping of the Open-RJ library
+ * Purpose: Root header file for the STL mapping of the Open-RJ library
  *
  * Created: 28th September 2004
- * Updated: 29th September 2004
+ * Updated: 19th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -42,18 +42,18 @@
  *
  */
 
-#ifndef OPENRJ_INCL_OPENRJ_STL_H_OPENRJ
-#define OPENRJ_INCL_OPENRJ_STL_H_OPENRJ
+#ifndef OPENRJ_INCL_OPENRJ_STL_HPP_OPENRJ
+#define OPENRJ_INCL_OPENRJ_STL_HPP_OPENRJ
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
-# define OPENRJ_VER_OPENRJ_STL_H_OPENRJ_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_H_OPENRJ_MINOR     0
-# define OPENRJ_VER_OPENRJ_STL_H_OPENRJ_REVISION  2
-# define OPENRJ_VER_OPENRJ_STL_H_OPENRJ_EDIT      2
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     1
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  3
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      9
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -68,9 +68,12 @@
 #endif /* ORJ_NO_EXCEPTIONS */
 
 #include <stlsoft.h>
+#include <stlsoft_integer_to_string.h>
 
 #include <exception>
 #include <string>
+
+#include <string.h>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Compiler warnings
@@ -104,31 +107,89 @@ typedef std::string string_t;
 class database_exception
     : public std::exception
 {
+/// \name Types
+/// @{
+public:
+    typedef std::exception      parent_class_type;
+    typedef database_exception  class_type;
+/// @}
+
+/// \name Construction
+/// @{
 public:
     /// Constructs an exception from the given error code and error structure
     database_exception(ORJRC rc, ORJError const &error)
         : m_rc(rc)
         , m_error(error)
+        , m_message(create_message_(rc, error))
     {}
+#ifdef __STLSOFT_COMPILER_IS_GCC
+    virtual ~database_exception() throw()
+    {}
+#endif /* __STLSOFT_COMPILER_IS_GCC */
+/// @}
 
+/// \name Accessors
+/// @{
 public:
+    /// \brief The Open-RJ return code
     ORJRC rc() const
     {
         return m_rc;
     }
+    /// \brief The Open-RJ parse error
     ORJError const &error() const
     {
         return m_error;
     }
 
+    /// \brief A string form of the exception error message
     virtual char const *what() const throw()
     {
-        return "Open-RJ exception";
+        return (ORJ_RC_PARSEERROR == m_rc) ? m_message.c_str() : ORJ_GetErrorStringA(m_rc);
     }
+/// @}
 
+/// \name Implementation
+/// @{
 private:
-    ORJRC       m_rc;
-    ORJError    m_error;
+    static string_t create_message_(ORJRC rc, ORJError const &error)
+    {
+        string_t    s;
+
+        if(ORJ_RC_PARSEERROR == rc)
+        {
+            char    message[201];
+            char    sz1[21];
+            char    sz2[21];
+
+            // This was originally all done with string class methods, but it causes a
+            // ridiculous number of reallocations, so we do it the old crusty way
+            strcpy(message, "' at line ");
+            strcat(message, ::stlsoft::integer_to_string(&sz1[0], stlsoft_num_elements(sz1), error.invalidLine));
+            strcat(message, " column ");
+            strcat(message, ::stlsoft::integer_to_string(&sz2[0], stlsoft_num_elements(sz2), error.invalidColumn));
+
+            s   =   "Parse error '";
+            s   +=  ORJ_GetParseErrorStringA(error.parseError);
+            s   +=  message;
+        }
+
+        return s;
+    }
+/// @}
+
+/// \name Members
+/// @{
+private:
+    ORJRC           m_rc;
+    ORJError        m_error;
+    const string_t  m_message;
+/// @}
+
+// Not to be implemented
+private:
+    class_type &operator =(class_type const &);
 };
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -140,6 +201,6 @@ private:
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
-#endif /* !OPENRJ_INCL_OPENRJ_STL_H_OPENRJ */
+#endif /* !OPENRJ_INCL_OPENRJ_STL_HPP_OPENRJ */
 
 /* ////////////////////////////////////////////////////////////////////////// */

@@ -4,18 +4,18 @@
  * Purpose: DLL implementation file for the Open-RJ library
  *
  * Created: 23rd June 2004
- * Updated: 28th September 2004
+ * Updated: 15th January 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -46,6 +46,8 @@
  * Includes
  */
 
+#define OPENRJ_PURE_API
+
 #include <openrj/openrj.h>
 #include <windows.h>
 
@@ -62,8 +64,8 @@
  * Version information
  */
 
-#define _mccVerHi		OPENRJ_VER_MAJOR   
-#define _mccVerLo		OPENRJ_VER_MINOR   
+#define _mccVerHi		OPENRJ_VER_MAJOR
+#define _mccVerLo		OPENRJ_VER_MINOR
 #define _mccBldNum		OPENRJ_VER_REVISION
 #define _mccPlatform	SYDLLVER_PLATFORM_WINDOWS
 
@@ -91,7 +93,6 @@ typedef struct tagDllVersionInfo
     DWORD   dwBuildNumber;
     DWORD   dwPlatformID;
 }   DllVersionInfo;
-
 
 HRESULT CALLBACK DllGetVersion(DllVersionInfo *pvi)
 {
@@ -121,6 +122,30 @@ HRESULT CALLBACK DllGetVersion(DllVersionInfo *pvi)
 	}
 
 	return hr;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Synthesise the inline API functions here, so they're available for loading
+ */
+
+ORJ_CALL(size_t) ORJ_Database_GetNumLinesA(/* [in] */ ORJDatabaseA const *database)
+{
+    return database->numLines;
+}
+
+ORJ_CALL(size_t) ORJ_Database_GetNumFieldsA(/* [in] */ ORJDatabaseA const *database)
+{
+    return database->numFields;
+}
+
+ORJ_CALL(size_t) ORJ_Database_GetNumRecordsA(/* [in] */ ORJDatabaseA const *database)
+{
+    return database->numRecords;
+}
+
+ORJ_CALL(size_t) ORJ_Record_GetNumFieldsA(/* [in] */ ORJRecordA const *record)
+{
+    return record->numFields;
 }
 
 /* ////////////////////////////////////////////////////////////////////////// */

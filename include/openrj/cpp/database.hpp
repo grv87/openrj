@@ -4,18 +4,18 @@
  * Purpose: Database class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 29th September 2004
+ * Updated: 19th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MAJOR     1
-# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MINOR     3
-# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      10
+# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MINOR     5
+# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_REVISION  3
+# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      16
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@
 #include <openrj/cpp/field.hpp>
 #include <openrj/cpp/record.hpp>
 
-#include <stlsoft_operator_bool.h>  // For "safe bool"
+#include <stlsoft/operator_bool_adaptor.hpp>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Namespace
@@ -79,50 +79,38 @@ namespace cpp
  * Classes
  */
 
-/// \brief This class represents the Open-RJ database file, once read in and parsed
-class Database
+/// \brief This class implements the common database manipulation for the \c FileDatabase
+/// and \c MemoryDatabase classes.
+class DatabaseBase
+    : public ::stlsoft::operator_bool_adaptor<DatabaseBase>
 {
 /// \name Types
 /// @{
 public:
-    typedef Database        class_type;
+    typedef DatabaseBase    class_type;
     typedef Record          value_type;
 /// @}
 
 /// \name Construction
 /// @{
-public:
-    /// \brief Constructs a database instance from the given database file, and 
+protected:
+    /// \brief Constructs a database instance from the given database file, and
     /// the optional flags
     ///
     /// \param jarName The database name
     /// \param flags Combination of the \link #ORJ_FLAG ORJ_FLAG \endlink enumeration
-    explicit Database(char const *jarName, unsigned flags = 0) // throw (DatabaseException)
-        : m_database(NULL)
-    {
-        ORJError    error;
-        ORJRC       rc = ORJ_ReadDatabase(jarName, NULL, flags, &m_database, &error);
-
-        if(ORJ_RC_SUCCESS != rc)
-        {
-#if !defined(ORJ_NO_EXCEPTIONS)
-            // throw something here
-            throw DatabaseException(rc, error);
-#endif /* !ORJ_NO_EXCEPTIONS */
-        }
-    }
+    explicit DatabaseBase(ORJDatabase const *database)
+        : m_database(database)
+    {}
+public:
     /// \brief Closes the database
-    ~Database()
+    virtual ~DatabaseBase()
     {
-        if(NULL != m_database)
-        {
-            ORJ_FreeDatabase(m_database);
-        }
+        Close();
     }
 
-    /// 
     /// \brief Closes the database
-    void Close()
+    virtual void Close()
     {
         if(NULL != m_database)
         {
@@ -134,13 +122,11 @@ public:
 
 /// \name State
 /// @{
-private:
-    STLSOFT_DEFINE_OPERATOR_BOOL_TYPES(class_type, boolean_generator_type, boolean_type);
 public:
-    /// Indicates the state of the instance, i.e. whether it is contains a valid recls_info_t or not
-    operator boolean_type() const
+    /// Indicates whether the database is open
+    bool is_open() const
     {
-        return boolean_generator_type::translate(NULL != m_database);
+        return NULL != m_database;
     }
 /// @}
 
@@ -175,7 +161,7 @@ public:
 public:
     /// \brief Returns the requested record
     ///
-    /// \param index The index of the record to be returned. Must be less than the 
+    /// \param index The index of the record to be returned. Must be less than the
     /// value returned by GetNumRecords()
     Record operator [](size_t index) const
     {
@@ -185,13 +171,181 @@ public:
     }
 /// @}
 
+/// \name Members
+/// @{
 private:
-    ORJDatabase const *m_database;
+    ORJDatabase const   *m_database;
+/// @}
 
 // Not to be implemented
 private:
-    Database(Database const &);
-    Database const &operator =(Database const &);
+    DatabaseBase(DatabaseBase const &);
+    DatabaseBase const &operator =(DatabaseBase const &);
+};
+
+#ifndef OPENRJ_NO_FILE_HANDLING
+/// \brief This class represents the Open-RJ database file, once read in and parsed
+class FileDatabase
+    : public DatabaseBase
+{
+/// \name Types
+/// @{
+protected:
+    typedef DatabaseBase    parent_class_type;
+public:
+    typedef FileDatabase    class_type;
+/// @}
+
+/// \name Construction
+/// @{
+public:
+    /// \brief Constructs a database instance from the given database file, and
+    /// the optional flags
+    ///
+    /// \param jarName The database name
+    /// \param flags Combination of the \link #ORJ_FLAG ORJ_FLAG \endlink enumeration
+    explicit FileDatabase(char const *jarName, unsigned flags = 0) // throw (DatabaseException)
+        : parent_class_type(create_database_(jarName, flags))
+        , m_name(alloc_name_(jarName))
+    {}
+    /// \brief Closes the database
+    virtual ~FileDatabase()
+    {
+        Close();
+
+        free(m_name);
+    }
+
+    /// \brief Closes the database
+    virtual void Close()
+    {
+        this->parent_class_type::Close();
+    }
+/// @}
+
+/// \name Attributes
+/// @{
+public:
+    /// Returns the path of the database
+    char const *GetPath() const
+    {
+        return m_name;
+    }
+/// @}
+
+/// \name Implementation
+/// @{
+private:
+    static char *alloc_name_(char const *s)
+    {
+        char    *new_s  =   strdup(s);
+
+#if !defined(ORJ_NO_EXCEPTIONS)
+        if(NULL == new_s)
+        {
+            throw std::bad_alloc();
+        }
+#endif /* !ORJ_NO_EXCEPTIONS */
+
+        return new_s;
+    }
+
+    static ORJDatabase const *create_database_(char const *jarName, unsigned flags = 0) // throw (DatabaseException)
+    {
+        ORJDatabase const   *database;
+        ORJError            error;
+        ORJRC               rc = ORJ_ReadDatabase(jarName, NULL, flags, &database, &error);
+
+        if(ORJ_RC_SUCCESS != rc)
+        {
+#if !defined(ORJ_NO_EXCEPTIONS)
+            // throw something here
+            throw DatabaseException(rc, error);
+#endif /* !ORJ_NO_EXCEPTIONS */
+        }
+
+        return database;
+    }
+
+/// @}
+
+/// \name Members
+/// @{
+private:
+    char    *const  m_name;
+/// @}
+
+// Not to be implemented
+private:
+    FileDatabase(class_type const &);
+    class_type &operator =(class_type const &);
+};
+
+typedef FileDatabase    Database;
+#endif /* !OPENRJ_NO_FILE_HANDLING */
+
+/// \brief This class opens and provides access to a memory-based Open-RJ database
+class MemoryDatabase
+    : public DatabaseBase
+{
+/// \name Types
+/// @{
+protected:
+    typedef DatabaseBase    parent_class_type;
+public:
+    typedef MemoryDatabase    class_type;
+/// @}
+
+/// \name Construction
+/// @{
+public:
+    /// \brief Constructs a database instance from the given memory, and
+    /// the optional flags
+    ///
+    /// \param contents Pointer to the base of the memory contents to parse. May not be NULL
+    /// \param cbContents Number of bytes in the memory contents to parse
+    /// \param flags Combination of the \link #ORJ_FLAG ORJ_FLAG \endlink enumeration
+    explicit MemoryDatabase(char const *contents, size_t cbContents, unsigned flags = 0) // throw (DatabaseException)
+        : parent_class_type(create_database_(contents, cbContents, flags))
+    {}
+    /// \brief Closes the database
+    virtual ~MemoryDatabase()
+    {
+        Close();
+    }
+
+    /// \brief Closes the database
+    virtual void Close()
+    {
+        this->parent_class_type::Close();
+    }
+/// @}
+
+/// \name Implementation
+/// @{
+private:
+    static ORJDatabase const *create_database_(char const *contents, size_t cbContents, unsigned flags = 0) // throw (DatabaseException)
+    {
+        ORJDatabase const   *database;
+        ORJError            error;
+        ORJRC               rc = ORJ_CreateDatabaseFromMemory(contents, cbContents, NULL, flags, &database, &error);
+
+        if(ORJ_RC_SUCCESS != rc)
+        {
+#if !defined(ORJ_NO_EXCEPTIONS)
+            // throw something here
+            throw DatabaseException(rc, error);
+#endif /* !ORJ_NO_EXCEPTIONS */
+        }
+
+        return database;
+    }
+/// @}
+
+// Not to be implemented
+private:
+    MemoryDatabase(class_type const &);
+    class_type &operator =(class_type const &);
 };
 
 /* /////////////////////////////////////////////////////////////////////////////

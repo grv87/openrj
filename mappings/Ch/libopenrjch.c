@@ -4,18 +4,18 @@
  * Purpose: Implementation file for the Open-RJ - Ch mapping
  *
  * Created: 7th August 2004
- * Updated: 29th September 2004
+ * Updated: 18th February 2005
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004, Matthew Wilson and Synesis Software
+ * Copyright 2004-2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
+ * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer. 
+ *   list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
@@ -74,6 +74,33 @@ EXPORTCH ORJRC ORJ_ReadDatabaseA_chdl(void *arg_)
     Ch_VaEnd(ap);
 
     retVal = ORJ_ReadDatabaseA(jarName, ator, flags, pdatabase, error);
+
+    return retVal;
+}
+
+EXPORTCH ORJRC ORJ_CreateDatabaseFromMemoryA_chdl(void *arg_)
+{
+    va_list             ap;
+    ORJRC               retVal;
+    char const          *contents;
+    size_t              cbContents;
+    IORJAllocator       *ator;
+    unsigned            flags;
+    ORJDatabaseA const  **pdatabase;
+    ORJError            *error;
+
+    Ch_VaStart(ap, arg_);
+
+    contents    =       Ch_VaArg(ap, char const*);
+    cbContents  =       Ch_VaArg(ap, size_t);
+    ator        =       Ch_VaArg(ap, IORJAllocator*);
+    flags       =       Ch_VaArg(ap, unsigned);
+    pdatabase   =       Ch_VaArg(ap, ORJDatabaseA const**);
+    error       =       Ch_VaArg(ap, ORJError*);
+
+    Ch_VaEnd(ap);
+
+    retVal = ORJ_CreateDatabaseFromMemoryA(contents, cbContents, ator, flags, pdatabase, error);
 
     return retVal;
 }
