@@ -4,7 +4,7 @@
  * Purpose: Implementation file of the Open-RJ Ruby mapping.
  *
  * Created: 15th June 2004
- * Updated: 18th February 2005
+ * Updated: 22nd April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_RUBY_MAJOR     1
-# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     7
-# define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  2
-# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      16
+# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     8
+# define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  1
+# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      17
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -609,6 +609,13 @@ static VALUE Record_equals(VALUE lhs, VALUE rhs)
     return Record_equals_(Record_get_record_(lhs), Record_get_record_(rhs)) ? Qtrue : Qfalse;
 }
 
+static VALUE Record_comment(VALUE self)
+{
+    ORJRecord const *record =   Record_get_record_(self);
+
+    return rb_str_new(record->comment.ptr, record->comment.len);
+}
+
 /* /////////////////////////////////////////////////////////////////////////////
  * Database
  */
@@ -1016,6 +1023,7 @@ static VALUE openrj_usage(VALUE self)
         ,   "      Attributes:"
         ,   "        numFields               - the total number of fields in the record"
         ,   "        database                - the database object of which this record is part"
+        ,   "        comment                 - the comment associated with the record"
         ,   "      Methods:"
         ,   "        each                    - enumerates the fields in the record"
         ,   "        [<index>]               - accesses the field corresponding to the index."
@@ -1134,6 +1142,7 @@ void Init_openrj()
     rb_define_method(cRecord,   "eql?", Record_equals, 1);
     rb_define_attr(cRecord,     "numFields", 1, 0);
     rb_define_attr(cRecord,     "database", 1, 0);
+    rb_define_method(cRecord,   "comment", Record_comment, 0);
 
     /* Field class */
     TRACETODEBUGGER("Creating Field class\n");

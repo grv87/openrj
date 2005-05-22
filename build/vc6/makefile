@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -17,14 +17,6 @@
 !ifndef STLSOFT_INCLUDE
 !error STLSOFT_INCLUDE must be defined
 !endif # STLSOFT_INCLUDE
-
-!ifndef CH_EXTERN
-!error CH_EXTERN must be defined
-!endif # CH_EXTERN
-
-!ifndef PYTHON_ROOT
-!error PYTHON_ROOT must be defined
-!endif # PYTHON_ROOT
 
 ################################################################################
 # Symbols
@@ -355,8 +347,6 @@ target:		$(TARGETS)
 compile:	$(LIB_OBJS) $(TEST_OBJS)
 
 all: \
- ch \
- python \
  target \
  \
 
@@ -412,11 +402,6 @@ clean:
 	@-$(RM) $(OBJ_STL_MT_RELEASE)
 	@-$(RM) $(OBJ_STL_ST_DEBUG)
 	@-$(RM) $(OBJ_STL_ST_RELEASE)
-	@-$(RM) $(OBJ_CH)
-	@-$(RM) $(TARGET_CH_SHARED_LIB)
-	@-$(RM) $(OBJ_PYTHON)
-	@-$(RM) $(TARGET_PYTHON_SHARED_LIB)
-	@-$(RM) $(TARGET_RUBY_SHARED_LIB)
 
 test_:
 	$(TARGET_TEST_C_MT_DEBUG) --unittest
@@ -439,88 +424,6 @@ test_:
 	$(TARGET_TEST_STL_ST_RELEASE) --unittest
 
 test:	target test_
-
-# Ch parts
-
-PROJ_CH_DIR					=	$(PROJ_MAPPINGS_DIR)\ch
-
-SRC_CH_C					=	$(PROJ_CH_DIR)\libopenrjch.c
-OBJ_CH						=	$(PROJ_CH_DIR)\libopenrj.obj
-TARGET_CH_SHARED_LIB		=	$(PROJ_CH_DIR)\$(PROJ_TAG).dll
-
-CH_CC						=	$(CC)
-CH_AR						=	$(AR)
-CH_LD						=	$(LD)
-
-CH_CC_FLAGS					=	$(CC_FLAGS) -MD
-CH_CC_DEFS					=	$(CC_DEFS)
-CH_CC_INCLUDES				=	$(CC_INCLUDES) -I$(CH_EXTERN)\include
-CH_LD_LIB					=	-libpath:$(CH_EXTERN)\lib
-CH_CC_ARGS					=	$(CH_CC_FLAGS) $(CH_CC_DEFS) $(CH_CC_INCLUDES)
-CH_LD_ARGS					=	$(LD_ARGS) $(CH_LD_LIB) -dll  ch.lib chsdk.lib advapi32.lib
-
-
-$(OBJ_CH):	$(SRC_CH_C) makefile
-	$(CH_CC) $(CH_CC_ARGS) -Fo$@ $(SRC_CH_C)
-
-$(TARGET_CH_SHARED_LIB):	$(OBJ_CH) $(TARGET_LIB_DLL_RELEASE) makefile
-	$(CH_LD) $(CH_LD_ARGS) -out:$@ $(OBJ_CH) $(TARGET_LIB_DLL_RELEASE)
-
-ch:	$(TARGET_CH_SHARED_LIB)
-
-ch-test:	ch
-	cd $(PROJ_CH_DIR)
-	ch $(PROJ_CH_DIR)\test.ch
-
-# Python parts
-
-PROJ_PYTHON_DIR				=	$(PROJ_MAPPINGS_DIR)\python
-
-SRC_PYTHON_C				=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG)_python.c
-SRC_PYTHON_DEF				=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG)_python.def
-OBJ_PYTHON					=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG)_python.obj
-TARGET_PYTHON_SHARED_LIB	=	$(PROJ_PYTHON_DIR)\$(PROJ_TAG).dll
-
-PYTHON_CC					=	$(CC)
-PYTHON_AR					=	$(AR)
-PYTHON_LD					=	$(LD)
-
-PYTHON_CC_FLAGS				=	-nologo -c -W3 -WX
-PYTHON_CC_DEFS				=	$(CC_DEFS)
-PYTHON_CC_INCLUDES			=	$(CC_INCLUDES) -I$(PYTHON_ROOT)\include
-PYTHON_LD_LIB				=	-libpath:$(PYTHON_ROOT)\libs
-PYTHON_CC_ARGS				=	$(PYTHON_CC_FLAGS) $(PYTHON_CC_DEFS) $(PYTHON_CC_INCLUDES)
-PYTHON_LD_ARGS				=	$(LD_ARGS) $(PYTHON_LD_LIB) -dll -def:$(SRC_PYTHON_DEF)
-
-
-$(OBJ_PYTHON):	$(SRC_PYTHON_C) makefile
-	$(PYTHON_CC) $(PYTHON_CC_ARGS) -Fo$@ $(SRC_PYTHON_C)
-
-$(TARGET_PYTHON_SHARED_LIB):	$(OBJ_PYTHON) $(TARGET_LIB_ST_RELEASE) makefile
-	$(PYTHON_LD) $(PYTHON_LD_ARGS) -out:$@ $(OBJ_PYTHON) $(TARGET_LIB_ST_RELEASE)
-
-python:	$(TARGET_PYTHON_SHARED_LIB)
-
-python-test:	python
-	cd $(PROJ_PYTHON_DIR)
-	python $(PROJ_PYTHON_DIR)\test.py
-
-# Ruby parts
-
-TARGET_RUBY_SHARED_LIB	=	$(PROJ_MAPPINGS_DIR)\ruby\$(PROJ_TAG).so
-
-$(TARGET_RUBY_SHARED_LIB):	$(PROJ_MAPPINGS_DIR)\ruby\openrj_ruby.c makefile
-	@if not exist .\ruby-cc\NUL mkdir $(RUBY_BIN)
-	cd .\ruby-cc
-	ruby $(PROJ_MAPPINGS_DIR)\ruby\extconf.rb --with-openrj-dir=$(PROJ_BASE_DIR)
-	cd ..
-	make -f .\ruby-cc\Makefile
-	move $(PROJ_TAG).so $(TARGET_RUBY_SHARED_LIB)
-
-ruby:	$(TARGET_RUBY_SHARED_LIB)
-
-ruby-test:	ruby
-	ruby $(PROJ_MAPPINGS_DIR)\ruby\test.rb --unittest
 
 
 

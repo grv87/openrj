@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 3rd March 2005
+ * Updated: 23rd May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_H_OPENRJ_MAJOR      1
-# define OPENRJ_VER_H_OPENRJ_MINOR      9
-# define OPENRJ_VER_H_OPENRJ_REVISION   4
-# define OPENRJ_VER_H_OPENRJ_EDIT       33
+# define OPENRJ_VER_H_OPENRJ_MINOR      13
+# define OPENRJ_VER_H_OPENRJ_REVISION   1
+# define OPENRJ_VER_H_OPENRJ_EDIT       40
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -77,13 +77,15 @@
 # define OPENRJ_VER_1_1_1       0x01010100
 # define OPENRJ_VER_1_1_2       0x01010200
 # define OPENRJ_VER_1_2_1       0x01020100
+# define OPENRJ_VER_1_2_2       0x01020200
+# define OPENRJ_VER_1_3_1       0x01030100
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
-#define OPENRJ_VER_MINOR    2
+#define OPENRJ_VER_MINOR    3
 #define OPENRJ_VER_REVISION 1
 
-#define OPENRJ_VER  OPENRJ_VER_1_2_1
+#define OPENRJ_VER  OPENRJ_VER_1_3_1
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -161,7 +163,11 @@
 #endif /* __cplusplus, etc. */
 
 #if !defined(ORJ_NO_NAMESPACE)
-/// The Open-RJ root namespace - \c openrj.
+/** \brief The Open-RJ root namespace - \c openrj.
+ *
+ * This the the root namespace for Open-RJ, and contains the C-API functions, along
+ * with 
+ */
 namespace openrj
 {
 #endif /* !ORJ_NO_NAMESPACE */
@@ -221,6 +227,10 @@ enum ORJ_TAG_NAME(ORJ_FLAG)
 {
         ORJ_FLAG_ORDERFIELDS        =   0x0001  /*!< Arranges the fields in alphabetical order */
     ,   ORJ_FLAG_ELIDEBLANKRECORDS  =   0x0002  /*!< Causes blank records to be ignored */
+#ifdef __cplusplus
+    ,   ORDER_FIELDS                =   ORJ_FLAG_ORDERFIELDS
+    ,   ELIDE_BLANK_RECORDS         =   ORJ_FLAG_ELIDEBLANKRECORDS
+#endif /* __cplusplus */
 };
 typedef enum ORJ_TAG_NAME(ORJ_FLAG)         ORJ_FLAG;
 
@@ -314,6 +324,7 @@ struct ORJ_TAG_NAME(ORJRecordA)
     size_t      numFields;  /*!< The number of fields in the record */
     ORJFieldA   *fields;    /*!< The field array */
     void        *reserved0; /*!< Reserved. Cannot be used by client code */
+    ORJStringA  comment;    /*!< The record comment */
 
 };
 typedef struct ORJ_TAG_NAME(ORJRecordA)     ORJRecordA;
@@ -394,7 +405,7 @@ ORJ_CALL(ORJRC) ORJ_ReadDatabaseA(  /* [in] */ char const           *jarName
  * \param contents Pointer to the base of the memory contents to parse. May not be NULL
  * \param cbContents Number of bytes in the memory contents to parse
  * \param ator The allocator to use for allocating memory, May be NULL, in which case CRT malloc() / realloc() / free() are used
- * \param flags Combination of the \link #ORJ_FLAG ORJ_FLAG \endlink enumeration
+ * \param flags Combination of the ORJ_FLAG enumeration
  * \param error Pointer to an error structure, which is filled out with information if a parsing error is encountered
  * \param pdatabase Pointer to a database pointer, in which will be returned the database. May not be NULL. The returned pointer
  * must be freed using ORJ_FreeDatabaseA().
@@ -475,6 +486,13 @@ ORJ_CALL(ORJRC) ORJ_Record_GetFieldA(       /* [in] */ ORJRecordA const *record
                                         ,   /* [in] */ size_t           iField
                                         ,   /* [in] */ ORJFieldA const  **pfield);
 
+/** \brief Finds a field in a record, based on the name and, optionally, the value
+ *
+ * \param record The record from which to retrieve the field
+ * \param fieldName The name of the field
+ * \param fieldValue The value of the field. May be NULL, in which case the first record with the given
+ * name will be returned, irrespective of its value.
+ */
 ORJ_CALL(ORJFieldA const*) ORJ_Record_FindFieldByNameA( /* [in] */ ORJRecordA const *record
                                                     ,   /* [in] */ char const       *fieldName
                                                     ,   /* [in] */ char const       *fieldValue);
@@ -485,6 +503,16 @@ ORJ_CALL(ORJFieldA const*) ORJ_Record_FindFieldByNameA( /* [in] */ ORJRecordA co
  * \note The record is assumed valid. There is no error return
  */
 ORJ_CALL(ORJDatabaseA const*) ORJ_Record_GetDatabaseA(  /* [in] */ ORJRecordA const *record);
+
+
+/** \brief Gives the record comment
+ *
+ * \param record The record from which to retrieve the field
+ * \param pcomment Pointer to a comment pointer. The returned value points at the comment
+ */
+ORJ_CALL(ORJRC) ORJ_Record_GetCommentA(     /* [in] */ ORJRecordA const *record
+                                        ,   /* [in] */ ORJStringA const **pcomment);
+
 
 /** @} */
 
@@ -561,12 +589,26 @@ ORJ_CALL(ORJRecordA const*) ORJ_Field_GetRecordA(  /* [in] */ ORJFieldA const *f
  */
 ORJ_CALL(char const *) ORJ_GetErrorStringA( /* [in] */ ORJRC            errorCode);
 
+/** \brief Gives the length of the error string returned by ORJ_GetErrorStringA()
+ *
+ * \param errorCode The error whose name is to be retrieved
+ * \note If the error is not recognised, the function returns 0
+ */
+ORJ_CALL(size_t) ORJ_GetErrorStringLengthA( /* [in] */ ORJRC            errorCode);
+
 /** \brief Gives the name of the parse-error
  *
  * \param errorCode The parse-error whose name is to be retrieved
  * \note If the error is not recognised, the function returns the empty string ("")
  */
 ORJ_CALL(char const *) ORJ_GetParseErrorStringA( /* [in] */ ORJ_PARSE_ERROR errorCode);
+
+/** \brief Gives the length of the error string returned by ORJ_GetParseErrorStringA()
+ *
+ * \param errorCode The error whose name is to be retrieved
+ * \note If the error is not recognised, the function returns 0
+ */
+ORJ_CALL(size_t) ORJ_GetParseErrorStringLengthA( /* [in] */ ORJ_PARSE_ERROR errorCode);
 
 /** @} */
 
@@ -651,9 +693,43 @@ inline ORJRC ORJ_FreeDatabase(/* [in] */ ORJDatabase const *database)
 
 #ifdef __cplusplus
 
+inline char const *c_str_ptr(ORJStringA const &s)
+{
+    return s.ptr;   /* This is ok, because Open-RJ guarantees that strings will be nul-terminated */
+}
+
+inline char const *c_str_data(ORJStringA const &s)
+{
+    return s.ptr;
+}
+
+inline size_t c_str_len(ORJStringA const &s)
+{
+    return s.len;
+}
+
+template <class S>
+inline S &operator <<(S &stm, ORJStringA const &s)
+{
+    stm.write(s.ptr, s.len);
+
+    return stm;
+}
+
+
 inline char const *c_str_ptr(ORJRC rc)
 {
     return ORJ_GetErrorStringA(rc);
+}
+
+inline char const *c_str_data(ORJRC rc)
+{
+    return ORJ_GetErrorStringA(rc);
+}
+
+inline size_t c_str_len(ORJRC rc)
+{
+    return ORJ_GetErrorStringLengthA(rc);
 }
 
 template <class S>
@@ -665,6 +741,16 @@ inline S &operator <<(S &s, ORJRC rc)
 inline char const *c_str_ptr(ORJ_PARSE_ERROR pe)
 {
     return ORJ_GetParseErrorStringA(pe);
+}
+
+inline char const *c_str_data(ORJ_PARSE_ERROR pe)
+{
+    return ORJ_GetParseErrorStringA(pe);
+}
+
+inline size_t c_str_len(ORJ_PARSE_ERROR pe)
+{
+    return ORJ_GetParseErrorStringLengthA(pe);
 }
 
 template <class S>
@@ -680,11 +766,13 @@ inline S &operator <<(S &s, ORJ_PARSE_ERROR pe)
  */
 
 #if !defined(ORJ_NO_NAMESPACE)
-} // namespace openrj
+} /* namespace openrj */
 
 namespace stlsoft
 {
     using ::openrj::c_str_ptr;
+    using ::openrj::c_str_data;
+    using ::openrj::c_str_len;
 }
 
 #endif /* !ORJ_NO_NAMESPACE */

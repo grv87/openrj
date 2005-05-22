@@ -4,7 +4,7 @@
  * Purpose:     Implementation file for the C project.
  *
  * Created:     11th June 2004
- * Updated:     19th February 2005
+ * Updated:     23rd May 2005
  *
  * Status:      Wizard-generated
  *
@@ -84,13 +84,15 @@
 
 static void			usage(int bExit, char const *reason, int invalidArg, int argc, char *argv[]);
 static int			run_unittests(void);
-//static char const	*find_exe_name(char const *arg0);
+/* static char const	*find_exe_name(char const *arg0); */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Globals
  */
 
-//static char const	*EXE_NAME	=	"";
+/* static char const	*EXE_NAME	=	""; */
+
+/* __declspec(dllimport) void __stdcall Sleep(unsigned long); */
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
@@ -100,7 +102,7 @@ int main(int argc, char *argv[])
 	char const	*jarName	=	NULL;
 	unsigned	flags		=	0;
 
-//	EXE_NAME = find_exe_name(argv[0]);
+/* 	EXE_NAME = find_exe_name(argv[0]); */
 
 #if 0
 	Sleep(100000);
@@ -201,16 +203,26 @@ int main(int argc, char *argv[])
 			{
 				size_t				iField;
 				ORJRecordA const	*record;
+				ORJStringA const	*comment;
 
 				ORJ_Database_GetRecordA(database, iRecord, &record);
 
 				openrj_assert(NULL != record);
 
-				printf("record-#%u (%u records)\n", iRecord, ORJ_Record_GetNumFieldsA(record));
+				if( ORJ_RC_SUCCESS == ORJ_Record_GetCommentA(record, &comment) &&
+					0 != comment->len)
+				{
+					printf("record-#%u; %.*s (%u records)\n", iRecord, comment->len, comment->ptr, ORJ_Record_GetNumFieldsA(record));
+				}
+				else
+				{
+					printf("record-#%u (%u records)\n", iRecord, ORJ_Record_GetNumFieldsA(record));
+				}
 
 				for(iField = 0; iField < ORJ_Record_GetNumFieldsA(record); ++iField)
 				{
 					ORJFieldA const		*field;
+					ORJFieldA const		*field2;
 					ORJStringA const	*name;
 					ORJStringA const	*value;
 
@@ -219,6 +231,13 @@ int main(int argc, char *argv[])
 					ORJ_Field_GetNameAndValueA(field, &name, &value);
 
 					printf("  field-#%u [%.*s]:[%.*s]\n", iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
+
+					field2	=	ORJ_Record_FindFieldByNameA(record, name->ptr, value->ptr);
+
+					if(field != field2)
+					{
+						fprintf(stderr, "** Field mismatch!! **\n");
+					}
 				}
 			}
 #endif /* 0 */
@@ -234,7 +253,7 @@ int main(int argc, char *argv[])
 
 static void usage(int bExit, char const *reason, int invalidArg, int argc, char **argv)
 {
-    // Get the executable name
+    /* Get the executable name */
     char    *EXE_NAME   =   strcpy((char*)alloca(1 + strlen(argv[0])), argv[0]);
     char    *p;
 

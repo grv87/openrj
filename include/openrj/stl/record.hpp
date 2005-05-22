@@ -4,7 +4,7 @@
  * Purpose: record class, in the STL mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 3rd March 2005
+ * Updated: 23rd April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     4
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  5
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      15
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     5
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  2
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      17
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -131,6 +131,9 @@ public:
 
     /// \brief Indicates whether the record is empty
     bool empty() const;
+
+    /// \brief Returns the record comment string
+    string_t comment() const;
 
     /// \brief Returns the requested field
     ///
@@ -469,6 +472,13 @@ inline size_t record::size() const
     openrj_assert(NULL != m_record);
 
     return ORJ_Record_GetNumFieldsA(m_record);
+}
+
+inline string_t record::comment() const
+{
+    openrj_assert(NULL != m_record);
+
+    return string_t(m_record->comment.ptr, m_record->comment.len);
 }
 
 inline bool record::empty() const

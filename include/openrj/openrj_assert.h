@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    openrj_assert.h
+ * File:    openrj/openrj_assert.h
  *
  * Purpose: Assertions for the Open-RJ C-API
  *
  * Created: 11th June 2004
- * Updated: 18th February 2005
+ * Updated: 8th April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_H_OPENRJ_ASSERT_MAJOR       1
 # define OPENRJ_VER_H_OPENRJ_ASSERT_MINOR       1
 # define OPENRJ_VER_H_OPENRJ_ASSERT_REVISION    2
-# define OPENRJ_VER_H_OPENRJ_ASSERT_EDIT        6
+# define OPENRJ_VER_H_OPENRJ_ASSERT_EDIT        7
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

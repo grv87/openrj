@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -80,7 +80,7 @@ CC_F_WARNING_ERR		=	-wx
 
 CPPC_F_NOLOGO		=	
 CPPC_F_COMPILE_ONLY	=	-c
-CPPC_F_WARNING_MAX	=	
+CPPC_F_WARNING_MAX	=	-wc
 CPPC_F_WARNING_ERR	=	-wx
 CPPC_F_EXCEPTIONS	=	-Ae
 CPPC_F_RTTI			=	-Ar
@@ -107,11 +107,11 @@ CPPC_FLAGS = \
 
 # Arguments (= flags + defines + includes)
 
-CC_ARGS_ST_DEBUG				=	 $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_RELEASE				=	 $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_DEBUG				=	-D_DEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_RELEASE				=	-DNDEBUG -o+space $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 
-CPPC_ARGS_ST_DEBUG			=	 $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
-CPPC_ARGS_ST_RELEASE			=	 $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_DEBUG			=	-D_DEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_RELEASE			=	-DNDEBUG -o+space $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 
 AR_ARGS				=	-c -n
 

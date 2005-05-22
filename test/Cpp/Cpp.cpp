@@ -4,7 +4,7 @@
  * Purpose:     Implementation file for the Cpp project.
  *
  * Created:     15th June 2004
- * Updated:     2nd March 2005
+ * Updated:     22nd April 2005
  *
  * Status:      Wizard-generated
  *
@@ -226,7 +226,10 @@ static int main_(int argc, char *argv[])
 				size_t	iField;
 				Record	record(db[iRecord]);
 
-				cout << "record-#" << iRecord << " (" << db.GetNumRecords() << " records)" << endl;
+				cout	<< "record-#" << iRecord 
+						<< " " << record.GetComment() << " "
+						<< " (" << db.GetNumRecords() << " records)"
+						<< endl;
 
 				for(iField = 0; iField < record.GetNumFields(); ++iField)
 				{
@@ -290,7 +293,7 @@ int main(int argc, char *argv[])
 
 static void usage(int bExit, char const *reason, int invalidArg, int argc, char *argv[])
 {
-    char    *EXE_NAME   =   strcpy((char*)alloca(1 + strlen(argv[0])), argv[0]);
+    char    *EXE_NAME   =   strcpy(static_cast<char*>(alloca(1 + strlen(argv[0]))), argv[0]);
     char    *p;
 
     if(NULL != (p = strrchr(EXE_NAME, '\\')))

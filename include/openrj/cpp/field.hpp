@@ -4,7 +4,7 @@
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 18th February 2005
+ * Updated: 23rd May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    2
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 3
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     8
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    3
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 2
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     10
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -64,6 +64,8 @@
 
 #include <stlsoft_shim_string.h>
 #include <stlsoft_string_access.h>
+
+#include <string.h>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Namespace
@@ -81,6 +83,12 @@ namespace cpp
 /// \brief This class represents a field in a record in the database
 class Field
 {
+/// \name Types
+/// @{
+public:
+    typedef Field   class_type;
+/// @}
+
 /// \name Construction
 /// @{
 public:
@@ -93,12 +101,12 @@ public:
         : m_field(NULL)
     {}
     /// Copy constructor
-    Field(Field const &rhs)
+    Field(class_type const &rhs)
         : m_field(rhs.m_field)
     {}
 
     /// Copy assignment operator
-    Field &operator =(Field const &rhs)
+    class_type &operator =(class_type const &rhs)
     {
         m_field = rhs.m_field;
 
@@ -129,6 +137,15 @@ public:
     }
 /// @}
 
+/// \name Comparison
+/// @{
+public:
+    bool IsEqual(class_type const &rhs) const
+    {
+        return 0 == strcmp(GetName(), rhs.GetName()) && 0 == strcmp(GetValue(), rhs.GetValue());
+    }
+/// @}
+
 /// \name Attributes
 /// @{
 public:
@@ -153,6 +170,20 @@ private:
 };
 
 /* /////////////////////////////////////////////////////////////////////////////
+ * Operators
+ */
+
+inline bool operator ==(Field const &lhs, Field const &rhs)
+{
+    return lhs.IsEqual(rhs);
+}
+
+inline bool operator !=(Field const &lhs, Field const &rhs)
+{
+    return !lhs.IsEqual(rhs);
+}
+
+/* /////////////////////////////////////////////////////////////////////////////
  * Shims
  */
 
@@ -175,6 +206,16 @@ inline ::stlsoft::basic_shim_string<char> c_str_ptr(Field const &f)
     return ss;
 }
 
+inline ::stlsoft::basic_shim_string<char> c_str_data(Field const &f)
+{
+    return c_str_ptr(f);
+}
+
+inline size_t c_str_len(Field const &f)
+{
+    return f.GetField()->name.len + 1 + f.GetField()->value.len;
+}
+
 template <class S>
 inline S &operator <<(S &s, Field const &field)
 {
@@ -193,6 +234,8 @@ inline S &operator <<(S &s, Field const &field)
 namespace stlsoft
 {
     using ::openrj::cpp::c_str_ptr;
+    using ::openrj::cpp::c_str_data;
+    using ::openrj::cpp::c_str_len;
 }
 
 /* ////////////////////////////////////////////////////////////////////////// */

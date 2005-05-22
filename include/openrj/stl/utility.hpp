@@ -4,7 +4,7 @@
  * Purpose: Helper functions for use with the Open-RJ STL mapping
  *
  * Created: 2nd December 2004
- * Updated: 18th February 2005
+ * Updated: 23rd May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_MAJOR    1
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_MINOR    0
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_REVISION 2
-# define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_EDIT     3
+# define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_EDIT     4
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -78,7 +78,6 @@
 
 namespace openrj
 {
-/// The Open-RJ STL namespace - \c openrj::stl
 namespace stl
 {
 
@@ -105,6 +104,7 @@ inline string_t lookup(string_t const &fieldName, record const &r0, record const
 /// \param fieldName The named of the field to be searched for
 /// \param r0 The first record to be searched
 /// \param r1 The second record to be searched
+/// \param defaultValue The default value to be used if the named field is not found in either record
 ///
 /// \return The value matching the field found in r0 or r1, or \c defaultValue if not found in either
 inline string_t lookup(string_t const &fieldName, record const &r0, record const &r1, string_t const &defaultValue)

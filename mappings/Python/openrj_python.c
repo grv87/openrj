@@ -4,7 +4,7 @@
  * Purpose: Implementation for the Python mapping for Open-RJ
  *
  * Created: 1st October 2004
- * Updated: 3rd March 2005
+ * Updated: 22nd April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -44,9 +44,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_PYTHON_MAJOR     1
-# define OPENRJ_VER_C_OPENRJ_PYTHON_MINOR     1
-# define OPENRJ_VER_C_OPENRJ_PYTHON_REVISION  4
-# define OPENRJ_VER_C_OPENRJ_PYTHON_EDIT      12
+# define OPENRJ_VER_C_OPENRJ_PYTHON_MINOR     2
+# define OPENRJ_VER_C_OPENRJ_PYTHON_REVISION  1
+# define OPENRJ_VER_C_OPENRJ_PYTHON_EDIT      14
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -897,9 +897,13 @@ static PyObject *openrj_Record_getattr(openrj_Record *self, char const *name)
     {
         return Py_BuildValue("i", openrj_Record_length(self));
     }
+    else if(0 == strcmp(name, "comment"))
+    {
+	    return Py_BuildValue("s#", self->record.comment.ptr, self->record.comment.len);
+    }
     else
     {
-        return Py_FindMethod(openrj_Database_methods, (PyObject*)self, (char*)name);
+        return Py_FindMethod(openrj_Record_methods, (PyObject*)self, (char*)name);
     }
 }
 

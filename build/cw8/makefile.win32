@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -74,12 +74,12 @@ CPPC_DEFS			=	$(COMMON_DEFS)
 # Flags
 
 CC_F_NOLOGO				=	
-CC_F_COMPILE_ONLY		=	-c
+CC_F_COMPILE_ONLY		=	
 CC_F_WARNING_MAX		=	-warn all -warn nonotused -warn nopadding
 CC_F_WARNING_ERR		=	-warn error
 
 CPPC_F_NOLOGO		=	
-CPPC_F_COMPILE_ONLY	=	-c
+CPPC_F_COMPILE_ONLY	=	
 CPPC_F_WARNING_MAX	=	-warn all -warn nonotused -warn nopadding  -warn nonotinlined
 CPPC_F_WARNING_ERR	=	-warn error
 CPPC_F_EXCEPTIONS	=	-Cpp_exceptions on

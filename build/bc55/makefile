@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -83,84 +83,84 @@ CC_FLAGS = \
 
 # Arguments (= flags + defines + includes)
 
-CC_ARGS_ST_DEBUG				=	-D_DEBUG -UNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_RELEASE				=	-DNDEBUG -U_DEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_D				=	-D_DEBUG -UNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_R				=	-DNDEBUG -U_DEBUG -O1 $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 
 AR_ARGS				=	
 
-LD_ARGS				=	-q $(COMMON_LIB)
+LD_ARGS				=	-q -l-x $(COMMON_LIB)
 
 ################################################################################
 # Targets
 
 # libs
-TARGET_LIB_ST_DEBUG			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).debug.lib
-TARGET_LIB_ST_RELEASE			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).lib
+TARGET_LIB_ST_D			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).debug.lib
+TARGET_LIB_ST_R			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).lib
 
 
 
 # test programs
-TARGET_TEST_C_ST_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).debug.exe
-TARGET_TEST_C_ST_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).exe
+TARGET_TEST_C_ST_D		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).debug.exe
+TARGET_TEST_C_ST_R		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).exe
 
 TARGETS = \
- $(TARGET_LIB_ST_DEBUG) \
- $(TARGET_LIB_ST_RELEASE) \
- $(TARGET_TEST_C_ST_DEBUG) \
- $(TARGET_TEST_C_ST_RELEASE) \
+ $(TARGET_LIB_ST_D) \
+ $(TARGET_LIB_ST_R) \
+ $(TARGET_TEST_C_ST_D) \
+ $(TARGET_TEST_C_ST_R) \
  \
 
 # objects
 
 # for libs
 
-OBJ_PROJ_orjapi__ST_DEBUG = $(PROJ_OBJ_DIR)\orjapi.debug.obj
-OBJ_PROJ_orjmem__ST_DEBUG = $(PROJ_OBJ_DIR)\orjmem.debug.obj
-OBJ_PROJ_orjstr__ST_DEBUG = $(PROJ_OBJ_DIR)\orjstr.debug.obj
+OBJ_PROJ_orjapi__ST_D = $(PROJ_OBJ_DIR)\orjapi.debug.obj
+OBJ_PROJ_orjmem__ST_D = $(PROJ_OBJ_DIR)\orjmem.debug.obj
+OBJ_PROJ_orjstr__ST_D = $(PROJ_OBJ_DIR)\orjstr.debug.obj
 
-OBJ_PROJ_ST_DEBUG = \
- $(OBJ_PROJ_orjapi__ST_DEBUG) \
- $(OBJ_PROJ_orjmem__ST_DEBUG) \
- $(OBJ_PROJ_orjstr__ST_DEBUG) \
+OBJ_PROJ_ST_D = \
+ $(OBJ_PROJ_orjapi__ST_D) \
+ $(OBJ_PROJ_orjmem__ST_D) \
+ $(OBJ_PROJ_orjstr__ST_D) \
  \
 
-OBJ_PROJ_ST_DEBUG_PM = \
- -+$(OBJ_PROJ_orjapi__ST_DEBUG) \
- -+$(OBJ_PROJ_orjmem__ST_DEBUG) \
- -+$(OBJ_PROJ_orjstr__ST_DEBUG) \
+OBJ_PROJ_ST_D_PM = \
+ -+$(OBJ_PROJ_orjapi__ST_D) \
+ -+$(OBJ_PROJ_orjmem__ST_D) \
+ -+$(OBJ_PROJ_orjstr__ST_D) \
  \
 
-OBJ_PROJ_orjapi__ST_RELEASE = $(PROJ_OBJ_DIR)\orjapi.obj
-OBJ_PROJ_orjmem__ST_RELEASE = $(PROJ_OBJ_DIR)\orjmem.obj
-OBJ_PROJ_orjstr__ST_RELEASE = $(PROJ_OBJ_DIR)\orjstr.obj
+OBJ_PROJ_orjapi__ST_R = $(PROJ_OBJ_DIR)\orjapi.obj
+OBJ_PROJ_orjmem__ST_R = $(PROJ_OBJ_DIR)\orjmem.obj
+OBJ_PROJ_orjstr__ST_R = $(PROJ_OBJ_DIR)\orjstr.obj
 
-OBJ_PROJ_ST_RELEASE = \
- $(OBJ_PROJ_orjapi__ST_RELEASE) \
- $(OBJ_PROJ_orjmem__ST_RELEASE) \
- $(OBJ_PROJ_orjstr__ST_RELEASE) \
+OBJ_PROJ_ST_R = \
+ $(OBJ_PROJ_orjapi__ST_R) \
+ $(OBJ_PROJ_orjmem__ST_R) \
+ $(OBJ_PROJ_orjstr__ST_R) \
  \
 
-OBJ_PROJ_ST_RELEASE_PM = \
- -+$(OBJ_PROJ_orjapi__ST_RELEASE) \
- -+$(OBJ_PROJ_orjmem__ST_RELEASE) \
- -+$(OBJ_PROJ_orjstr__ST_RELEASE) \
+OBJ_PROJ_ST_R_PM = \
+ -+$(OBJ_PROJ_orjapi__ST_R) \
+ -+$(OBJ_PROJ_orjmem__ST_R) \
+ -+$(OBJ_PROJ_orjstr__ST_R) \
  \
 
 
 LIB_OBJS = \
- $(OBJ_PROJ_ST_DEBUG) \
- $(OBJ_PROJ_ST_RELEASE) \
+ $(OBJ_PROJ_ST_D) \
+ $(OBJ_PROJ_ST_R) \
  \
 
 
 # for test programs
 
-OBJ_C_ST_DEBUG					=	.\C.debug.obj
-OBJ_C_ST_RELEASE					=	.\C.obj
+OBJ_C_ST_D					=	.\C.debug.obj
+OBJ_C_ST_R					=	.\C.obj
 
 TEST_OBJS = \
- $(OBJ_C_ST_DEBUG) \
- $(OBJ_C_ST_RELEASE) \
+ $(OBJ_C_ST_D) \
+ $(OBJ_C_ST_R) \
  \
 
 
@@ -207,18 +207,18 @@ usage:
 	@echo "make [usage | clean | compile | all | test | target] - default is 'all'"
 
 clean:
-	@-$(RM) $(TARGET_LIB_ST_DEBUG)
-	@-$(RM) $(TARGET_LIB_ST_RELEASE)
-	@-$(RM) $(TARGET_TEST_C_ST_DEBUG)
-	@-$(RM) $(TARGET_TEST_C_ST_RELEASE)
-	@-$(RM) $(OBJ_PROJ_ST_DEBUG)
-	@-$(RM) $(OBJ_PROJ_ST_RELEASE)
-	@-$(RM) $(OBJ_C_ST_DEBUG)
-	@-$(RM) $(OBJ_C_ST_RELEASE)
+	@-$(RM) $(TARGET_LIB_ST_D)
+	@-$(RM) $(TARGET_LIB_ST_R)
+	@-$(RM) $(TARGET_TEST_C_ST_D)
+	@-$(RM) $(TARGET_TEST_C_ST_R)
+	@-$(RM) $(OBJ_PROJ_ST_D)
+	@-$(RM) $(OBJ_PROJ_ST_R)
+	@-$(RM) $(OBJ_C_ST_D)
+	@-$(RM) $(OBJ_C_ST_R)
 
 test_:
-	$(TARGET_TEST_C_ST_DEBUG) --unittest
-	$(TARGET_TEST_C_ST_RELEASE) --unittest
+	$(TARGET_TEST_C_ST_D) --unittest
+	$(TARGET_TEST_C_ST_R) --unittest
 
 test:	target test_
 
@@ -228,46 +228,46 @@ test:	target test_
 
 # library
 
-$(TARGET_LIB_ST_DEBUG): $(OBJ_PROJ_ST_DEBUG) makefile
+$(TARGET_LIB_ST_D): $(OBJ_PROJ_ST_D) makefile
 	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
-	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_ST_DEBUG_PM)
+	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_ST_D_PM)
 
-$(OBJ_PROJ_orjapi__ST_DEBUG): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_DEBUG) -o$@ $(PROJ_SRC_DIR)\orjapi.c
-$(OBJ_PROJ_orjmem__ST_DEBUG): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_DEBUG) -o$@ $(PROJ_SRC_DIR)\orjmem.c
-$(OBJ_PROJ_orjstr__ST_DEBUG): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_DEBUG) -o$@ $(PROJ_SRC_DIR)\orjstr.c
+$(OBJ_PROJ_orjapi__ST_D): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__ST_D): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__ST_D): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_SRC_DIR)\orjstr.c
 
-$(TARGET_LIB_ST_RELEASE): $(OBJ_PROJ_ST_RELEASE) makefile
+$(TARGET_LIB_ST_R): $(OBJ_PROJ_ST_R) makefile
 	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
-	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_ST_RELEASE_PM)
+	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_ST_R_PM)
 
-$(OBJ_PROJ_orjapi__ST_RELEASE): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_RELEASE) -o$@ $(PROJ_SRC_DIR)\orjapi.c
-$(OBJ_PROJ_orjmem__ST_RELEASE): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_RELEASE) -o$@ $(PROJ_SRC_DIR)\orjmem.c
-$(OBJ_PROJ_orjstr__ST_RELEASE): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_RELEASE) -o$@ $(PROJ_SRC_DIR)\orjstr.c
+$(OBJ_PROJ_orjapi__ST_R): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_SRC_DIR)\orjapi.c
+$(OBJ_PROJ_orjmem__ST_R): $(PROJ_SRC_DIR)\orjmem.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_SRC_DIR)\orjmem.c
+$(OBJ_PROJ_orjstr__ST_R): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_SRC_DIR)\orjstr.c
 
 
 # C test client
 
-$(TARGET_TEST_C_ST_DEBUG):	$(OBJ_C_ST_DEBUG) makefile
+$(TARGET_TEST_C_ST_D):	$(OBJ_C_ST_D) makefile
 	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
-	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
+	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_ST_D) $(TARGET_LIB_ST_D)
 
 
-$(OBJ_C_ST_DEBUG):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_DEBUG) -o$@ $(PROJ_TEST_DIR)\C\C.c
+$(OBJ_C_ST_D):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_TEST_DIR)\C\C.c
 
-$(TARGET_TEST_C_ST_RELEASE):	$(OBJ_C_ST_RELEASE) makefile
+$(TARGET_TEST_C_ST_R):	$(OBJ_C_ST_R) makefile
 	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
-	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_ST_R) $(TARGET_LIB_ST_R)
 
 
-$(OBJ_C_ST_RELEASE):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_RELEASE) -o$@ $(PROJ_TEST_DIR)\C\C.c
+$(OBJ_C_ST_R):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_TEST_DIR)\C\C.c
 
 
 
