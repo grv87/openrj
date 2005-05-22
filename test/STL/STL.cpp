@@ -4,7 +4,7 @@
  * Purpose:     Implementation file for the STL project.
  *
  * Created:     18th June 2004
- * Updated:     3rd March 2005
+ * Updated:     22nd April 2005
  *
  * Status:      Wizard-generated
  *
@@ -219,7 +219,10 @@ static int main_(int argc, char *argv[])
 			{
 				openrj::stl::record	record(db[iRecord]);
 
-				cout << "record-#" << iRecord << " (" << db.size() << " records)" << endl;
+				cout	<< "record-#" << iRecord
+						<< " " << record.comment() << " "
+						<< " (" << db.size() << " records)"
+						<< endl;
 
 				for(size_t iField = 0; iField < record.size(); ++iField)
 				{
@@ -239,7 +242,10 @@ static int main_(int argc, char *argv[])
 			{
 				openrj::stl::record	record(*begin);
 
-				cout << "record-#" << iRecord << " (of " << db.size() << " records)" << endl;
+				cout	<< "record-#" << iRecord
+						<< " " << record.comment() << " "
+						<< " (of " << db.size() << " records)"
+						<< endl;
 
 				if(record.has_field("Name"))
 				{
@@ -331,7 +337,7 @@ int main(int argc, char *argv[])
 
 static void usage(int bExit, char const *reason, int invalidArg, int argc, char *argv[])
 {
-    char    *EXE_NAME   =   strcpy((char*)alloca(1 + strlen(argv[0])), argv[0]);
+    char    *EXE_NAME   =   strcpy(static_cast<char*>(alloca(1 + strlen(argv[0]))), argv[0]);
     char    *p;
 
     if(NULL != (p = strrchr(EXE_NAME, '\\')))

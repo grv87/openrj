@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 3rd March 2005
+ * Updated: 23rd May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
-# define OPENRJ_VER_C_ORJAPI_MINOR      4
-# define OPENRJ_VER_C_ORJAPI_REVISION   7
-# define OPENRJ_VER_C_ORJAPI_EDIT       27
+# define OPENRJ_VER_C_ORJAPI_MINOR      5
+# define OPENRJ_VER_C_ORJAPI_REVISION   3
+# define OPENRJ_VER_C_ORJAPI_EDIT       31
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -276,22 +276,22 @@ ORJ_CALL(ORJRC) ORJ_ReadDatabaseA(  /* [in] */ char const           *jarFile
     {
         /* (2) Determine the extent of the file */
         long    pos     =   fseek(f, 0, SEEK_END);
-        long    size    =   ftell(f);
+        long    size1    =   ftell(f);
 
         (void)fseek(f, pos, SEEK_SET);
 
-        if(-1 == size)
+        if(-1 == size1)
         {
             rc = ORJ_RC_BADFILEREAD;
         }
-        else if(0 == size)
+        else if(0 == size1)
         {
             rc = ORJ_RC_NORECORDS;
         }
         else
         {
             const size_t    cbDbStruct  =   round_up_16_(sizeof(ORJDatabaseA));
-            const size_t    cbData      =   round_up_16_((size_t)size + 1); /* Add 1 here, so that we can null-terminate the last line even if it does not contain \n */
+            const size_t    cbData      =   round_up_16_((size_t)size1 + 1); /* Add 1 here, so that we can null-terminate the last line even if it does not contain \n */
             size_t          cbAll       =   cbDbStruct + cbData;
             ORJDatabaseA    *db         =   (ORJDatabaseA*)openrj_ator_alloc_(ator, cbAll);
 
@@ -304,18 +304,18 @@ ORJ_CALL(ORJRC) ORJ_ReadDatabaseA(  /* [in] */ char const           *jarFile
                 /* Now we have the memory block, we read in all the contents and process them
                  * to determine the number of records involved.
                  */
-                size_t  size = fread(((char*)db) + cbDbStruct, 1, cbData, f);
+                size_t  size2 = fread(((char*)db) + cbDbStruct, 1, cbData, f);
 
-                if(0 == size)
+                if(0 == size2)
                 {
                     rc = ORJ_RC_BADFILEREAD;
                 }
                 else
                 {
                     /* Add a nul */
-                    (cbDbStruct + size)[(char*)db] = '\0';
+                    (cbDbStruct + size2)[(char*)db] = '\0';
 
-                    rc = ORJ_ExpandBlockAndParseA_(db, cbDbStruct, cbData, cbAll, flags, ator, pdatabase, error, size);
+                    rc = ORJ_ExpandBlockAndParseA_(db, cbDbStruct, cbData, cbAll, flags, ator, pdatabase, error, size2);
                 }
 
                 if(ORJ_RC_SUCCESS != rc)
@@ -377,16 +377,16 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                                     ,   size_t              size)
 {
     ORJRC       rc;
-    char *const pchData =   ((char*)db) + cbDbStruct;
+    char *const pchData1 =   ((char*)db) + cbDbStruct;
     size_t      numLines;
     size_t      numFields;
     size_t      numRecords;
 
     /* 0-fill the remainder of the data block */
-    (void)memset(&pchData[size], 0, cbData - size);
+    (void)memset(&pchData1[size], 0, cbData - size);
 
     /* Process the block, counting the number of lines, fields and records */
-    if(!process_field_markers(pchData, &size, &numLines, &numFields, &numRecords, error))
+    if(!process_field_markers(pchData1, &size, &numLines, &numFields, &numRecords, error))
     {
         rc = ORJ_RC_PARSEERROR;
     }
@@ -410,18 +410,18 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
         {
             /* The reallocation has succeeded, so we now. */
 
-            char *const             pchData     =   ((char*)newDb) + cbDbStruct;    /* This is hiding outer scope, but buys us const */
-            char const *const       end         =   &pchData[size];
-            ORJFieldA *const        pFields     =   (ORJFieldA*)&pchData[round_up_16_(size)];
-            ORJRecordA *const       pRecords    =   (ORJRecordA*)&pchData[round_up_16_(size) + cbFields];
+            char *const             pchData2    =   ((char*)newDb) + cbDbStruct;    /* This is hiding outer scope, but buys us const */
+            char const *const       end1        =   &pchData2[size];
+            ORJFieldA *const        pFields     =   (ORJFieldA*)&pchData2[round_up_16_(size)];
+            ORJRecordA *const       pRecords    =   (ORJRecordA*)&pchData2[round_up_16_(size) + cbFields];
             ORJRecordA const *const lastRecord  =   &pRecords[numRecords];
-            char                    *data       =   &pchData[0];
+            char                    *data       =   &pchData2[0];
             ORJFieldA               *field      =   &pFields[0];
             ORJFieldA               *field0;
             ORJRecordA              *record     =   &pRecords[0];
 
-            openrj_assert((void*)pchData < (void*)end);
-            openrj_assert((void*)end <= (void*)pFields);
+            openrj_assert((void*)pchData2 < (void*)end1);
+            openrj_assert((void*)end1 <= (void*)pFields);
             openrj_assert((void*)pFields <= (void*)pRecords);
 
             db = newDb;
@@ -438,7 +438,7 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                 openrj_assert((void*)pFields < (void*)pRecords);
 
                 /* Now tie up all the fields and records */
-                for(field0 = field; data != end; )
+                for(field0 = field; data != end1; )
                 {
                     size_t const len = strlen(data);
 
@@ -464,6 +464,28 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                             qsort(record->fields, record->numFields, sizeof(ORJFieldA), field_compare);
                         }
 
+                        record->comment.len =   len - 2;
+                        record->comment.ptr =   data + 2;
+
+                        for(; '\0' != *record->comment.ptr; ++record->comment.ptr, --record->comment.len)
+                        {
+                            if( ' ' != *record->comment.ptr &&
+                                '\t' != *record->comment.ptr)
+                            {
+                                break;
+                            }
+                        }
+
+                        openrj_assert(0 <= (ptrdiff_t)record->comment.len);
+                        openrj_assert(record->comment.len < len);
+                        openrj_assert(NULL != record->comment.ptr);
+                        openrj_assert(' ' != record->comment.ptr[0]);
+                        openrj_assert('\t' != record->comment.ptr[0]);
+                        openrj_assert(data <= record->comment.ptr);
+                        openrj_assert(record->comment.ptr <= data + len);
+                        openrj_assert(record->comment.ptr <= data + 2 + record->comment.len);
+                        openrj_assert('\0' == record->comment.ptr[record->comment.len]);
+
                         if( ORJ_FLAG_ELIDEBLANKRECORDS == (flags & ORJ_FLAG_ELIDEBLANKRECORDS) &&
                             0 == record->numFields)
                         {
@@ -484,28 +506,28 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                     {
                         /* A genuine field */
 
-                        char    *end    =   data + len;
+                        char    *end2    =   data + len;
                         char    *colon;
                         char    *value;
 
                         /* 1. Remove space before end */
-                        for(; data != end; --end)
+                        for(; data != end2; --end2)
                         {
-                            if( ' ' != *(end - 1) &&
-                                '\t' != *(end - 1))
+                            if( ' ' != *(end2 - 1) &&
+                                '\t' != *(end2 - 1))
                             {
                                 break;
                             }
 
-                            *(end - 1) = '\0'; /* Strips trailing whitespace from line */
+                            *(end2 - 1) = '\0'; /* Strips trailing whitespace from line */
                         }
 
                         colon = strchr(data, ':');
 
                         if(NULL == colon)
                         {
-                            colon = end;
-                            value = end;
+                            colon = end2;
+                            value = end2;
                         }
                         else
                         {
@@ -551,17 +573,17 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                         openrj_assert(NULL != data);
                         openrj_assert(NULL != colon);
                         openrj_assert(NULL != value);
-                        openrj_assert(NULL != end);
+                        openrj_assert(NULL != end2);
 
                         openrj_assert(data <= colon);
                         openrj_assert(colon <= value);
-                        openrj_assert(value <= end);
+                        openrj_assert(value <= end2);
 
                         field->mbz0         =   0;
                         field->name.ptr     =   data;
                         field->name.len     =   (size_t)(colon - data);
                         field->value.ptr    =   value;
-                        field->value.len    =   (size_t)(end - value);
+                        field->value.len    =   (size_t)(end2 - value);
                         field->reserved0    =   record;
 
                         openrj_assert(field->name.ptr <= field->value.ptr);
@@ -676,18 +698,27 @@ ORJ_CALL(ORJFieldA const*) ORJ_Record_FindFieldByNameA( /* [in] */ ORJRecordA co
 {
     ORJFieldA const *begin;
     ORJFieldA const *end;
+    size_t          cchFieldName;
+    size_t          cchFieldValue;
 
     openrj_assert(NULL != record);
     openrj_assert(NULL != fieldName);
+
+    cchFieldName    =   strlen(fieldName);
+    cchFieldValue   =   (NULL == fieldValue) ? 0 : strlen(fieldValue);
 
     begin   =   &record->fields[0];
     end     =   &record->fields[record->numFields];
     for(; begin != end; ++ begin)
     {
-        if(0 == strncmp(fieldName, begin->name.ptr, begin->name.len))
+        /* Name must be same length and contents */
+        if( cchFieldName == begin->name.len &&
+            0 == strncmp(fieldName, begin->name.ptr, begin->name.len))
         {
-            if( NULL == fieldValue ||
-                0 == strncmp(fieldValue, begin->value.ptr, begin->value.len))
+            /* Value must be NULL (meaning match any) or must be same length and contents */
+            if( 0 == cchFieldValue ||
+                (   cchFieldValue == begin->value.len &&
+                    0 == strncmp(fieldValue, begin->value.ptr, begin->value.len)))
             {
                 return begin;
             }
@@ -702,6 +733,17 @@ ORJ_CALL(ORJDatabaseA const*) ORJ_Record_GetDatabaseA(/* [in] */ ORJRecordA cons
     openrj_assert(NULL != record);
 
     return (ORJDatabaseA const*)record->reserved0;
+}
+
+ORJ_CALL(ORJRC) ORJ_Record_GetCommentA(     /* [in] */ ORJRecordA const *record
+                                        ,   /* [in] */ ORJStringA const **pcomment)
+{
+    openrj_assert(NULL != record);
+    openrj_assert(NULL != pcomment);
+
+    *pcomment = &record->comment;
+
+    return ORJ_RC_SUCCESS;
 }
 
 ORJ_CALL(ORJRC) ORJ_Field_GetNameA(         /* [in] */ ORJFieldA const  *field
@@ -990,7 +1032,7 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
                             return 0;
                         }
                     }
-                } // Fall through
+                } /* Fall through */
             default:
                 numInitialWsToSkip = 0;
                 break;

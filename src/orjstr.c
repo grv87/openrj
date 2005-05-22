@@ -4,7 +4,7 @@
  * Purpose: Provides (English) string mappings for errors
  *
  * Created: 26th July 2004
- * Updated: 3rd March 2005
+ * Updated: 7th April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
-# define OPENRJ_VER_C_ORJMEM_MINOR      0
-# define OPENRJ_VER_C_ORJMEM_REVISION   4
-# define OPENRJ_VER_C_ORJMEM_EDIT       6
+# define OPENRJ_VER_C_ORJMEM_MINOR      1
+# define OPENRJ_VER_C_ORJMEM_REVISION   1
+# define OPENRJ_VER_C_ORJMEM_EDIT       7
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,6 +62,7 @@
 /* #include <openrj/openrj_memory.h> */
 
 #include <stdlib.h>
+#include <string.h>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Macros
@@ -126,14 +127,24 @@ static char const *ORJ_LookupErrorStringA_(int error, ErrorString const *mapping
     return "";
 }
 
-ORJ_CALL(char const *) ORJ_GetErrorStringA( /* [in] */ ORJRC            errorCode)
+ORJ_CALL(char const *) ORJ_GetErrorStringA( /* [in] */ ORJRC errorCode)
 {
     return ORJ_LookupErrorStringA_((int)errorCode, &errors[0], NUM_ELEMENTS(errors));
+}
+
+ORJ_CALL(size_t) ORJ_GetErrorStringLengthA( /* [in] */ ORJRC errorCode)
+{
+    return strlen(ORJ_GetErrorStringA(errorCode));
 }
 
 ORJ_CALL(char const *) ORJ_GetParseErrorStringA( /* [in] */ ORJ_PARSE_ERROR errorCode)
 {
     return ORJ_LookupErrorStringA_((int)errorCode, &parseErrors[0], NUM_ELEMENTS(parseErrors));
+}
+
+ORJ_CALL(size_t) ORJ_GetParseErrorStringLengthA( /* [in] */ ORJ_PARSE_ERROR errorCode)
+{
+    return strlen(ORJ_GetParseErrorStringA(errorCode));
 }
 
 /* ////////////////////////////////////////////////////////////////////////// */

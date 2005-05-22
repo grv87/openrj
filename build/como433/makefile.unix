@@ -5,7 +5,7 @@
 #           compiler, on UNIX
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -20,7 +20,7 @@ PROJ_TAG			=	openrj
 
 CC					=	como
 CPPC				=	como
-AR					=	lib
+AR					=	ar
 LD					=	como
 RM					=	rm -f
 
@@ -37,7 +37,7 @@ PROJ_TEST_DIR		=	$(PROJ_BASE_DIR)/test
 
 # Includes
 
-INCLUDES_LEADER		=	-I-
+INCLUDES_LEADER		=	
 
 PROJ_INCLUDE		=	-I$(PROJ_INCLUDE_DIR)
 

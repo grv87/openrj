@@ -4,7 +4,7 @@
  * Purpose: Root header file for the STL mapping of the Open-RJ library
  *
  * Created: 28th September 2004
- * Updated: 19th February 2005
+ * Updated: 23rd May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  3
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      9
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      10
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,10 @@
 
 namespace openrj
 {
-/// The Open-RJ STL namespace - \c openrj::stl
+/// \brief The Open-RJ STL namespace - \c openrj::stl
+///
+/// This contains the field, record, file_database and memory_database classes,
+/// along with the exception class database_exception
 namespace stl
 {
 

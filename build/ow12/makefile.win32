@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -78,8 +78,8 @@ CC_FLAGS = \
 
 # Arguments (= flags + defines + includes)
 
-CC_ARGS_ST_DEBUG				=	 $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_RELEASE				=	 $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_DEBUG				=	-D_DEBUG -UNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_RELEASE				=	-DNDEBUG -U_DEBUG -os $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 
 AR_ARGS				=	-q -c
 
@@ -224,6 +224,7 @@ test:	target test_
 # library
 
 $(TARGET_LIB_ST_DEBUG): $(OBJ_PROJ_ST_DEBUG) makefile.win32
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
 	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_ST_DEBUG_PM)
 
 $(OBJ_PROJ_orjapi__ST_DEBUG): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile.win32
@@ -234,6 +235,7 @@ $(OBJ_PROJ_orjstr__ST_DEBUG): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile.w
 	$(CC) $(CC_ARGS_ST_DEBUG) -fo=$@ $(PROJ_SRC_DIR)\orjstr.c
 
 $(TARGET_LIB_ST_RELEASE): $(OBJ_PROJ_ST_RELEASE) makefile.win32
+	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
 	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_ST_RELEASE_PM)
 
 $(OBJ_PROJ_orjapi__ST_RELEASE): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile.win32
@@ -247,6 +249,7 @@ $(OBJ_PROJ_orjstr__ST_RELEASE): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
 # C test client
 
 $(TARGET_TEST_C_ST_DEBUG):	$(OBJ_C_ST_DEBUG) makefile.win32
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
 	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
 
 
@@ -254,6 +257,7 @@ $(OBJ_C_ST_DEBUG):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile.win32
 	$(CC) $(CC_ARGS_ST_DEBUG) -fo=$@ $(PROJ_TEST_DIR)\C\C.c
 
 $(TARGET_TEST_C_ST_RELEASE):	$(OBJ_C_ST_RELEASE) makefile.win32
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
 	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
 
 

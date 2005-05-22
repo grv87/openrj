@@ -202,7 +202,19 @@ SOURCE=..\..\..\include\openrj\cpp\database.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\include\openrj\cpp\databasebase.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\include\openrj\cpp\field.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\openrj\cpp\filedatabase.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\include\openrj\cpp\memorydatabase.hpp
 # End Source File
 # Begin Source File
 

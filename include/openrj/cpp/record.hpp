@@ -4,7 +4,7 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 18th February 2005
+ * Updated: 22nd April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       3
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       6
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        9
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        13
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -107,6 +107,16 @@ public:
     }
 
 public:
+    /// \brief Returns the record comment string
+    String GetComment() const
+    {
+        openrj_assert(NULL != m_record);
+
+        ORJStringA const *comment;
+
+        return (ORJ_RC_SUCCESS == ORJ_Record_GetCommentA(m_record, &comment)) ? String(comment->ptr, comment->len) : String();
+    }
+
     /// \brief Returns the number of fields in the record
     size_t GetNumFields() const
     {
@@ -141,7 +151,7 @@ public:
     {
         ORJField const  *const  begin   =   &m_record->fields[0];
         ORJField const  *const  end     =   &m_record->fields[m_record->numFields];
-        ORJField const          *it     =   std::find_if(begin, end, match_name(name));
+        ORJField const          *it     =   ::std::find_if(begin, end, match_name(name));
 
         if(NULL != pfield)
         {
@@ -151,24 +161,39 @@ public:
         return (it != end);
     }
 
+    bool HasField(char const *name) const
+    {
+        return NULL != ORJ_Record_FindFieldByNameA(m_record, name, NULL);
+    }
+
+    bool HasField(char const *name, char const *value) const
+    {
+        return NULL != ORJ_Record_FindFieldByNameA(m_record, name, value);
+    }
+
+    bool HasFieldWithValue(char const *value) const
+    {
+        return NULL != ORJ_Record_FindFieldByNameA(m_record, NULL, value);
+    }
+
 #if !defined(ORJ_NO_EXCEPTIONS)
     /// \brief Returns the requested field
     ///
     /// \param name The index of the field to be returned.
     /// \retval A Field wrapper to the requested field. If not found, an
     /// instance of std::out_of_range is thrown. There is no error return
-    ORJString operator [](char const *name) const
+    String operator [](char const *name) const
     {
         ORJField const  *begin  =   &m_record->fields[0];
         ORJField const  *end    =   &m_record->fields[m_record->numFields];
-        ORJField const  *it     =   std::find_if(begin, end, match_name(name));
+        ORJField const  *it     =   ::std::find_if(begin, end, match_name(name));
 
         if(it == end)
         {
-            throw std::out_of_range("Field not found");
+            throw ::std::out_of_range("Field not found");
         }
 
-        return it->value;
+        return String(it->value.ptr, it->value.len);
     }
 
     /// \brief Returns the requested field
@@ -177,7 +202,7 @@ public:
     /// \retval A Field wrapper to the requested field. If not found, an
     /// instance of std::out_of_range is thrown. There is no error return
     template <typename S>
-    ORJString operator [](S const &name) const
+    String operator [](S const &name) const
     {
         return operator [](::stlsoft::c_str_ptr(name));
     }

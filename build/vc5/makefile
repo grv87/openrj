@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 

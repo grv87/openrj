@@ -4,7 +4,7 @@
  * Purpose: Root header file for the C++ mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 18th February 2005
+ * Updated: 23rd May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MAJOR       1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       3
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    2
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        9
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       4
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    1
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        11
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,6 +62,11 @@
 
 #include <openrj/openrj.h>
 #include <openrj/openrj_assert.h>
+
+#ifndef STLSOFT_INCL_STLSOFT_HPP_STRING_ACCESS
+# include <stlsoft/string_access.hpp>
+#endif /* !STLSOFT_INCL_STLSOFT_HPP_STRING_ACCESS */
+#include <stlsoft/string_view.hpp>
 
 #include <exception>
 
@@ -87,7 +92,10 @@
 
 namespace openrj
 {
-    /// The Open-RJ C++ namespace - \c openrj::cpp
+    /// \brief The Open-RJ C++ namespace - \c openrj::cpp
+    ///
+    /// This contains the Field, Record, FileDatabase and MemoryDatabase classes,
+    /// along with the exception class DatabaseException
     namespace cpp
     {
         class Field;
@@ -95,6 +103,7 @@ namespace openrj
         class DatabaseBase;
         class FileDatabase;
         class MemoryDatabase;
+        typedef ::stlsoft::basic_string_view<char>  String;
 
 #if !defined(ORJ_NO_EXCEPTIONS)
         /// \brief The exception type thrown by the Open-RJ - C++ mapping
@@ -105,7 +114,7 @@ namespace openrj
             /// \brief Construct from result code and error structure
             ///
             /// \param rc The \link #ORJRC result code \endlink reflecting the error condition
-            /// \param error The \link #openrj::ORJError error structure \endlink associated with a parsing error
+            /// \param error The error structure (ORJError) associated with a parsing error
             DatabaseException(ORJRC rc, ORJError const &error)
                 : m_rc(rc)
                 , m_error(error)

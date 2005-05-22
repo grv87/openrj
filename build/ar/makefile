@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	3rd March 2005
+# Updated:	26th March 2005
 #
 ################################################################################
 
@@ -273,7 +273,7 @@ test:	target test_
 
 $(TARGET_LIB_DEBUG): $(OBJ_PROJ_DEBUG) makefile
 	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
-	$(AR) $(AR_ARGS) -o $@ $(OBJ_PROJ_DEBUG)
+	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_DEBUG)
 
 $(OBJ_PROJ_orjapi__DEBUG): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
 	$(CC) $(CC_ARGS_DEBUG) --output-path=$@ $(PROJ_SRC_DIR)\orjapi.c
@@ -284,7 +284,7 @@ $(OBJ_PROJ_orjstr__DEBUG): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
 
 $(TARGET_LIB_RELEASE): $(OBJ_PROJ_RELEASE) makefile
 	@-if not exist $(PROJ_LIB_DIR)\NUL mkdir $(PROJ_LIB_DIR)
-	$(AR) $(AR_ARGS) -o $@ $(OBJ_PROJ_RELEASE)
+	$(AR) $(AR_ARGS) $@ $(OBJ_PROJ_RELEASE)
 
 $(OBJ_PROJ_orjapi__RELEASE): $(PROJ_SRC_DIR)\orjapi.c $(LIB_HEADERS) makefile
 	$(CC) $(CC_ARGS_RELEASE) --output-path=$@ $(PROJ_SRC_DIR)\orjapi.c

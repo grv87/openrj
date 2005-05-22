@@ -5,7 +5,7 @@
  *          Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 3rd March 2005
+ * Updated: 5th April 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       6
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    7
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        28
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    8
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        29
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -269,7 +269,7 @@ public:
     /// \param flags Combination of the \link #ORJ_FLAG ORJ_FLAG \endlink enumeration
     template <typename S>
     explicit memory_database(S const &contents, unsigned flags = 0)
-        : parent_class_type(create_database_(::stlsoft::c_str_ptr(contents), ::stlsoft::c_str_len(contents), flags))
+        : parent_class_type(create_database_(::stlsoft::c_str_data(contents), ::stlsoft::c_str_len(contents), flags))
     {}
 #ifdef __STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT
     /// \brief Constructs a database instance from the given character array, and
