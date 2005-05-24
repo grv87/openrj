@@ -4,7 +4,7 @@
  * Purpose: Helper functions for use with the Open-RJ STL mapping
  *
  * Created: 2nd December 2004
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/stl/utility.hpp Helper functions for use with the Open-RJ STL mapping
+/** \file openrj/stl/utility.hpp Helper functions for use with the Open-RJ STL mapping
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_MAJOR    1
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_MINOR    0
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_REVISION 2
-# define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_EDIT     4
+# define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_EDIT     5
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

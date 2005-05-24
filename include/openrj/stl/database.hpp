@@ -5,7 +5,7 @@
  *          Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 5th April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -39,7 +39,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/stl/database.hpp file_database and memory_database classes, in the STL mapping of the Open-RJ library
+/** \file openrj/stl/database.hpp file_database and memory_database classes, in the STL mapping of the Open-RJ library
  *
  */
 
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       6
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    8
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        29
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    9
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        31
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -185,7 +185,7 @@ public:
     ///
     /// \param index The index of the record to be returned. Must be less than the
     /// value returned by size()
-    record operator [](size_t index) const;
+    const record operator [](size_t index) const;
 
 public:
     const_iterator begin() const;
@@ -522,7 +522,7 @@ inline size_t database_base::size() const
     return num_records();
 }
 
-inline record database_base::operator [](size_t index) const
+inline const record database_base::operator [](size_t index) const
 {
     openrj_assert(index <= num_records());
 

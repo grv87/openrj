@@ -4,7 +4,7 @@
  * Purpose: Root header file for the C++ mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/cpp/openrj.hpp This is the root file of the Open-RJ C++ -API
+/** \file openrj/cpp/openrj.hpp This is the root file of the Open-RJ C++ -API
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       4
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        11
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        13
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@
 
 namespace openrj
 {
-    /// \brief The Open-RJ C++ namespace - \c openrj::cpp
+    /// \brief The Open-RJ/C++ namespace - \c openrj::cpp
     ///
     /// This contains the Field, Record, FileDatabase and MemoryDatabase classes,
     /// along with the exception class DatabaseException
@@ -103,6 +103,11 @@ namespace openrj
         class DatabaseBase;
         class FileDatabase;
         class MemoryDatabase;
+        /// \brief Presents a standard string-like interface over the ORJStringA structure
+        ///
+        /// \note It uses STLSoft's basic_string_view, which does not do any
+        /// allocation, rather it uses the underlying storage. Therefore, you should not use
+        /// any String copies from a given database once that database instance is destroyed.
         typedef ::stlsoft::basic_string_view<char>  String;
 
 #if !defined(ORJ_NO_EXCEPTIONS)
@@ -133,6 +138,7 @@ namespace openrj
             }
 
         public:
+            /// C-string form of the exception
             char const  *what() const throw()
             {
                 if(ORJ_RC_PARSEERROR == m_rc)

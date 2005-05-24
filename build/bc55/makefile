@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	26th March 2005
+# Updated:	25th May 2005
 #
 ################################################################################
 
@@ -100,14 +100,18 @@ TARGET_LIB_ST_R			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).lib
 
 
 # test programs
-TARGET_TEST_C_ST_D		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).debug.exe
-TARGET_TEST_C_ST_R		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).exe
+TARGET_TEST_C_FULL_ST_D			=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_full.$(COMP_TAG).debug.exe
+TARGET_TEST_C_SIMPLE_ST_D		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_simple.$(COMP_TAG).debug.exe
+TARGET_TEST_C_FULL_ST_R			=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_full.$(COMP_TAG).exe
+TARGET_TEST_C_SIMPLE_ST_R		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_simple.$(COMP_TAG).exe
 
 TARGETS = \
  $(TARGET_LIB_ST_D) \
  $(TARGET_LIB_ST_R) \
- $(TARGET_TEST_C_ST_D) \
- $(TARGET_TEST_C_ST_R) \
+ $(TARGET_TEST_C_FULL_ST_D) \
+ $(TARGET_TEST_C_SIMPLE_ST_D) \
+ $(TARGET_TEST_C_FULL_ST_R) \
+ $(TARGET_TEST_C_SIMPLE_ST_R) \
  \
 
 # objects
@@ -155,12 +159,16 @@ LIB_OBJS = \
 
 # for test programs
 
-OBJ_C_ST_D					=	.\C.debug.obj
-OBJ_C_ST_R					=	.\C.obj
+OBJ_C_FULL_ST_D				=	.\C_full.debug.obj
+OBJ_C_SIMPLE_ST_D			=	.\C_simple.debug.obj
+OBJ_C_FULL_ST_R				=	.\C_full.obj
+OBJ_C_SIMPLE_ST_R			=	.\C_simple.obj
 
 TEST_OBJS = \
- $(OBJ_C_ST_D) \
- $(OBJ_C_ST_R) \
+ $(OBJ_C_FULL_ST_D) \
+ $(OBJ_C_SIMPLE_ST_D) \
+ $(OBJ_C_FULL_ST_R) \
+ $(OBJ_C_SIMPLE_ST_R) \
  \
 
 
@@ -209,16 +217,22 @@ usage:
 clean:
 	@-$(RM) $(TARGET_LIB_ST_D)
 	@-$(RM) $(TARGET_LIB_ST_R)
-	@-$(RM) $(TARGET_TEST_C_ST_D)
-	@-$(RM) $(TARGET_TEST_C_ST_R)
+	@-$(RM) $(TARGET_TEST_C_FULL_ST_D)
+	@-$(RM) $(TARGET_TEST_C_SIMPLE_ST_D)
+	@-$(RM) $(TARGET_TEST_C_FULL_ST_R)
+	@-$(RM) $(TARGET_TEST_C_SIMPLE_ST_R)
 	@-$(RM) $(OBJ_PROJ_ST_D)
 	@-$(RM) $(OBJ_PROJ_ST_R)
-	@-$(RM) $(OBJ_C_ST_D)
-	@-$(RM) $(OBJ_C_ST_R)
+	@-$(RM) $(OBJ_C_FULL_ST_D)
+	@-$(RM) $(OBJ_C_SIMPLE_ST_D)
+	@-$(RM) $(OBJ_C_FULL_ST_R)
+	@-$(RM) $(OBJ_C_SIMPLE_ST_R)
 
 test_:
-	$(TARGET_TEST_C_ST_D) --unittest
-	$(TARGET_TEST_C_ST_R) --unittest
+	$(TARGET_TEST_C_FULL_ST_D) --unittest
+	$(TARGET_TEST_C_SIMPLE_ST_D) --unittest
+	$(TARGET_TEST_C_FULL_ST_R) --unittest
+	$(TARGET_TEST_C_SIMPLE_ST_R) --unittest
 
 test:	target test_
 
@@ -251,23 +265,43 @@ $(OBJ_PROJ_orjstr__ST_R): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
 	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_SRC_DIR)\orjstr.c
 
 
-# C test client
+# C test clients
 
-$(TARGET_TEST_C_ST_D):	$(OBJ_C_ST_D) makefile
+# full
+$(TARGET_TEST_C_FULL_ST_D):	$(OBJ_C_FULL_ST_D) makefile
 	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
-	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_ST_D) $(TARGET_LIB_ST_D)
+	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_FULL_ST_D) $(TARGET_LIB_ST_D)
 
 
-$(OBJ_C_ST_D):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_TEST_DIR)\C\C.c
+$(OBJ_C_FULL_ST_D):	$(PROJ_TEST_DIR)\C_full\C_full.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_TEST_DIR)\C_full\C_full.c
 
-$(TARGET_TEST_C_ST_R):	$(OBJ_C_ST_R) makefile
+# minimal
+$(TARGET_TEST_C_SIMPLE_ST_D):	$(OBJ_C_SIMPLE_ST_D) makefile
 	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
-	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_ST_R) $(TARGET_LIB_ST_R)
+	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_SIMPLE_ST_D) $(TARGET_LIB_ST_D)
 
 
-$(OBJ_C_ST_R):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile
-	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_TEST_DIR)\C\C.c
+$(OBJ_C_SIMPLE_ST_D):	$(PROJ_TEST_DIR)\C_simple\C_simple.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_D) -o$@ $(PROJ_TEST_DIR)\C_simple\C_simple.c
+
+# full
+$(TARGET_TEST_C_FULL_ST_R):	$(OBJ_C_FULL_ST_R) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_FULL_ST_R) $(TARGET_LIB_ST_R)
+
+
+$(OBJ_C_FULL_ST_R):	$(PROJ_TEST_DIR)\C_full\C_full.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_TEST_DIR)\C_full\C_full.c
+
+# minimal
+$(TARGET_TEST_C_SIMPLE_ST_R):	$(OBJ_C_SIMPLE_ST_R) makefile
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -e$@ $(OBJ_C_SIMPLE_ST_R) $(TARGET_LIB_ST_R)
+
+
+$(OBJ_C_SIMPLE_ST_R):	$(PROJ_TEST_DIR)\C_simple\C_simple.c $(TEST_C_HEADERS) makefile
+	$(CC) $(CC_ARGS_ST_R) -o$@ $(PROJ_TEST_DIR)\C_simple\C_simple.c
 
 
 

@@ -4,7 +4,7 @@
  * Purpose: record class, in the STL mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 23rd April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/stl/record.hpp Record class, in the C++ mapping of the Open-RJ library
+/** \file openrj/stl/record.hpp Record class, in the C++ mapping of the Open-RJ library
  *
  */
 
@@ -52,8 +52,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MAJOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     5
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  2
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      17
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  3
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      19
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ public:
     /// value returned by size()
     ///
     /// \return The field corresponding to the given index
-    field operator [](size_t index) const;
+    const field operator [](size_t index) const;
 
     /// \brief Indicates whether the record contains one or more fields of the given name
     bool has_field(string_t const &name) const;
@@ -155,7 +155,7 @@ public:
     /// present, then an instance of std::out_of_range is thrown
     ///
     /// \return The value of the named field. There is no error return
-    string_t operator [](string_t const &name) const; // throw (std::out_of_range)
+    const string_t operator [](string_t const &name) const; // throw (std::out_of_range)
 
     /// \brief Returns the value of the first field of the given name, or the given
     /// default if none exists
@@ -486,7 +486,7 @@ inline bool record::empty() const
     return 0 == size();
 }
 
-inline field record::operator [](size_t index) const
+inline const field record::operator [](size_t index) const
 {
     openrj_assert(index <= size());
 
@@ -509,7 +509,7 @@ inline size_t record::count_fields(string_t const &name) const
 # pragma warning(disable : 4702)
 #endif /* __STLSOFT_COMPILER_IS_MSVC */
 
-inline string_t record::operator [](string_t const &name) const // throw (std::out_of_range)
+inline const string_t record::operator [](string_t const &name) const // throw (std::out_of_range)
 {
     ORJField const  *r  =   find_field_(name);
 

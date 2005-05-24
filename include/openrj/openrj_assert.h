@@ -4,7 +4,7 @@
  * Purpose: Assertions for the Open-RJ C-API
  *
  * Created: 11th June 2004
- * Updated: 8th April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,9 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/openrj_assert.h Assertions for the Open-RJ C-API
- *
- */
+/** \file openrj/openrj_assert.h Assertions for the Open-RJ C-API */
 
 #ifndef OPENRJ_INCL_H_OPENRJ_ASSERT
 #define OPENRJ_INCL_H_OPENRJ_ASSERT
@@ -53,7 +51,7 @@
 # define OPENRJ_VER_H_OPENRJ_ASSERT_MAJOR       1
 # define OPENRJ_VER_H_OPENRJ_ASSERT_MINOR       1
 # define OPENRJ_VER_H_OPENRJ_ASSERT_REVISION    2
-# define OPENRJ_VER_H_OPENRJ_ASSERT_EDIT        7
+# define OPENRJ_VER_H_OPENRJ_ASSERT_EDIT        9
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -70,10 +68,19 @@
  * Functions and macros
  */
 
+/** \def openrj_assert(expr)
+ *
+ * Evaluates the expression, and aborts the program if it evaluates to zero/false
+ *
+ * \note Resolves to an underlying assertion macro, and therefore will be
+ * inactive when the the underlying assertion macro is; usually in presence of
+ * NDEBUG or absence of _DEBUG.
+ */
+
 #if defined(_MSC_VER)
-# define openrj_assert      _ASSERTE
+# define openrj_assert(expr)	_ASSERTE(expr)
 #else /* ? compiler */
-# define openrj_assert      assert
+# define openrj_assert(expr)	assert(expr)
 #endif /* compiler */
 
 /* ////////////////////////////////////////////////////////////////////////// */

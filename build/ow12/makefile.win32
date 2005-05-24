@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	26th March 2005
+# Updated:	25th May 2005
 #
 ################################################################################
 
@@ -95,14 +95,18 @@ TARGET_LIB_ST_RELEASE			=	$(PROJ_LIB_DIR)\$(PROJ_TAG).$(COMP_TAG).lib
 
 
 # test programs
-TARGET_TEST_C_ST_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).debug.exe
-TARGET_TEST_C_ST_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C.$(COMP_TAG).exe
+TARGET_TEST_C_FULL_ST_DEBUG			=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_full.$(COMP_TAG).debug.exe
+TARGET_TEST_C_SIMPLE_ST_DEBUG		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_simple.$(COMP_TAG).debug.exe
+TARGET_TEST_C_FULL_ST_RELEASE			=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_full.$(COMP_TAG).exe
+TARGET_TEST_C_SIMPLE_ST_RELEASE		=	$(PROJ_BIN_DIR)\$(PROJ_TAG).test.C_simple.$(COMP_TAG).exe
 
 TARGETS = \
  $(TARGET_LIB_ST_DEBUG) \
  $(TARGET_LIB_ST_RELEASE) \
- $(TARGET_TEST_C_ST_DEBUG) \
- $(TARGET_TEST_C_ST_RELEASE) \
+ $(TARGET_TEST_C_FULL_ST_DEBUG) \
+ $(TARGET_TEST_C_SIMPLE_ST_DEBUG) \
+ $(TARGET_TEST_C_FULL_ST_RELEASE) \
+ $(TARGET_TEST_C_SIMPLE_ST_RELEASE) \
  \
 
 # objects
@@ -150,12 +154,16 @@ LIB_OBJS = \
 
 # for test programs
 
-OBJ_C_ST_DEBUG					=	.\C.debug.obj
-OBJ_C_ST_RELEASE					=	.\C.obj
+OBJ_C_FULL_ST_DEBUG				=	.\C_full.debug.obj
+OBJ_C_SIMPLE_ST_DEBUG			=	.\C_simple.debug.obj
+OBJ_C_FULL_ST_RELEASE				=	.\C_full.obj
+OBJ_C_SIMPLE_ST_RELEASE			=	.\C_simple.obj
 
 TEST_OBJS = \
- $(OBJ_C_ST_DEBUG) \
- $(OBJ_C_ST_RELEASE) \
+ $(OBJ_C_FULL_ST_DEBUG) \
+ $(OBJ_C_SIMPLE_ST_DEBUG) \
+ $(OBJ_C_FULL_ST_RELEASE) \
+ $(OBJ_C_SIMPLE_ST_RELEASE) \
  \
 
 
@@ -204,16 +212,22 @@ usage:
 clean:
 	@-$(RM) $(TARGET_LIB_ST_DEBUG)
 	@-$(RM) $(TARGET_LIB_ST_RELEASE)
-	@-$(RM) $(TARGET_TEST_C_ST_DEBUG)
-	@-$(RM) $(TARGET_TEST_C_ST_RELEASE)
+	@-$(RM) $(TARGET_TEST_C_FULL_ST_DEBUG)
+	@-$(RM) $(TARGET_TEST_C_SIMPLE_ST_DEBUG)
+	@-$(RM) $(TARGET_TEST_C_FULL_ST_RELEASE)
+	@-$(RM) $(TARGET_TEST_C_SIMPLE_ST_RELEASE)
 	@-$(RM) $(OBJ_PROJ_ST_DEBUG)
 	@-$(RM) $(OBJ_PROJ_ST_RELEASE)
-	@-$(RM) $(OBJ_C_ST_DEBUG)
-	@-$(RM) $(OBJ_C_ST_RELEASE)
+	@-$(RM) $(OBJ_C_FULL_ST_DEBUG)
+	@-$(RM) $(OBJ_C_SIMPLE_ST_DEBUG)
+	@-$(RM) $(OBJ_C_FULL_ST_RELEASE)
+	@-$(RM) $(OBJ_C_SIMPLE_ST_RELEASE)
 
 test_:
-	$(TARGET_TEST_C_ST_DEBUG) --unittest
-	$(TARGET_TEST_C_ST_RELEASE) --unittest
+	$(TARGET_TEST_C_FULL_ST_DEBUG) --unittest
+	$(TARGET_TEST_C_SIMPLE_ST_DEBUG) --unittest
+	$(TARGET_TEST_C_FULL_ST_RELEASE) --unittest
+	$(TARGET_TEST_C_SIMPLE_ST_RELEASE) --unittest
 
 test:	target test_
 
@@ -246,23 +260,43 @@ $(OBJ_PROJ_orjstr__ST_RELEASE): $(PROJ_SRC_DIR)\orjstr.c $(LIB_HEADERS) makefile
 	$(CC) $(CC_ARGS_ST_RELEASE) -fo=$@ $(PROJ_SRC_DIR)\orjstr.c
 
 
-# C test client
+# C test clients
 
-$(TARGET_TEST_C_ST_DEBUG):	$(OBJ_C_ST_DEBUG) makefile.win32
+# full
+$(TARGET_TEST_C_FULL_ST_DEBUG):	$(OBJ_C_FULL_ST_DEBUG) makefile.win32
 	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
-	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
+	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_FULL_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
 
 
-$(OBJ_C_ST_DEBUG):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile.win32
-	$(CC) $(CC_ARGS_ST_DEBUG) -fo=$@ $(PROJ_TEST_DIR)\C\C.c
+$(OBJ_C_FULL_ST_DEBUG):	$(PROJ_TEST_DIR)\C_full\C_full.c $(TEST_C_HEADERS) makefile.win32
+	$(CC) $(CC_ARGS_ST_DEBUG) -fo=$@ $(PROJ_TEST_DIR)\C_full\C_full.c
 
-$(TARGET_TEST_C_ST_RELEASE):	$(OBJ_C_ST_RELEASE) makefile.win32
+# minimal
+$(TARGET_TEST_C_SIMPLE_ST_DEBUG):	$(OBJ_C_SIMPLE_ST_DEBUG) makefile.win32
 	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
-	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_SIMPLE_ST_DEBUG) $(TARGET_LIB_ST_DEBUG)
 
 
-$(OBJ_C_ST_RELEASE):	$(PROJ_TEST_DIR)\C\C.c $(TEST_C_HEADERS) makefile.win32
-	$(CC) $(CC_ARGS_ST_RELEASE) -fo=$@ $(PROJ_TEST_DIR)\C\C.c
+$(OBJ_C_SIMPLE_ST_DEBUG):	$(PROJ_TEST_DIR)\C_simple\C_simple.c $(TEST_C_HEADERS) makefile.win32
+	$(CC) $(CC_ARGS_ST_DEBUG) -fo=$@ $(PROJ_TEST_DIR)\C_simple\C_simple.c
+
+# full
+$(TARGET_TEST_C_FULL_ST_RELEASE):	$(OBJ_C_FULL_ST_RELEASE) makefile.win32
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_FULL_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+
+
+$(OBJ_C_FULL_ST_RELEASE):	$(PROJ_TEST_DIR)\C_full\C_full.c $(TEST_C_HEADERS) makefile.win32
+	$(CC) $(CC_ARGS_ST_RELEASE) -fo=$@ $(PROJ_TEST_DIR)\C_full\C_full.c
+
+# minimal
+$(TARGET_TEST_C_SIMPLE_ST_RELEASE):	$(OBJ_C_SIMPLE_ST_RELEASE) makefile.win32
+	@-if not exist $(PROJ_BIN_DIR)\NUL mkdir $(PROJ_BIN_DIR)
+	$(LD) $(LD_ARGS) -fe=$@ $(OBJ_C_SIMPLE_ST_RELEASE) $(TARGET_LIB_ST_RELEASE)
+
+
+$(OBJ_C_SIMPLE_ST_RELEASE):	$(PROJ_TEST_DIR)\C_simple\C_simple.c $(TEST_C_HEADERS) makefile.win32
+	$(CC) $(CC_ARGS_ST_RELEASE) -fo=$@ $(PROJ_TEST_DIR)\C_simple\C_simple.c
 
 
 

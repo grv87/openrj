@@ -4,7 +4,7 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 22nd April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/cpp/record.hpp Record class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/record.hpp Record class, in the C++ mapping of the Open-RJ library
  *
  */
 
@@ -52,8 +52,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       6
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        13
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    2
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        15
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,6 +62,12 @@
 
 #include <openrj/cpp/openrj.hpp>
 #include <openrj/cpp/field.hpp>
+
+#include <stlsoft.h>
+#ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
+# include <stlsoft/meta.hpp>
+# include <stlsoft/meta/yesno.hpp>
+#endif /* __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
 
 #include <algorithm>
 #include <stdexcept>
@@ -129,7 +135,19 @@ public:
     ///
     /// \param index The index of the field to be returned. Must be less than the
     /// value returned by GetNumFields()
-    Field operator [](size_t index) const
+    ///
+    /// \note The return type is const, to prevent confusing semantics such
+    /// as
+    /// \htmlonly
+    /// <pre>
+    /// 
+    /// Record record = . . .;
+    ///
+    /// record[0] = record[1]; // Doesn't have any effect!!
+    /// 
+    /// </pre>
+    /// \endhtmlonly
+    const Field operator [](size_t index) const
     {
         openrj_assert(index <= GetNumFields());
 
@@ -182,6 +200,18 @@ public:
     /// \param name The index of the field to be returned.
     /// \retval A Field wrapper to the requested field. If not found, an
     /// instance of std::out_of_range is thrown. There is no error return
+    ///
+    /// \note The return type is const, to prevent confusing semantics such
+    /// as
+    /// \htmlonly
+    /// <pre>
+    /// 
+    /// Record record = . . .;
+    ///
+    /// record["Channel"] = record["Port"]; // Doesn't have any effect!!
+    /// 
+    /// </pre>
+    /// \endhtmlonly
     String operator [](char const *name) const
     {
         ORJField const  *begin  =   &m_record->fields[0];
@@ -196,16 +226,55 @@ public:
         return String(it->value.ptr, it->value.len);
     }
 
+
+# ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
+    template <typename S>
+    String subscript_operator_(S const &name, stlsoft::no_type) const
+    {
+        return operator [](::stlsoft::c_str_ptr(name));
+    }
+
+    template <typename I>
+    Field subscript_operator_(I const &index, stlsoft::yes_type) const
+    {
+        return operator [](static_cast<size_t>(index));
+    }
+
     /// \brief Returns the requested field
     ///
     /// \param name The index of the field to be returned.
     /// \retval A Field wrapper to the requested field. If not found, an
     /// instance of std::out_of_range is thrown. There is no error return
     template <typename S>
-    String operator [](S const &name) const
+    typename stlsoft::select_first_type<Field, String, stlsoft::is_integral_type<S>::value>::type operator [](S const &name) const
+    {
+        typedef typename stlsoft::is_integral_type<S>::type     yesno_type;
+
+        return subscript_operator_(name, yesno_type());
+    }
+# else /* ? __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
+    /// \brief Returns the requested field
+    ///
+    /// \param name The index of the field to be returned.
+    /// \retval A Field wrapper to the requested field. If not found, an
+    /// instance of std::out_of_range is thrown. There is no error return
+    template <typename S>
+    typename String operator [](S const &name) const
     {
         return operator [](::stlsoft::c_str_ptr(name));
     }
+
+#  ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+    const Field operator [](int index) const
+    {
+        return operator [](static_cast<size_t>(index));
+    }
+//    const Field operator [](long index) const
+//    {
+//        return operator [](static_cast<size_t>(index));
+//    }
+#  endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+# endif /* !__STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
 #endif /* !ORJ_NO_EXCEPTIONS */
 
 // Implementation

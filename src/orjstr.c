@@ -4,7 +4,7 @@
  * Purpose: Provides (English) string mappings for errors
  *
  * Created: 26th July 2004
- * Updated: 7th April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file orjstr.c Provides (English) string mappings for errors
+/** \file orjstr.c Provides (English) string mappings for errors
  *
  */
 
@@ -50,7 +50,7 @@
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
 # define OPENRJ_VER_C_ORJMEM_MINOR      1
 # define OPENRJ_VER_C_ORJMEM_REVISION   1
-# define OPENRJ_VER_C_ORJMEM_EDIT       7
+# define OPENRJ_VER_C_ORJMEM_EDIT       8
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

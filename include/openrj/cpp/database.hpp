@@ -4,7 +4,7 @@
  * Purpose: Database class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 12th April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/cpp/database.hpp Database class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/database.hpp Database class, in the C++ mapping of the Open-RJ library
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MAJOR     1
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MINOR     6
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      17
+# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      18
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

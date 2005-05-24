@@ -4,7 +4,7 @@
  * Purpose: DatabaseBase class, in the C++ mapping of the Open-RJ library
  *
  * Created: 12th April 2005
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/cpp/databasebase.hpp DatabaseBase class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/databasebase.hpp DatabaseBase class, in the C++ mapping of the Open-RJ library
  *
  */
 
@@ -52,8 +52,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MINOR       0
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        4
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -161,7 +161,7 @@ public:
     ///
     /// \param index The index of the record to be returned. Must be less than the
     /// value returned by GetNumRecords()
-    Record operator [](size_t index) const
+    const Record operator [](size_t index) const
     {
         openrj_assert(index <= GetNumRecords());
 
