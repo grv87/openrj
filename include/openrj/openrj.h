@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    openrj.h
+ * File:    openrj/openrj.h
  *
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/openrj.h This is the root file of the Open-RJ C-API
+/** \file openrj/openrj.h This is the root file of the Open-RJ C-API
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_H_OPENRJ_MAJOR      1
 # define OPENRJ_VER_H_OPENRJ_MINOR      13
 # define OPENRJ_VER_H_OPENRJ_REVISION   1
-# define OPENRJ_VER_H_OPENRJ_EDIT       40
+# define OPENRJ_VER_H_OPENRJ_EDIT       42
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -79,13 +79,14 @@
 # define OPENRJ_VER_1_2_1       0x01020100
 # define OPENRJ_VER_1_2_2       0x01020200
 # define OPENRJ_VER_1_3_1       0x01030100
+# define OPENRJ_VER_1_3_2       0x01030200
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
 #define OPENRJ_VER_MINOR    3
-#define OPENRJ_VER_REVISION 1
+#define OPENRJ_VER_REVISION 2
 
-#define OPENRJ_VER  OPENRJ_VER_1_3_1
+#define OPENRJ_VER  OPENRJ_VER_1_3_2
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -99,49 +100,30 @@
 
 /** \mainpage What is Open-RJ?
  *
+ * \htmlonly
+ <table width = "100%"><tr><td align="center">
+ * \endhtmlonly
+ * \ref section_what_is_openrj "Intro" | \ref section_format |
+ * \ref page_gettingstarted "Getting Started"
+ * \htmlonly
+ </td></tr></table>
+ * \endhtmlonly
+ *
+ * \section section_what_is_openrj What is Open-RJ?
+ *
  * This is a simple library to support the Record-Jar format (so named in the
  * excellent
  * <a href = "http://awprofessional.com/title/0131429019">The Art Of UNIX Programming</a>),
  * which is a simple, loosely structured format supporting multiple records
  * with variable fields.
  *
+ * \section section_format The Open-RJ format
+ *
  * Each \c ORJFieldA field is a name value pair, where the
  * name is the whitespace-trimmed leftmost portion of the line, preceeding the
  * colon separator. The value is the white-space trimmed remainder of the line.
  * Values may extend over multiple lines by use the the \c \
  * line continuation character.
- * The format looks like the following:
- *
-\htmlonly
-<table align = "center">
-<tr><td><font face="courier">%% Books data</font></td><td><font face="courier">&nbsp;</font></td></tr>
-<tr><td><font face="courier">%% Created: 28th June 2004</font></td></tr>
-<tr><td><font face="courier">%% Updated: 29th June 2004</font></td></tr>
-<tr><td><font face="courier">Author:</font></td><td><font face="courier">Donald E. Knuth</font></td></tr>
-<tr><td><font face="courier">Title:</font></td><td><font face="courier">Art of Computer Programming, The, Volume 1: Fundamental Algorithms</font></td></tr>
-<tr><td><font face="courier">Publisher:</font></td><td><font face="courier">Addison-Wesley</font></td></tr>
-<tr><td><font face="courier">&nbsp;</font></td><td><font face="courier">&nbsp;</font></td></tr>
-<tr><td><font face="courier">Year:</font></td><td><font face="courier">1997</font></td></tr>
-<tr><td><font face="courier">Description:</font></td><td><font face="courier"></font></td></tr>
-<tr><td><font face="courier">%%</font></td><td><font face="courier">&nbsp;</font></td></tr>
-<tr><td><font face="courier">Author:</font></td><td><font face="courier">Eric Raymond</font></td></tr>
-<tr><td><font face="courier">Title:</font></td><td><font face="courier">Art of UNIX Programming, The </font></td></tr>
-<tr><td><font face="courier">Url:</font></td><td><font face="courier">http://www.awprofessional.com/title/0131429019</font></td></tr>
-<tr><td><font face="courier">Publisher:</font></td><td><font face="courier">Addison-Wesley</font></td></tr>
-<tr><td><font face="courier">Year:</font></td><td><font face="courier">2003</font></td></tr>
-<tr><td><font face="courier">Description:</font></td><td><font face="courier">This is a great book if you want to learn about the history of UNIX. It \</font></td></tr>
-<tr><td><font face="courier">&nbsp;</font></td><td><font face="courier">inspired the &lt;a href = "../libraries/index.html#openrj">Open-RJ&lt;/a> project</font></td></tr>
-<tr><td><font face="courier">%%</font></td><td><font face="courier">&nbsp;</font></td></tr>
-<tr><td><font face="courier">Author:</font></td><td><font face="courier">Rector and Sells</font></td></tr>
-<tr><td><font face="courier">Title:</font></td><td><font face="courier">ATL Internals</font></td></tr>
-<tr><td><font face="courier">Publisher:</font></td><td><font face="courier">Addison-Wesley</font></td></tr>
-<tr><td><font face="courier">Year:</font></td><td><font face="courier">1999</font></td></tr>
-<tr><td><font face="courier">Description:</font></td><td><font face="courier"></font></td></tr>
-<tr><td><font face="courier">%%</font></td><td><font face="courier">&nbsp;</font></td></tr>
-</table>
-\endhtmlonly
-
- *
  *
  * It has the following features:
  *
@@ -150,6 +132,56 @@
  * - \c \ continues the line onto the next
  * - whitespace is trimmed from the beginning and end of all lines, except prior to the
  *    line continuation character
+ * - there is no requirement for records to have the same number of fields, or fields
+ *   with the same names
+ * - records may contain more than one field with the same name
+ *
+ * The format looks like the following:
+ *
+ * \htmlonly
+ * <pre>
+ *     %% Books data 
+ *     %% Created:   28th June 2004
+ *     %% Updated:   29th June 2004
+ *     Author:       Donald E. Knuth
+ *     Title:        Art of Computer Programming, The, Volume 1: Fundamental Algorithms
+ *     Publisher:    Addison-Wesley
+ *     Year:         1997
+ *     Description:
+ *     %% 
+ *     Author:       Eric Raymond
+ *     Title:        Art of UNIX Programming, The 
+ *     Url:          http://www.awprofessional.com/title/0131429019
+ *     Publisher:    Addison-Wesley
+ *     Year:         2003
+ *     Description:  This is a great book if you want to learn about the \
+ *                   history of UNIX. It inspired the \
+ *                   &lt;a href = "../libraries/index.html#openrj">Open-RJ&lt;/a> project
+ *     %% 
+ *     Author:       Rector and Sells
+ *     Title:        ATL Internals
+ *     Publisher:    Addison-Wesley
+ *     Year:         1999
+ *     Description:
+ *     %% 
+ * </pre>
+ * \endhtmlonly
+ *
+ * Hence, the value of the <b>Description</b> field in the second non-empty record (which
+ * is the fifth record of any type), is 
+ *
+ * <b>This is a great book if you want to learn about the history of UNIX. It inspired the &lt;a href = "../libraries/index.html#openrj">Open-RJ&lt;/a> project</b>
+ *
+ *
+ * \section section_mainpage_gettingstarted Getting Started
+ * 
+ * This section guides you to finding sample programs for your chosed language.
+ * Just click on the language below, to be taken to the example programs:
+ *
+ * \ref section_sample_C | \ref section_sample_Ch |
+ * \ref section_sample_Cpp | \ref section_sample_Python | 
+ * \ref section_sample_Ruby
+ *
  */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -180,12 +212,13 @@ namespace openrj
 # define OPENRJ_NO_STRUCT_TAG_PREFIX
 #endif /* OPENRJ_DOCUMENTATION_SKIP_SECTION || _CH_ */
 
-#if defined(OPENRJ_DOCUMENTATION_SKIP_SECTION) || \
-    defined(OPENRJ_NO_STRUCT_TAG_PREFIX)
-# define ORJ_TAG_NAME(x)                    x
-#else /* ? OPENRJ_NO_STRUCT_TAG_PREFIX */
-# define ORJ_TAG_NAME(x)                    tag ## x
-#endif /* OPENRJ_NO_STRUCT_TAG_PREFIX */
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# if defined(OPENRJ_NO_STRUCT_TAG_PREFIX)
+#  define ORJ_TAG_NAME(x)                   x
+# else /* ? OPENRJ_NO_STRUCT_TAG_PREFIX */
+#  define ORJ_TAG_NAME(x)                   tag ## x
+# endif /* OPENRJ_NO_STRUCT_TAG_PREFIX */
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* OPENRJ_NO_STDIO */
 
@@ -208,18 +241,27 @@ LOAD_CHDL_CODE(openrjch, OpenRJ)
  * Types
  */
 
-typedef unsigned char   orj_byte_t;
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+typedef unsigned char           orj_byte_t;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
-typedef char            orj_char_t;
+/** Character type used by Open-RJ
+ *
+ * \note As of the current implementation, this is always defined to char
+ */
+typedef char                    orj_char_t;
 /* typedef wchar_t           orj_char_t; */
 
-#ifdef __cplusplus
-# define ORJ_EXTERN_C_  extern "C"
-#else /* ? __cplusplus */
-# define ORJ_EXTERN_C_  extern
-#endif /* !__cplusplus */
-#define ORJ_CALL(rt)    ORJ_EXTERN_C_ rt
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 
+# ifdef __cplusplus
+#  define ORJ_EXTERN_C_         extern "C"
+# else /* ? __cplusplus */
+#  define ORJ_EXTERN_C_         extern
+# endif /* !__cplusplus */
+# define ORJ_CALL(rt)           ORJ_EXTERN_C_ rt
+
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \brief The flags passed to the database creation functions
  */
@@ -232,7 +274,9 @@ enum ORJ_TAG_NAME(ORJ_FLAG)
     ,   ELIDE_BLANK_RECORDS         =   ORJ_FLAG_ELIDEBLANKRECORDS
 #endif /* __cplusplus */
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef enum ORJ_TAG_NAME(ORJ_FLAG)         ORJ_FLAG;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \brief The return code type of the Open-RJ API
  */
@@ -250,7 +294,9 @@ enum ORJ_TAG_NAME(ORJRC)
     ,   ORJ_RC_INVALIDCONTENT                   /*!< The database file contained invalid content                */
 /*[OPENRJ:Errors-end]*/
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef enum ORJ_TAG_NAME(ORJRC)            ORJRC;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \brief Parsing error constants
  */
@@ -264,7 +310,9 @@ enum ORJ_TAG_NAME(ORJ_PARSE_ERROR)
     ,   ORJ_PARSE_UNFINISHEDRECORD              /*!< The last record in the database file was not terminated by a record separator  */
 /*[OPENRJ:ParseErrors-end]*/
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef enum ORJ_TAG_NAME(ORJ_PARSE_ERROR)  ORJ_PARSE_ERROR;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 
 /** \brief Allocator interface for Open-RJ
@@ -278,16 +326,20 @@ struct ORJ_TAG_NAME(IORJAllocator)
     /** Defines the "member" function for freeing memory */
     void (*pfnFree)(struct ORJ_TAG_NAME(IORJAllocator) *ator, void *pv);
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef struct ORJ_TAG_NAME(IORJAllocator)  IORJAllocator;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \brief The string type (for ANSI coding)
  */
 struct ORJ_TAG_NAME(ORJStringA)
 {
-    size_t      len;        /*!< The number of characters in the string     */
-    char const  *ptr;       /*!< Pointer to the first element in the string */
+    size_t      len;        /*!< \brief The number of characters in the string     */
+    char const  *ptr;       /*!< \brief Pointer to the first element in the string */
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef struct ORJ_TAG_NAME(ORJStringA)     ORJStringA;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 typedef ORJStringA                          ORJString;
 /* typedef ORJStringW                         ORJString; */
@@ -300,13 +352,15 @@ typedef ORJStringA                          ORJString;
  */
 struct ORJ_TAG_NAME(ORJFieldA)
 {
-    size_t      mbz0;       /*!< Reserved: must be 0 */
-    ORJStringA  name;       /*!< The field name */
-    ORJStringA  value;      /*!< The field value */
-    void        *reserved0; /*!< Reserved. Cannot be used by client code */
+    size_t      mbz0;       /*!< \brief Reserved: must be 0 */
+    ORJStringA  name;       /*!< \brief The field name */
+    ORJStringA  value;      /*!< \brief The field value */
+    void        *reserved0; /*!< \brief Reserved: cannot be used by client code */
 
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef struct ORJ_TAG_NAME(ORJFieldA)      ORJFieldA;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 typedef ORJFieldA                           ORJField;
 /* typedef ORJFieldW                          ORJField; */
@@ -320,14 +374,16 @@ typedef ORJFieldA                           ORJField;
 
 struct ORJ_TAG_NAME(ORJRecordA)
 {
-    size_t      mbz0;       /*!< Reserved: must be 0 */
-    size_t      numFields;  /*!< The number of fields in the record */
-    ORJFieldA   *fields;    /*!< The field array */
-    void        *reserved0; /*!< Reserved. Cannot be used by client code */
-    ORJStringA  comment;    /*!< The record comment */
+    size_t      mbz0;       /*!< \brief Reserved: must be 0 */
+    size_t      numFields;  /*!< \brief The number of fields in the record */
+    ORJFieldA   *fields;    /*!< \brief The field array */
+    void        *reserved0; /*!< \brief Reserved: cannot be used by client code */
+    ORJStringA  comment;    /*!< \brief The record comment */
 
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef struct ORJ_TAG_NAME(ORJRecordA)     ORJRecordA;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 typedef ORJRecordA                          ORJRecord;
 /* typedef ORJRecordW                         ORJRecord; */
@@ -342,17 +398,19 @@ typedef ORJRecordA                          ORJRecord;
 
 struct ORJ_TAG_NAME(ORJDatabaseA)
 {
-    size_t          mbz0;       /*!< Reserved: must be 0 */
-    size_t          flags;      /*!< Holds the flags passed to the function used to create the database */
-    size_t          numLines;   /*!< The number of lines in the database */
-    size_t          numFields;  /*!< The number of fields in the database */
-    ORJFieldA       *fields;    /*!< The record array */
-    size_t          numRecords; /*!< The number of records in the database */
-    ORJRecordA      *records;   /*!< The record array */
-    IORJAllocator   *ator;      /*!< The allocator */
+    size_t          mbz0;       /*!< \brief Reserved: must be 0 */
+    size_t          flags;      /*!< \brief Holds the flags passed to the function used to create the database */
+    size_t          numLines;   /*!< \brief The number of lines in the database */
+    size_t          numFields;  /*!< \brief The number of fields in the database */
+    ORJFieldA       *fields;    /*!< \brief The record array */
+    size_t          numRecords; /*!< \brief The number of records in the database */
+    ORJRecordA      *records;   /*!< \brief The record array */
+    IORJAllocator   *ator;      /*!< \brief The allocator */
 
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef struct ORJ_TAG_NAME(ORJDatabaseA)   ORJDatabaseA;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 typedef ORJDatabaseA                        ORJDatabase;
 /* typedef ORJDatabaseW                       ORJDatabase; */
@@ -362,12 +420,14 @@ typedef ORJDatabaseA                        ORJDatabase;
 
 struct ORJ_TAG_NAME(ORJError)
 {
-    size_t          reserved0;      /*!< Reserved: must not be accessed                         */
-    unsigned        invalidLine;    /*!< The line on which the parsing error was encountered    */
-    unsigned        invalidColumn;  /*!< The column on which the parsing error was encountered  */
-    ORJ_PARSE_ERROR parseError;     /*!< The type of the parsing error                          */
+    size_t          reserved0;      /*!< \brief Reserved: must not be accessed                         */
+    unsigned        invalidLine;    /*!< \brief The line on which the parsing error was encountered    */
+    unsigned        invalidColumn;  /*!< \brief The column on which the parsing error was encountered  */
+    ORJ_PARSE_ERROR parseError;     /*!< \brief The type of the parsing error                          */
 };
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 typedef struct ORJ_TAG_NAME(ORJError)       ORJError;
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * API
@@ -465,6 +525,10 @@ ORJ_CALL(ORJRC) ORJ_Database_GetRecordA(/* [in] */ ORJDatabaseA const   *databas
 
 /** \name Record manipulation functions
  *
+ * These functions may be used instead of direct manipulation of the data
+ * structures, which may be necessary when mapping the API to other languages
+ * which can only deal in opaque values and function calls (e.g. JNI).
+ *
  * \ingroup group_openrj
  */
 /** @{ */
@@ -521,6 +585,10 @@ ORJ_CALL(ORJRC) ORJ_Record_GetCommentA(     /* [in] */ ORJRecordA const *record
  */
 
 /** \name Field manipulation functions
+ *
+ * These functions may be used instead of direct manipulation of the data
+ * structures, which may be necessary when mapping the API to other languages
+ * which can only deal in opaque values and function calls (e.g. JNI).
  *
  * \ingroup group_openrj
  */
@@ -657,6 +725,10 @@ inline size_t ORJ_Record_GetNumFieldsA_(/* [in] */ ORJRecordA const *record)
 
 #ifdef __cplusplus
 # ifndef OPENRJ_NO_FILE_HANDLING
+/** \brief Reads the records from the given file into an Open-RJ databsae
+ *
+ * \note An inline wrapper for ORJ_ReadDatabaseA()
+ */
 inline ORJRC ORJ_ReadDatabase(  /* [in] */ orj_char_t const     *jarName
                             ,   /* [in] */ IORJAllocator        *ator
                             ,   /* [in] */ unsigned             flags
@@ -666,6 +738,10 @@ inline ORJRC ORJ_ReadDatabase(  /* [in] */ orj_char_t const     *jarName
     return ORJ_ReadDatabaseA(jarName, ator, flags, pdatabase, error);
 }
 # endif /* !OPENRJ_NO_FILE_HANDLING */
+/** \brief Reads the records from the memory block into an Open-RJ databsae
+ *
+ * \note An inline wrapper for ORJ_CreateDatabaseFromMemoryA()
+ */
 inline ORJRC ORJ_CreateDatabaseFromMemory(  /* [in] */ orj_char_t const     *contents
                                         ,   /* [in] */ size_t               cbContents
                                         ,   /* [in] */ IORJAllocator        *ator
@@ -675,6 +751,11 @@ inline ORJRC ORJ_CreateDatabaseFromMemory(  /* [in] */ orj_char_t const     *con
 {
     return ORJ_CreateDatabaseFromMemoryA(contents, cbContents, ator, flags, pdatabase, error);
 }
+
+/** \brief Frees the resources associated with the database
+ *
+ * \note An inline wrapper for ORJ_FreeDatabaseA()
+ */
 inline ORJRC ORJ_FreeDatabase(/* [in] */ ORJDatabase const *database)
 {
     return ORJ_FreeDatabaseA(database);
@@ -693,21 +774,140 @@ inline ORJRC ORJ_FreeDatabase(/* [in] */ ORJDatabase const *database)
 
 #ifdef __cplusplus
 
+/** \defgroup group_openrj_stringaccessshims String access shims
+ *
+ */
+
+/** \name String access shims
+ *
+ * These functions are <a href = "http://www.cuj.com/documents/s=8681/cuj0308wilson/">string access shims</a>
+ * for injection into the <b>stlsoft</b> namespace, in order to facilitate
+ * generalised manipulation of the \link ORJStringA \endlink, ORJRC and ORJ_PARSE_ERROR types.
+ * 
+ * @{
+ */
+
+/** Nul-terminated C-string representation of the given ORJStringA instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
 inline char const *c_str_ptr(ORJStringA const &s)
 {
     return s.ptr;   /* This is ok, because Open-RJ guarantees that strings will be nul-terminated */
 }
 
+/** Not necessarily nul-terminated C-string representation of the given ORJStringA instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
 inline char const *c_str_data(ORJStringA const &s)
 {
     return s.ptr;
 }
 
+/** Length of the C-string representation of the given ORJStringA instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
 inline size_t c_str_len(ORJStringA const &s)
 {
     return s.len;
 }
 
+/** Nul-terminated C-string representation of the given ORJRC instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_ptr(ORJRC rc)
+{
+    return ORJ_GetErrorStringA(rc);
+}
+
+/** Not necessarily nul-terminated C-string representation of the given ORJRC instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_data(ORJRC rc)
+{
+    return ORJ_GetErrorStringA(rc);
+}
+
+/** Length of the C-string representation of the given ORJRC instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline size_t c_str_len(ORJRC rc)
+{
+    return ORJ_GetErrorStringLengthA(rc);
+}
+
+/** Nul-terminated C-string representation of the given ORJ_PARSE_ERROR instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_ptr(ORJ_PARSE_ERROR pe)
+{
+    return ORJ_GetParseErrorStringA(pe);
+}
+
+/** Not necessarily nul-terminated C-string representation of the given ORJ_PARSE_ERROR instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_data(ORJ_PARSE_ERROR pe)
+{
+    return ORJ_GetParseErrorStringA(pe);
+}
+
+/** Length of the C-string representation of the given ORJ_PARSE_ERROR instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline size_t c_str_len(ORJ_PARSE_ERROR pe)
+{
+    return ORJ_GetParseErrorStringLengthA(pe);
+}
+
+/** @} String access shims */
+
+/** \defgroup group_openrj_streaminsertionshimfunctiontemplates Stream insertion shim function templates
+ *
+ */
+
+/** \name Stream insertion shims
+ *
+ * These functions are <a href = "http://www.cuj.com/documents/s=8681/cuj0308wilson/">stream insertion shims</a>
+ * for allowing the ORJStringA, ORJRC and ORJ_PARSE_ERROR types to be used
+ * with stream instances, a la the IOStreams.
+ *
+ * For example:
+ *
+ * \htmlonly
+ * <pre>
+ *
+ * ORJRecord *record = . . . ;
+ *
+ * std::cout << record->fields[0] << std::end; // Prints the value of the 0th field in the record
+ *
+ * ORJRC rc = ORJ_RC_INVALIDINDEX;
+ *
+ * std::cout << rc << std::end; // Prints "An invalid index was specified"
+ *
+ * ORJ_PARSE_ERROR pe = ORJ_PARSE_UNFINISHEDLINE;
+ *
+ * std::cout << pe << std::end; // Prints "The last line in the database was not terminated by a line-feed"
+ *
+ * </pre>
+ * 
+ * @{
+ */
+
+/** Inserts an ORJStringA instance into a stream
+ *
+ * \ingroup group_openrj_streaminsertionshimfunctiontemplates
+ *
+ * \note stm may be of any type that supports a write(char const *str, size_t len); method
+ */
 template <class S>
 inline S &operator <<(S &stm, ORJStringA const &s)
 {
@@ -716,48 +916,31 @@ inline S &operator <<(S &stm, ORJStringA const &s)
     return stm;
 }
 
-
-inline char const *c_str_ptr(ORJRC rc)
-{
-    return ORJ_GetErrorStringA(rc);
-}
-
-inline char const *c_str_data(ORJRC rc)
-{
-    return ORJ_GetErrorStringA(rc);
-}
-
-inline size_t c_str_len(ORJRC rc)
-{
-    return ORJ_GetErrorStringLengthA(rc);
-}
-
+/** Inserts an ORJRC instance into a stream
+ *
+ * \ingroup group_openrj_streaminsertionshimfunctiontemplates
+ *
+ * \note stm may be of any type that supports an insertion operator taking char const*
+ */
 template <class S>
-inline S &operator <<(S &s, ORJRC rc)
+inline S &operator <<(S &stm, ORJRC rc)
 {
-    return s << c_str_ptr(rc);
+    return stm << c_str_ptr(rc);
 }
 
-inline char const *c_str_ptr(ORJ_PARSE_ERROR pe)
-{
-    return ORJ_GetParseErrorStringA(pe);
-}
-
-inline char const *c_str_data(ORJ_PARSE_ERROR pe)
-{
-    return ORJ_GetParseErrorStringA(pe);
-}
-
-inline size_t c_str_len(ORJ_PARSE_ERROR pe)
-{
-    return ORJ_GetParseErrorStringLengthA(pe);
-}
-
+/** Inserts an ORJ_PARSE_ERROR instance into a stream
+ *
+ * \ingroup group_openrj_streaminsertionshimfunctiontemplates
+ *
+ * \note stm may be of any type that supports an insertion operator taking char const*
+ */
 template <class S>
-inline S &operator <<(S &s, ORJ_PARSE_ERROR pe)
+inline S &operator <<(S &stm, ORJ_PARSE_ERROR pe)
 {
-    return s << c_str_ptr(pe);
+    return stm << c_str_ptr(pe);
 }
+
+/** @} String insertion shim function templates */
 
 #endif /* __cplusplus */
 
@@ -768,6 +951,13 @@ inline S &operator <<(S &s, ORJ_PARSE_ERROR pe)
 #if !defined(ORJ_NO_NAMESPACE)
 } /* namespace openrj */
 
+#ifdef OPENRJ_DOCUMENTATION_SKIP_SECTION
+/** The Open-RJ project inserts c_str_ptr, c_str_data and c_str_len 
+ * <a href = "http://www.cuj.com/documents/s=8681/cuj0308wilson/">string access shims</a> 
+ * into the STLSoft namespace, for generalised manipulation of its ORJStringA, ORJRC
+ * and ORJ_PARSE_ERROR types.
+ */
+#endif /* OPENRJ_DOCUMENTATION_SKIP_SECTION */
 namespace stlsoft
 {
     using ::openrj::c_str_ptr;

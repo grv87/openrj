@@ -4,7 +4,7 @@
  * Purpose: Helper functions for the Open-RJ C++ mapping
  *
  * Created: 12th April 2005
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/cpp/functions.hpp Helper functions for the Open-RJ C++ mapping
+/** \file openrj/cpp/functions.hpp Helper functions for the Open-RJ C++ mapping
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MAJOR      1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MINOR      0
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_REVISION   1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_EDIT       2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_EDIT       4
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -97,11 +97,28 @@ namespace helper
  * Functions
  */
 
+/// \brief Looks up the named field in one of two records, or throws exception if not found in either
+///
+/// \param fieldName The named of the field to be searched for
+/// \param r0 The first record to be searched
+/// \param r1 The second record to be searched
+///
+/// \return The value matching the field found in r0 or r1
+///
+/// \note If the field is not found in either record, an instance of std::out_of_range exception is thrown
 inline String Lookup(char const *fieldName, Record const &r0, Record const &r1)
 {
     return r0.HasField(fieldName) ? r0[fieldName] : r1[fieldName];
 }
 
+/// \brief Looks up the named field in one of two records, or returns a default value if not found in either
+///
+/// \param fieldName The named of the field to be searched for
+/// \param r0 The first record to be searched
+/// \param r1 The second record to be searched
+/// \param defaultValue The default value to be used if the named field is not found in either record
+///
+/// \return The value matching the field found in r0 or r1, or \c defaultValue if not found in either
 inline String Lookup(char const *fieldName, Record const &r0, Record const &r1, char const *defaultValue)
 {
     return r0.HasField(fieldName) ? r0[fieldName] : r1.HasField(fieldName) ? r1[fieldName] : defaultValue;

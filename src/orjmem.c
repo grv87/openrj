@@ -4,7 +4,7 @@
  * Purpose: Implementation file of the memory handling for the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 18th February 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file orjmem.c Implementation file of the memory handling for the Open-RJ library
+/** \file orjmem.c Implementation file of the memory handling for the Open-RJ library
  *
  */
 
@@ -50,7 +50,7 @@
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
 # define OPENRJ_VER_C_ORJMEM_MINOR      1
 # define OPENRJ_VER_C_ORJMEM_REVISION   2
-# define OPENRJ_VER_C_ORJMEM_EDIT       4
+# define OPENRJ_VER_C_ORJMEM_EDIT       5
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

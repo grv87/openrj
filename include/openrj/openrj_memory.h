@@ -4,7 +4,7 @@
  * Purpose: Memory aspect of the Open-RJ C-API
  *
  * Created: 11th June 2004
- * Updated: 8th April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/openrj_memory.h Memory aspect of the Open-RJ C-API
+/** \file openrj/openrj_memory.h Memory aspect of the Open-RJ C-API
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_H_OPENRJ_MEMORY_MAJOR       1
 # define OPENRJ_VER_H_OPENRJ_MEMORY_MINOR       0
 # define OPENRJ_VER_H_OPENRJ_MEMORY_REVISION    4
-# define OPENRJ_VER_H_OPENRJ_MEMORY_EDIT        6
+# define OPENRJ_VER_H_OPENRJ_MEMORY_EDIT        7
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/cpp/field.hpp This is the root file of the Open-RJ C-API
+/** \file openrj/cpp/field.hpp This is the root file of the Open-RJ C-API
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    3
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 2
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     10
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     11
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -173,11 +173,13 @@ private:
  * Operators
  */
 
+/// \brief Evaluates to true if the two instances have identical names and values
 inline bool operator ==(Field const &lhs, Field const &rhs)
 {
     return lhs.IsEqual(rhs);
 }
 
+/// \brief Evaluates to true if the two instances have different names and/or values
 inline bool operator !=(Field const &lhs, Field const &rhs)
 {
     return !lhs.IsEqual(rhs);
@@ -187,6 +189,9 @@ inline bool operator !=(Field const &lhs, Field const &rhs)
  * Shims
  */
 
+/// \brief String access shim providing C-string access to the contents of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
 inline ::stlsoft::basic_shim_string<char> c_str_ptr(Field const &f)
 {
     ORJField const                      *pf =   f.GetField();
@@ -206,16 +211,25 @@ inline ::stlsoft::basic_shim_string<char> c_str_ptr(Field const &f)
     return ss;
 }
 
+/// \brief String access shim providing (potentially non-nul-terminated) C-string access to the contents of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
 inline ::stlsoft::basic_shim_string<char> c_str_data(Field const &f)
 {
     return c_str_ptr(f);
 }
 
+/// \brief String attribute shim providing the length of the C-string form of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
 inline size_t c_str_len(Field const &f)
 {
     return f.GetField()->name.len + 1 + f.GetField()->value.len;
 }
 
+/// \brief Stream insertion shim for a Field instance
+///
+/// \ingroup group_openrj_streaminsertionshimfunctiontemplates
 template <class S>
 inline S &operator <<(S &s, Field const &field)
 {

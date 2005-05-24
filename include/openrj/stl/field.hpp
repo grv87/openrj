@@ -4,7 +4,7 @@
  * Purpose: field class, in the STL mapping of the Open-RJ library.
  *
  * Created: 28th September 2004
- * Updated: 18th February 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/stl/field.hpp Field class, in the STL mapping of the Open-RJ library
+/** \file openrj/stl/field.hpp Field class, in the STL mapping of the Open-RJ library
  *
  */
 
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MAJOR      1
-# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MINOR      2
-# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_REVISION   3
-# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_EDIT       11
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MINOR      3
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_REVISION   1
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_EDIT       13
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -139,6 +139,9 @@ private:
  * Shims
  */
 
+/// \brief String access shim providing C-string access to the contents of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
 inline stlsoft::basic_shim_string<char> c_str_ptr(field const &f)
 {
     ORJField const  *pf =   f.get_field();
@@ -153,6 +156,17 @@ inline stlsoft::basic_shim_string<char> c_str_ptr(field const &f)
     return stlsoft::basic_shim_string<char>(s.c_str(), s.length());
 }
 
+/// \brief String access shim providing (potentially non-nul-terminated) C-string access to the contents of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
+inline ::stlsoft::basic_shim_string<char> c_str_data(field const &f)
+{
+    return c_str_ptr(f);
+}
+
+/// \brief Stream insertion shim for a field instance
+///
+/// \ingroup group_openrj_streaminsertionshimfunctiontemplates
 template <class S>
 inline S &operator <<(S &s, field const &field)
 {

@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
-Project: "C"=.\TEST\C\vc5\C.dsp - Package Owner=<4>
+Project: "C_full"=.\TEST\C_full\vc5\C_full.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -18,7 +18,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cpp"=.\Test\Cpp\vc5\Cpp.dsp - Package Owner=<4>
+Project: "Cpp_full"=.\Test\Cpp_full\vc5\Cpp_full.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -33,7 +33,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "STL"=.\Test\STL\vc5\STL.dsp - Package Owner=<4>
+Project: "STL_full"=.\Test\STL_full\vc5\STL_full.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

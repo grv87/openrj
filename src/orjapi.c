@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file orjapi.c Implementation file for the Open-RJ library
+/** \file orjapi.c Implementation file for the Open-RJ library
  *
  */
 
@@ -50,7 +50,7 @@
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
 # define OPENRJ_VER_C_ORJAPI_MINOR      5
 # define OPENRJ_VER_C_ORJAPI_REVISION   3
-# define OPENRJ_VER_C_ORJAPI_EDIT       31
+# define OPENRJ_VER_C_ORJAPI_EDIT       32
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

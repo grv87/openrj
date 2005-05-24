@@ -4,7 +4,7 @@
  * Purpose: DLL implementation file for the Open-RJ library
  *
  * Created: 23rd June 2004
- * Updated: 15th January 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file orjapi.c DLL implementation file for the Open-RJ library
+/** \file orjapi.c DLL implementation file for the Open-RJ library
  *
  */
 

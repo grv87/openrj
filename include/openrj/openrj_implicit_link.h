@@ -4,7 +4,7 @@
  * Purpose: Implicit linking for the Open-RJ API
  *
  * Created: 8th April 2005
- * Updated: 8th April 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/openrj_implicit_link.h Implicit linking for the Open-RJ API
+/** \file openrj/openrj_implicit_link.h Implicit linking for the Open-RJ API
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_MAJOR       1
 # define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_MINOR       0
 # define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_REVISION    1
-# define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_EDIT        1
+# define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_EDIT        2
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@
  * Purpose: Functors for use with the Open-RJ STL mapping
  *
  * Created: 10th November 2004
- * Updated: 23rd May 2005
+ * Updated: 25th May 2005
  *
  * Home:    http://openrj.org/
  *
@@ -38,7 +38,7 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/* \file openrj/stl/functional.hpp Functors for use with the Open-RJ STL mapping
+/** \file openrj/stl/functional.hpp Functors for use with the Open-RJ STL mapping
  *
  */
 
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_MAJOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_MINOR     0
 # define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_REVISION  2
-# define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_EDIT      4
+# define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_EDIT      5
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
