@@ -4,7 +4,7 @@
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 25th May 2005
+ * Updated: 7th June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    3
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 2
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     11
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    4
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 1
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     12
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -189,6 +189,28 @@ inline bool operator !=(Field const &lhs, Field const &rhs)
  * Shims
  */
 
+/// \brief String access shim providing, possibly NULL, C-string access to the contents of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
+inline ::stlsoft::basic_shim_string<char, true> c_str_ptr_null(Field const &f)
+{
+    ORJField const                              *pf =   f.GetField();
+    size_t                                      cch =   pf->name.len + 1 + pf->value.len;
+    ::stlsoft::basic_shim_string<char, true>    ss(cch);
+
+    if(cch < ss.size())
+    {
+        char    *s  =   ss.data();
+
+        strncpy(s, pf->name.ptr, pf->name.len);
+        s += pf->name.len;
+        *s++ = '=';
+        strncpy(s, pf->value.ptr, pf->value.len);
+    }
+
+    return ss;
+}
+
 /// \brief String access shim providing C-string access to the contents of a Field instance
 ///
 /// \ingroup group_openrj_stringaccessshims
@@ -224,7 +246,9 @@ inline ::stlsoft::basic_shim_string<char> c_str_data(Field const &f)
 /// \ingroup group_openrj_stringaccessshims
 inline size_t c_str_len(Field const &f)
 {
-    return f.GetField()->name.len + 1 + f.GetField()->value.len;
+    ORJField const  *pf =   f.GetField();
+
+    return pf->name.len + 1 + pf->value.len;
 }
 
 /// \brief Stream insertion shim for a Field instance
@@ -247,6 +271,7 @@ inline S &operator <<(S &s, Field const &field)
 
 namespace stlsoft
 {
+    using ::openrj::cpp::c_str_ptr_null;
     using ::openrj::cpp::c_str_ptr;
     using ::openrj::cpp::c_str_data;
     using ::openrj::cpp::c_str_len;

@@ -4,7 +4,7 @@
  * Purpose: Root header file for the STL mapping of the Open-RJ library
  *
  * Created: 28th September 2004
- * Updated: 25th May 2005
+ * Updated: 22nd June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  3
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      11
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     3
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  1
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      14
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -68,10 +68,19 @@
 #endif /* ORJ_NO_EXCEPTIONS */
 
 #include <stlsoft.h>
-#include <stlsoft_integer_to_string.h>
+
+#if !defined(_STLSOFT_VER_1_8_4)
+# error STLSoft version 1.8.4 or greater required. (www.stlsoft.org/downloads.html)
+#endif /* STLSoft version */
+
+#include <stlsoft/integer_to_string.hpp>
 
 #include <exception>
-#include <string>
+#if defined(OPENRJ_USE_CUSTOM_STRING)
+# include OPENRJ_CUSTOM_STRING_INCLUDE
+#else /* OPENRJ_USE_CUSTOM_STRING */
+# include <string>
+#endif /* !OPENRJ_USE_CUSTOM_STRING */
 
 #include <string.h>
 
@@ -100,7 +109,11 @@ namespace stl
  * Typedefs
  */
 
-typedef std::string string_t;
+#if defined(OPENRJ_USE_CUSTOM_STRING)
+typedef OPENRJ_CUSTOM_STRING_TYPE       string_t;
+#else /* OPENRJ_USE_CUSTOM_STRING */
+typedef std::string                     string_t;
+#endif /* !OPENRJ_USE_CUSTOM_STRING */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Classes
@@ -168,10 +181,10 @@ private:
 
             // This was originally all done with string class methods, but it causes a
             // ridiculous number of reallocations, so we do it the old crusty way
-            strcpy(message, "' at line ");
-            strcat(message, ::stlsoft::integer_to_string(&sz1[0], stlsoft_num_elements(sz1), error.invalidLine));
-            strcat(message, " column ");
-            strcat(message, ::stlsoft::integer_to_string(&sz2[0], stlsoft_num_elements(sz2), error.invalidColumn));
+            ::strcpy(message, "' at line ");
+            ::strcat(message, ::stlsoft::integer_to_string(&sz1[0], stlsoft_num_elements(sz1), error.invalidLine));
+            ::strcat(message, " column ");
+            ::strcat(message, ::stlsoft::integer_to_string(&sz2[0], stlsoft_num_elements(sz2), error.invalidColumn));
 
             s   =   "Parse error '";
             s   +=  ORJ_GetParseErrorStringA(error.parseError);

@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 25th May 2005
+ * Updated: 6th June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
 # define OPENRJ_VER_C_ORJAPI_MINOR      5
-# define OPENRJ_VER_C_ORJAPI_REVISION   3
-# define OPENRJ_VER_C_ORJAPI_EDIT       32
+# define OPENRJ_VER_C_ORJAPI_REVISION   4
+# define OPENRJ_VER_C_ORJAPI_EDIT       33
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -483,7 +483,7 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                         openrj_assert('\t' != record->comment.ptr[0]);
                         openrj_assert(data <= record->comment.ptr);
                         openrj_assert(record->comment.ptr <= data + len);
-                        openrj_assert(record->comment.ptr <= data + 2 + record->comment.len);
+                        openrj_assert((0 == record->comment.len) || (record->comment.ptr <= data + 2 + record->comment.len));
                         openrj_assert('\0' == record->comment.ptr[record->comment.len]);
 
                         if( ORJ_FLAG_ELIDEBLANKRECORDS == (flags & ORJ_FLAG_ELIDEBLANKRECORDS) &&

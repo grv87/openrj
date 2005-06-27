@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	25th May 2005
+# Updated:	28th June 2005
 #
 ################################################################################
 
@@ -69,7 +69,7 @@ CC_DEFS				=	$(COMMON_DEFS)
 
 CC_F_NOLOGO				=	-nologo
 CC_F_COMPILE_ONLY		=	-c
-CC_F_WARNING_MAX		=	-W4
+CC_F_WARNING_MAX		=	-W3
 CC_F_WARNING_ERR		=	-WX
 
 CC_TOOL_FLAGS		=	

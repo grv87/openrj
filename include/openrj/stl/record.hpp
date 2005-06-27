@@ -4,7 +4,7 @@
  * Purpose: record class, in the STL mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 25th May 2005
+ * Updated: 22nd June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     5
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     6
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  3
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      19
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      22
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -73,7 +73,8 @@
 #include <iterator>
 #include <stdexcept>
 
-#include <stlsoft_iterator.h>
+#include <stlsoft/indirect_reverse_iterator.hpp>
+#include <stlsoft/iterator.hpp>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Compiler warnings
@@ -101,11 +102,16 @@ namespace stl
 class record
 {
 public:
-    typedef record              class_type;
-    typedef field               value_type;
-    typedef value_type const    const_reference;
-    typedef value_type const    *const_pointer;
-    typedef ptrdiff_t           difference_type;
+    /// This type
+    typedef record                                          class_type;
+    /// The value type
+    typedef field                                           value_type;
+    /// The non-mutating (const) reference type
+    typedef value_type const                                const_reference;
+    /// The non-mutating (const) pointer type
+    typedef value_type const                                *const_pointer;
+    /// The difference type
+    typedef ptrdiff_t                                       difference_type;
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 public:
@@ -113,6 +119,25 @@ public:
 
     friend class const_iterator;
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+    /// The non-mutating (const) reverse iterator type
+#  if 0 // Can't use reverse_iterator, because const_iterator is a forward-declared member class
+    typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_iterator
+                                                        ,   value_type
+                                                        ,   value_type // Return by value!
+                                                        ,   void*
+                                                        ,   difference_type
+                                                        >   const_reverse_iterator;
+#  else /* ? 0 */
+    typedef stlsoft_ns_qual(indirect_reverse_iterator)<     const_iterator
+                                                        ,   value_type
+                                                        ,   value_type // Return by value!
+                                                        ,   void*
+                                                        ,   difference_type
+                                                        >   const_reverse_iterator;
+#  endif /* 0 */
+#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 public:
     /// Conversion constructor
@@ -167,8 +192,25 @@ public:
     string_t get_field_value(string_t const &name, string_t const &defValue) const;
 
 public:
+    /// Begins the iteration
+    ///
+    /// \return A non-mutating (const) iterator representing the start of the sequence
     const_iterator begin() const;
+    /// Ends the iteration
+    ///
+    /// \return A non-mutating (const) iterator representing the end of the sequence
     const_iterator end() const;
+
+#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+    /// Begins the reverse iteration
+    ///
+    /// \return A non-mutating (const) iterator representing the start of the reverse sequence
+    const_reverse_iterator rbegin() const;
+    /// Ends the reverse iteration
+    ///
+    /// \return A non-mutating (const) iterator representing the end of the reverse sequence
+    const_reverse_iterator rend() const;
+#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 private:
     /// \brief Predicate for detecting name
@@ -218,6 +260,8 @@ public:
 #endif /* OPENRJ_STL_ITERATOR_HOLDS_VALUE */
     const_iterator &operator ++();
     const_iterator operator ++(int);
+    const_iterator &operator --();
+    const_iterator operator --(int);
 
 public:
     const_iterator operator -(difference_type d) const;
@@ -310,9 +354,25 @@ inline record::const_iterator record::const_iterator::operator ++(int)
     return ret;
 }
 
+inline record::const_iterator &record::const_iterator::operator --()
+{
+    --m_field;
+
+    return *this;
+}
+
+inline record::const_iterator record::const_iterator::operator --(int)
+{
+    const_iterator  ret(*this);
+
+    operator --();
+
+    return ret;
+}
+
 inline record::const_iterator record::const_iterator::operator -(record::difference_type d) const
 {
-    return const_iterator(&m_field[d]);
+    return const_iterator(&m_field[-d]);
 }
 
 inline record::difference_type record::const_iterator::operator -(record::const_iterator const &rhs) const
@@ -515,7 +575,7 @@ inline const string_t record::operator [](string_t const &name) const // throw (
 
     if(NULL == r)
     {
-        throw std::out_of_range("record does not contain field named \"" + name + "\"");
+        throw std::out_of_range(stlsoft::c_str_ptr("record does not contain field named \"" + name + "\""));
     }
 
     return field(&*r).value();
@@ -546,6 +606,18 @@ inline record::const_iterator record::end() const
 
     return &m_record->fields[m_record->numFields];
 }
+
+#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+inline record::const_reverse_iterator record::rbegin() const
+{
+    return const_reverse_iterator(end());
+}
+
+inline record::const_reverse_iterator record::rend() const
+{
+    return const_reverse_iterator(begin());
+}
+#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Namespace

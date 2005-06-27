@@ -1,0 +1,21 @@
+
+EXPORTS
+	DllGetVersion
+	ORJ_ReadDatabaseA
+	ORJ_CreateDatabaseFromMemoryA
+	ORJ_FreeDatabaseA
+	ORJ_Database_GetNumLinesA
+	ORJ_Database_GetNumFieldsA
+	ORJ_Database_GetNumRecordsA
+	ORJ_Database_GetRecordA
+	ORJ_Record_GetNumFieldsA
+	ORJ_Record_GetFieldA
+	ORJ_Record_FindFieldByNameA
+	ORJ_Record_GetDatabaseA
+	ORJ_Field_GetNameA
+	ORJ_Field_GetValueA
+	ORJ_Field_GetNameAndValueA
+	ORJ_Field_GetRecordA
+	ORJ_GetErrorStringA
+	ORJ_GetParseErrorStringA
+	ORJ_Record_GetCommentA

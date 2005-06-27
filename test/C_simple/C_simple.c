@@ -6,7 +6,7 @@
  *              smallest-possible informative example.
  *
  * Created:     25th May 2005
- * Updated:     25th May 2005
+ * Updated:     19th June 2005
  *
  * www:         http://www.openrj.org/
  *
@@ -37,7 +37,7 @@
  * Globals
  */
 
-// Sample database
+/* Sample database */
 static const char   contents[] =
 
     "%% Sample Open-RJ database - Cats and Dogs\n"
@@ -64,6 +64,7 @@ static const char   contents[] =
     "Breed:     German \\\n"
     "           Shepherd\n"
     "%%\n"
+#if !defined(__GNUC__)
     "Name:      Pepper\n"
     "Species:   Dog\n"
     "Breed:     Border Collie\n"
@@ -77,6 +78,7 @@ static const char   contents[] =
     "Breed:     Shetland \\\n"
     "           Sheepdog\n"
     "%%\n"
+#endif /* compiler */
     "Name:      Sparky\n"
     "Species:   Cat\n"
     "%%\n";
@@ -95,7 +97,7 @@ int main(int argc, char *argv[])
 
     if(0 != rc)
     {
-        printf("Error at line %u, column %u: %s\n", error.invalidLine, error.invalidColumn, ORJ_GetErrorStringA(rc));
+        printf("Error at line %ld, column %ld: %s\n", (long)error.invalidLine, (long)error.invalidColumn, ORJ_GetErrorStringA(rc));
 
         return EXIT_FAILURE;
     }
@@ -104,12 +106,12 @@ int main(int argc, char *argv[])
         /* 2. Display database characteristics using structure accesses */
         printf("\n2. Display database characteristics (via structure member access):\n");
 
-        printf("Database has %u lines in %u fields in %u records\n", db->numLines, db->numFields, db->numRecords);
+        printf("Database has %ld lines in %ld fields in %ld records\n", (long)db->numLines, (long)db->numFields, (long)db->numRecords);
 
         /* 3. Display database characteristics using method calls */
         printf("\n3. Display database characteristics (via API function call):\n");
 
-        printf("Database has %u lines in %u fields in %u records\n", ORJ_Database_GetNumLinesA(db), ORJ_Database_GetNumFieldsA(db), ORJ_Database_GetNumRecordsA(db));
+        printf("Database has %ld lines in %ld fields in %ld records\n", (long)ORJ_Database_GetNumLinesA(db), (long)ORJ_Database_GetNumFieldsA(db), (long)ORJ_Database_GetNumRecordsA(db));
 
         /* 4. Enumerate the contents using structure accesses */
         {
@@ -125,18 +127,18 @@ int main(int argc, char *argv[])
                 if( NULL != rec->comment.ptr &&
                     0 != rec->comment.len)
                 {
-                    printf("record-#%u; %.*s (%u fields)\n", iRecord, rec->comment.len, rec->comment.ptr, rec->numFields);
+                    printf("record-#%ld; %.*s (%ld fields)\n", (long)iRecord, (int)rec->comment.len, rec->comment.ptr, (long)rec->numFields);
                 }
                 else
                 {
-                    printf("record-#%d (%d fields)\n", iRecord, rec->numFields);
+                    printf("record-#%ld (%ld fields)\n", (long)iRecord, (long)rec->numFields);
                 }
 
                 for(iField = 0; iField < rec->numFields; ++iField)
                 {
                     ORJFieldA   *field  =   &rec->fields[iField];
 
-                    printf("  field-#%d [%.*s]:[%.*s]\n", iField, field->name.len, field->name.ptr, field->value.len, field->value.ptr);
+                    printf("  field-#%ld [%.*s]:[%.*s]\n", (long)iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
                 }
             }
         }
@@ -158,11 +160,11 @@ int main(int argc, char *argv[])
                 if( ORJ_RC_SUCCESS == ORJ_Record_GetCommentA(rec, &comment) &&
                     0 != comment->len)
                 {
-                    printf("record-#%u; %.*s (%u fields)\n", iRecord, comment->len, comment->ptr, ORJ_Record_GetNumFieldsA(rec));
+                    printf("record-#%ld; %.*s (%ld fields)\n", (long)iRecord, (int)comment->len, comment->ptr, (long)ORJ_Record_GetNumFieldsA(rec));
                 }
                 else
                 {
-                    printf("record-#%u (%u fields)\n", iRecord, ORJ_Record_GetNumFieldsA(rec));
+                    printf("record-#%ld (%ld fields)\n", (long)iRecord, (long)ORJ_Record_GetNumFieldsA(rec));
                 }
 
                 for(iField = 0; iField < ORJ_Record_GetNumFieldsA(rec); ++iField)
@@ -176,7 +178,7 @@ int main(int argc, char *argv[])
 
                     ORJ_Field_GetNameAndValueA(field, &name, &value);
 
-                    printf("  field-#%u [%.*s]:[%.*s]\n", iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
+                    printf("  field-#%ld [%.*s]:[%.*s]\n", (long)iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
                     /* Now do a check to verify that the ORJ_Record_FindFieldByNameA() method works! */
@@ -196,8 +198,8 @@ int main(int argc, char *argv[])
         ORJ_FreeDatabase(db);
     }
 
-	((void)argc);
-	((void)argv);
+    ((void)argc);
+    ((void)argv);
 
     return EXIT_SUCCESS;
 }

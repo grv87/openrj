@@ -4,7 +4,7 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 25th May 2005
+ * Updated: 19th June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -52,8 +52,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       6
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    2
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        15
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    3
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        16
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -227,7 +227,8 @@ public:
     }
 
 
-# ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
+# if defined(__STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT) && \
+     !defined(STLSOFT_COMPILER_IS_BORLAND)
     template <typename S>
     String subscript_operator_(S const &name, stlsoft::no_type) const
     {
@@ -258,11 +259,14 @@ public:
     /// \param name The index of the field to be returned.
     /// \retval A Field wrapper to the requested field. If not found, an
     /// instance of std::out_of_range is thrown. There is no error return
+#  if !defined(STLSOFT_COMPILER_IS_MSVC) || \
+      _MSC_VER >= 1200
     template <typename S>
     typename String operator [](S const &name) const
     {
         return operator [](::stlsoft::c_str_ptr(name));
     }
+#  endif /* compiler */
 
 #  ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
     const Field operator [](int index) const

@@ -6,7 +6,7 @@
  *              and attempts to be a smallest-possible informative example.
  *
  * Created:     24th May 2005
- * Updated:     25th May 2005
+ * Updated:     19th June 2005
  *
  * www:         http://www.openrj.org/
  *
@@ -70,6 +70,7 @@ static const char   contents[] =
     "Breed:     German \\\n"
     "           Shepherd\n"
     "%%\n"
+#if !defined(__GNUC__)
     "Name:      Pepper\n"
     "Species:   Dog\n"
     "Breed:     Border Collie\n"
@@ -83,6 +84,7 @@ static const char   contents[] =
     "Breed:     Shetland \\\n"
     "           Sheepdog\n"
     "%%\n"
+#endif /* compiler */
     "Name:      Sparky\n"
     "Species:   Cat\n"
     "%%\n";

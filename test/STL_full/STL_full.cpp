@@ -5,7 +5,7 @@
  *              Open-RJ library).
  *
  * Created:     18th June 2004
- * Updated:     25th May 2005
+ * Updated:     19th June 2005
  *
  * www:         http://www.openrj.org/
  *
@@ -66,7 +66,7 @@ using std::cout;
 
 static void usage(int bExit, char const *reason, int invalidArg, int argc, char *argv[]);
 static int  run_unittests();
-static int  execute_unittest(openrj::stl::database const &database);
+static int  execute_unittest(openrj::stl::database_base const &database);
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
@@ -168,6 +168,7 @@ static int main_(int argc, char *argv[])
                 "Breed:     German \\\n"
                 "           Shepherd\n"
                 "%%\n"
+#if !defined(__GNUC__)
                 "Name:      Pepper\n"
                 "Species:   Dog\n"
                 "Breed:     Border Collie\n"
@@ -181,29 +182,52 @@ static int main_(int argc, char *argv[])
                 "Breed:     Shetland \\\n"
                 "           Sheepdog\n"
                 "%%\n"
+#endif /* compiler */
                 "Name:      Sparky\n"
                 "Species:   Cat\n"
                 "%%\n";
+
+            // 1. Create a database instance on memory, using openrj::stl::memory_database
+
+            cout << endl << "1. Create a database instance on memory, using openrj::stl::memory_database" << endl << endl;
 
             openrj::stl::memory_database    db(&contents[0], sizeof(contents), flags);
 
 #else /* ? USE_MEMORY_DATABASE */
 
-            openrj::stl::database   db(jarName, flags);
+            // 1. Create a database instance on file, using openrj::stl::file_database
+
+            cout << endl << "1. Create a database instance on file, using openrj::stl::file_database" << endl << endl;
+
+            openrj::stl::file_database      db(jarName, flags);
 
 #endif /* USE_MEMORY_DATABASE */
 
-            cout << "Record-JAR " << jarName << " has " << db.num_lines() << " lines in " << db.num_fields() << " fields in " << db.num_records() << " records" << endl;
+            // 2. Display database characteristics
 
-            cout << endl << "Records and their fields:" << endl;
-#if 0
-            for(size_t iRecord = 0; iRecord < db.size(); ++iRecord)
+            cout << endl << "2. Display database characteristics:" << endl << endl;
+
+#ifdef USE_MEMORY_DATABASE
+            cout    << "  Database has " 
+#else /* ? USE_MEMORY_DATABASE */
+            cout    << "  Database \"" << jarName << "\" has " 
+#endif /* USE_MEMORY_DATABASE */
+                    << db.num_lines() << " lines in " 
+                    << db.num_fields() << " fields in "
+                    << db.num_records() << " records"
+                    << endl;
+
+            // 3. Enumerate the contents using subscript operators
+
+            cout << endl << "3. Enumerate records and their fields using subscript operators:" << endl << endl;
+
+            { for(size_t iRecord = 0; iRecord < db.size(); ++iRecord)
             {
                 openrj::stl::record record(db[iRecord]);
 
-                cout    << "record-#" << iRecord
+                cout    << "  record-#" << iRecord
                         << " " << record.comment() << " "
-                        << " (" << db.size() << " fields)"
+                        << " (" << record.size() << " fields)"
                         << endl;
 
                 for(size_t iField = 0; iField < record.size(); ++iField)
@@ -212,58 +236,109 @@ static int main_(int argc, char *argv[])
                     std::string         name    =   field.name();
                     std::string         value   =   field.value();
 
-                    cout << "  field-#" << iField << field << endl;
+                    cout << "    field-#" << iField << field << endl;
                 }
-            }
-#else /* ? 0 */
+            }}
 
-            openrj::stl::database::const_iterator   begin   =   db.begin();
-            openrj::stl::database::const_iterator   end     =   db.end();
+            // 4. Enumerate the contents using begin()/end() methods
 
-            for(size_t iRecord = 0; begin != end; ++begin, ++iRecord)
+            cout << endl << "4. Enumerate records and their fields using begin()/end() methods:" << endl << endl;
+
+            {   openrj::stl::database::const_iterator   b   =   db.begin();
+                openrj::stl::database::const_iterator   e   =   db.end();
+
+                for(size_t iRecord = 0; b != e; ++b, ++iRecord)
             {
-                openrj::stl::record record(*begin);
+                openrj::stl::record record(*b);
 
-                cout    << "record-#" << iRecord
+                cout    << "  record-#" << iRecord
                         << " " << record.comment() << " "
-                        << " (of " << db.size() << " fields)"
+                        << " (" << record.size() << " fields)"
                         << endl;
 
                 if(record.has_field("Name"))
                 {
                     openrj::stl::string_t   value       =   record["Name"];
 
-                    cout << "This record has a \"Name\" field, whose value is " << value << endl;
+                    cout << "    This record has a \"Name\" field, whose value is " << value << endl;
 
                     size_t                  numNames    =   record.count_fields("Name");
 
                     STLSOFT_SUPPRESS_UNUSED(numNames);
                 }
 
-                openrj::stl::record::const_iterator begin   =   record.begin();
-                openrj::stl::record::const_iterator end     =   record.end();
+                {   openrj::stl::record::const_iterator b   =   record.begin();
+                    openrj::stl::record::const_iterator e   =   record.end();
 
-                for(size_t iField = 0; begin != end; ++begin, ++iField)
+                    for(size_t iField = 0; b != e; ++b, ++iField)
+                    {
+                        openrj::stl::field  field(*b);
+                        std::string         name    =   field.name();
+                        std::string         value   =   field.value();
+
+                        cout << "    field-#" << iField << " " << field << endl;
+                }}
+            }}
+
+#ifdef __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT
+            // 5. Enumerate the contents in reverse using rbegin()/rend() methods
+
+            cout << endl << "5. Enumerate the contents in reverse using rbegin()/rend() methods:" << endl << endl;
+
+            {   openrj::stl::database::const_reverse_iterator   b   =   db.rbegin();
+                openrj::stl::database::const_reverse_iterator   e   =   db.rend();
+
+                for(size_t iRecord = 0; b != e; ++b, ++iRecord)
+            {
+                openrj::stl::record record(*b);
+
+                cout    << "  record-#" << iRecord
+                        << " " << record.comment() << " "
+                        << " (" << record.size() << " fields)"
+                        << endl;
+
+                if(record.has_field("Name"))
                 {
-                    openrj::stl::field  field(*begin);
-                    std::string         name    =   field.name();
-                    std::string         value   =   field.value();
+                    openrj::stl::string_t   value       =   record["Name"];
 
-#if !defined(__STLSOFT_COMPILER_IS_MSVC) || \
-    _MSC_VER > 1200
-                    cout << "  field-#" << iField << " " << field << endl;
-#else /* ? compiler */
-                    cout << "  field-#" << iField << " " << stlsoft::c_str_ptr(field) << endl;
-#endif /* compiler */
+                    cout << "    This record has a \"Name\" field, whose value is " << value << endl;
+
+                    size_t                  numNames    =   record.count_fields("Name");
+
+                    STLSOFT_SUPPRESS_UNUSED(numNames);
                 }
-            }
+
+                {   openrj::stl::record::const_reverse_iterator b   =   record.rbegin();
+                    openrj::stl::record::const_reverse_iterator e   =   record.rend();
+
+                    for(size_t iField = 0; b != e; ++b, ++iField)
+                    {
+                        openrj::stl::field  field(*b);
+                        std::string         name    =   field.name();
+                        std::string         value   =   field.value();
+
+                        cout << "    field-#" << iField << " " << field << endl;
+                }}
+            }}
+#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 #ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS
-            cout << endl << "All fields:" << endl;
+            // 6. Enumerate all fields in the database using begin()/end() methods
+
+            cout << endl << "6. Enumerate all fields in the database using begin()/end() methods:" << endl << endl;
+
             std::copy(db.fields_begin(), db.fields_end(), std::ostream_iterator<openrj::stl::field>(std::cout, "\n"));
+
+# ifdef __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT
+            // 7. Enumerate all fields in the database in reverse using rbegin()/rend() methods
+
+            cout << endl << "7. Enumerate all fields in the database in reverse using rbegin()/rend() methods:" << endl << endl;
+
+            cout << endl << "All fields (in reverse order):" << endl;
+            std::copy(db.fields_rbegin(), db.fields_rend(), std::ostream_iterator<openrj::stl::field>(std::cout, "\n"));
+# endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 #endif /* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */
 
-#endif /* 0 */
         }
 #ifdef USE_STD_EXCEPTION_ONLY
         catch(std::exception &x)
@@ -297,13 +372,15 @@ static int main_(int argc, char *argv[])
 #endif /* USE_STD_EXCEPTION_ONLY */
     }
 
+    STLSOFT_SUPPRESS_UNUSED(execute_unittest);
+
     return EXIT_SUCCESS;
 }
 
 int main(int argc, char *argv[])
 {
 #if 0
-    Sleep(100000);
+    for(;;) {};
 #endif /* 0 */
 
     try
@@ -415,7 +492,7 @@ static int execute_unittest(openrj::stl::database_base const &database)
 
     if(numFields1 != numFields2)
     {
-        fprintf(stderr, "DatabaseBase::GetNumFields(): %lu; n x Record::GetNumFields(): %lu\n", numFields1, numFields2);
+        fprintf(stderr, "DatabaseBase::GetNumFields(): %ld; n x Record::GetNumFields(): %ld\n", static_cast<long>(numFields1), static_cast<long>(numFields2));
 
         return 1;
     }
@@ -453,6 +530,7 @@ static int run_unittests()
         "Breed:     German \\\n"
         "           Shepherd\n"
         "%%\n"
+#if !defined(__GNUC__)
         "Name:      Pepper\n"
         "Species:   Dog\n"
         "Breed:     Border Collie\n"
@@ -466,9 +544,17 @@ static int run_unittests()
         "Breed:     Shetland \\\n"
         "           Sheepdog\n"
         "%%\n"
+#endif /* compiler */
         "Name:      Sparky\n"
         "Species:   Cat\n"
         "%%\n";
+#if !defined(__GNUC__)
+    static const size_t NUM_RECORDS =   12;
+    static const size_t NUM_FIELDS  =   25;
+#else /* ?  compiler */
+    static const size_t NUM_RECORDS =   9;
+    static const size_t NUM_FIELDS  =   16;
+#endif /* compiler */
 
     /* 1. Test that *not* eliding blanks gives the right number of records */
     try
@@ -477,13 +563,13 @@ static int run_unittests()
 
         int iRet = 0;
 
-        if(12 != database.num_records())
+        if(NUM_RECORDS != database.num_records())
         {
             fprintf(stderr, "Incorrect number of records\n");
 
             iRet = 1;
         }
-        else if(25 != database.num_fields())
+        else if(NUM_FIELDS != database.num_fields())
         {
             fprintf(stderr, "Incorrect number of fields\n");
 
