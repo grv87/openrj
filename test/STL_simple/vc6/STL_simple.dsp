@@ -154,87 +154,159 @@ SOURCE=..\..\..\include\openrj\stl\utility.hpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\address_hiding_veneer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_address_hiding_veneer.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\allocator_base.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_allocator_base.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\auto_buffer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_auto_buffer.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\auto_destructor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_cccap_msvc.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\char_traits.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_char_traits.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\constraints.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_constraints.h
+SOURCE=$(STLSOFT_INCLUDE)/inprogress\stlsoft\indirect_reverse_iterator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_integer_to_string.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\integer_to_string.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_iterator.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\iterator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_meta.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\meta.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_new_allocator.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\new_allocator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_outer_initialiser.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\proxy_iterator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_proxy_iterator.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\sap_cast.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_sap_cast.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\sign_traits.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_shim_string.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\simple_algorithms.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_sign_traits.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\size_traits.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_simple_algorithms.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_size_traits.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_address_hiding_veneer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_string_access.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_allocator_base.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_type_traits.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_auto_buffer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\..\STLSoft\Identities\STLSoft\stlsoft\stlsoft_unindexable_veneer.h
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_auto_destructor.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_cccap_msvc.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_char_traits.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_constraints.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_integer_to_string.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_iterator.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_meta.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_new_allocator.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_proxy_iterator.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_sap_cast.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_shim_string.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_sign_traits.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_simple_algorithms.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_size_traits.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_string_access.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft_type_traits.h
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\string_access_fwd.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\type_traits.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=$(STLSOFT_INCLUDE)/stlsoft\meta\yesno.hpp
 # End Source File
 # End Group
 # End Group

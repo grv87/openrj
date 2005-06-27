@@ -4,7 +4,7 @@
  * Purpose:     C test program for the Open-RJ library.
  *
  * Created:     11th June 2004
- * Updated:     25th May 2005
+ * Updated:     19th June 2005
  *
  * www:         http://www.openrj.org/
  *
@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
                 }
             }
 #else /* ? 0 */
-            printf("Record-JAR %s has %u lines in %u fields in %u records\n", jarName, ORJ_Database_GetNumLinesA(database), ORJ_Database_GetNumFieldsA(database), ORJ_Database_GetNumRecordsA(database));
+            printf("Record-JAR %s has %ld lines in %ld fields in %ld records\n", jarName, (long)ORJ_Database_GetNumLinesA(database), (long)ORJ_Database_GetNumFieldsA(database), (long)ORJ_Database_GetNumRecordsA(database));
 
             for(iRecord = 0; iRecord < ORJ_Database_GetNumRecordsA(database); ++iRecord)
             {
@@ -172,11 +172,11 @@ int main(int argc, char *argv[])
                 if( ORJ_RC_SUCCESS == ORJ_Record_GetCommentA(record, &comment) &&
                     0 != comment->len)
                 {
-                    printf("record-#%u; %.*s (%u fields)\n", iRecord, comment->len, comment->ptr, ORJ_Record_GetNumFieldsA(record));
+                    printf("record-#%ld; %.*s (%ld fields)\n", (long)iRecord, (int)comment->len, comment->ptr, (long)ORJ_Record_GetNumFieldsA(record));
                 }
                 else
                 {
-                    printf("record-#%u (%u fields)\n", iRecord, ORJ_Record_GetNumFieldsA(record));
+                    printf("record-#%ld (%ld fields)\n", (long)iRecord, (long)ORJ_Record_GetNumFieldsA(record));
                 }
 
                 for(iField = 0; iField < ORJ_Record_GetNumFieldsA(record); ++iField)
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 
                     ORJ_Field_GetNameAndValueA(field, &name, &value);
 
-                    printf("  field-#%u [%.*s]:[%.*s]\n", iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
+                    printf("  field-#%ld [%.*s]:[%.*s]\n", (long)iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
 
                     /* Now do a check to verify that the ORJ_Record_FindFieldByNameA() method works! */
 
@@ -329,6 +329,7 @@ static int run_unittests()
         "Breed:     German \\\n"
         "           Shepherd\n"
         "%%\n"
+#if !defined(__GNUC__)
         "Name:      Pepper\n"
         "Species:   Dog\n"
         "Breed:     Border Collie\n"
@@ -342,9 +343,17 @@ static int run_unittests()
         "Breed:     Shetland \\\n"
         "           Sheepdog\n"
         "%%\n"
+#endif /* compiler */
         "Name:      Sparky\n"
         "Species:   Cat\n"
         "%%\n";
+#if !defined(__GNUC__)
+    static const size_t NUM_RECORDS =   12;
+    static const size_t NUM_FIELDS  =   25;
+#else /* ?  compiler */
+    static const size_t NUM_RECORDS =   9;
+    static const size_t NUM_FIELDS  =   16;
+#endif /* compiler */
 
     /* 1. Test that *not* eliding blanks gives the right number of records */
     {
@@ -363,13 +372,13 @@ static int run_unittests()
         {
             int iRet = 0;
 
-            if(12 != database->numRecords)
+            if(NUM_RECORDS != database->numRecords)
             {
                 fprintf(stderr, "Incorrect number of records\n");
 
                 iRet = 1;
             }
-            else if(25 != database->numFields)
+            else if(NUM_FIELDS != database->numFields)
             {
                 fprintf(stderr, "Incorrect number of fields\n");
 

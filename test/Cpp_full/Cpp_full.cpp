@@ -5,7 +5,7 @@
  *              Open-RJ library).
  *
  * Created:     15th June 2004
- * Updated:     25th May 2005
+ * Updated:     28th June 2005
  *
  * www:         http://www.openrj.org/
  *
@@ -172,6 +172,7 @@ static int main_(int argc, char *argv[])
                 "Breed:     German \\\n"
                 "           Shepherd\n"
                 "%%\n"
+#if !defined(__GNUC__)
                 "Name:      Pepper\n"
                 "Species:   Dog\n"
                 "Breed:     Border Collie\n"
@@ -185,6 +186,7 @@ static int main_(int argc, char *argv[])
                 "Breed:     Shetland \\\n"
                 "           Sheepdog\n"
                 "%%\n"
+#endif /* compiler */
                 "Name:      Sparky\n"
                 "Species:   Cat\n"
                 "%%\n";
@@ -375,7 +377,7 @@ static int execute_unittest(openrj::cpp::DatabaseBase const &database)
 
     if(numFields1 != numFields2)
     {
-        fprintf(stderr, "DatabaseBase::GetNumFields(): %lu; n x Record::GetNumFields(): %lu\n", numFields1, numFields2);
+        cerr << "DatabaseBase::GetNumFields(): " << numFields1 << "; n x Record::GetNumFields(): " << numFields2 << endl;
 
         return 1;
     }
@@ -413,6 +415,7 @@ static int run_unittests()
         "Breed:     German \\\n"
         "           Shepherd\n"
         "%%\n"
+#if !defined(__GNUC__)
         "Name:      Pepper\n"
         "Species:   Dog\n"
         "Breed:     Border Collie\n"
@@ -426,9 +429,17 @@ static int run_unittests()
         "Breed:     Shetland \\\n"
         "           Sheepdog\n"
         "%%\n"
+#endif /* compiler */
         "Name:      Sparky\n"
         "Species:   Cat\n"
         "%%\n";
+#if !defined(__GNUC__)
+    static const size_t NUM_RECORDS =   12;
+    static const size_t NUM_FIELDS  =   25;
+#else /* ?  compiler */
+    static const size_t NUM_RECORDS =   9;
+    static const size_t NUM_FIELDS  =   16;
+#endif /* compiler */
 
     /* 1. Test that *not* eliding blanks gives the right number of records */
     try
@@ -437,15 +448,15 @@ static int run_unittests()
 
         int iRet = 0;
 
-        if(12 != database.GetNumRecords())
+        if(NUM_RECORDS != database.GetNumRecords())
         {
-            fprintf(stderr, "Incorrect number of records\n");
+            cerr << "Incorrect number of records" << endl;
 
             iRet = 1;
         }
-        else if(25 != database.GetNumFields())
+        else if(NUM_FIELDS != database.GetNumFields())
         {
-            fprintf(stderr, "Incorrect number of fields\n");
+            cerr << "Incorrect number of fields" << endl;
 
             iRet = 1;
         }
@@ -466,11 +477,11 @@ static int run_unittests()
 
             if(0 == iRet)
             {
-                fprintf(stderr, "%d tests succeeded\n", NUM_TESTS);
+                cerr << NUM_TESTS << " tests succeeded" << endl;
             }
             else
             {
-                fprintf(stderr, "Test #%d failed\n", i);
+                cerr << "Test #" << i << " failed" << endl;
             }
         }
 

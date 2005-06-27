@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 25th May 2005
+ * Updated: 7th June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_H_OPENRJ_MAJOR      1
-# define OPENRJ_VER_H_OPENRJ_MINOR      13
+# define OPENRJ_VER_H_OPENRJ_MINOR      14
 # define OPENRJ_VER_H_OPENRJ_REVISION   1
-# define OPENRJ_VER_H_OPENRJ_EDIT       42
+# define OPENRJ_VER_H_OPENRJ_EDIT       43
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -80,13 +80,14 @@
 # define OPENRJ_VER_1_2_2       0x01020200
 # define OPENRJ_VER_1_3_1       0x01030100
 # define OPENRJ_VER_1_3_2       0x01030200
+# define OPENRJ_VER_1_3_3       0x01030300
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
 #define OPENRJ_VER_MINOR    3
-#define OPENRJ_VER_REVISION 2
+#define OPENRJ_VER_REVISION 3
 
-#define OPENRJ_VER  OPENRJ_VER_1_3_2
+#define OPENRJ_VER  OPENRJ_VER_1_3_3
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -168,7 +169,7 @@
  * \endhtmlonly
  *
  * Hence, the value of the <b>Description</b> field in the second non-empty record (which
- * is the fifth record of any type), is 
+ * is the fifth record of any type), is:
  *
  * <b>This is a great book if you want to learn about the history of UNIX. It inspired the &lt;a href = "../libraries/index.html#openrj">Open-RJ&lt;/a> project</b>
  *
@@ -787,6 +788,15 @@ inline ORJRC ORJ_FreeDatabase(/* [in] */ ORJDatabase const *database)
  * @{
  */
 
+/** Nul-terminated, possibly NULL, C-string representation of the given ORJStringA instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_ptr_null(ORJStringA const &s)
+{
+    return (0 != s.len) ? s.ptr : NULL;
+}
+
 /** Nul-terminated C-string representation of the given ORJStringA instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -796,7 +806,7 @@ inline char const *c_str_ptr(ORJStringA const &s)
     return s.ptr;   /* This is ok, because Open-RJ guarantees that strings will be nul-terminated */
 }
 
-/** Not necessarily nul-terminated C-string representation of the given ORJStringA instance
+/** Nul-terminated C-string representation of the given ORJStringA instance
  *
  * \ingroup group_openrj_stringaccessshims
  */
@@ -812,6 +822,17 @@ inline char const *c_str_data(ORJStringA const &s)
 inline size_t c_str_len(ORJStringA const &s)
 {
     return s.len;
+}
+
+/** Nul-terminated, possibly NULL, C-string representation of the given ORJRC instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_ptr_null(ORJRC rc)
+{
+    char const *s   =   ORJ_GetErrorStringA(rc);
+
+    return ('\0' != s) ? s : NULL;
 }
 
 /** Nul-terminated C-string representation of the given ORJRC instance
@@ -839,6 +860,17 @@ inline char const *c_str_data(ORJRC rc)
 inline size_t c_str_len(ORJRC rc)
 {
     return ORJ_GetErrorStringLengthA(rc);
+}
+
+/** Nul-terminated, possibly NULL, C-string representation of the given ORJ_PARSE_ERROR instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline char const *c_str_ptr_null(ORJ_PARSE_ERROR pe)
+{
+    char const *s   =   ORJ_GetParseErrorStringA(pe);
+
+    return ('\0' != s) ? s : NULL;
 }
 
 /** Nul-terminated C-string representation of the given ORJ_PARSE_ERROR instance
@@ -960,6 +992,7 @@ inline S &operator <<(S &stm, ORJ_PARSE_ERROR pe)
 #endif /* OPENRJ_DOCUMENTATION_SKIP_SECTION */
 namespace stlsoft
 {
+    using ::openrj::c_str_ptr_null;
     using ::openrj::c_str_ptr;
     using ::openrj::c_str_data;
     using ::openrj::c_str_len;

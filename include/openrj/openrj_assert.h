@@ -78,9 +78,9 @@
  */
 
 #if defined(_MSC_VER)
-# define openrj_assert(expr)	_ASSERTE(expr)
+# define openrj_assert(expr)    _ASSERTE(expr)
 #else /* ? compiler */
-# define openrj_assert(expr)	assert(expr)
+# define openrj_assert(expr)    assert(expr)
 #endif /* compiler */
 
 /* ////////////////////////////////////////////////////////////////////////// */

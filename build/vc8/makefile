@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:	15th Feburary 2005
-# Updated:	25th May 2005
+# Updated:	28th June 2005
 #
 ################################################################################
 
@@ -88,7 +88,7 @@ CC_F_WARNING_ERR		=	-WX
 
 CPPC_F_NOLOGO		=	-nologo
 CPPC_F_COMPILE_ONLY	=	-c
-CPPC_F_WARNING_MAX	=	-W4
+CPPC_F_WARNING_MAX	=	-W4 -wd4800
 CPPC_F_WARNING_ERR	=	-WX
 CPPC_F_EXCEPTIONS	=	-EHsc
 CPPC_F_RTTI			=	-GR

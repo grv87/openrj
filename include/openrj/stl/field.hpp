@@ -4,7 +4,7 @@
  * Purpose: field class, in the STL mapping of the Open-RJ library.
  *
  * Created: 28th September 2004
- * Updated: 25th May 2005
+ * Updated: 7th June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MAJOR      1
-# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MINOR      3
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_MINOR      4
 # define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_REVISION   1
-# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_EDIT       13
+# define OPENRJ_VER_OPENRJ_STL_HPP_FIELD_EDIT       14
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -139,6 +139,23 @@ private:
  * Shims
  */
 
+/// \brief String access shim providing, possibly NULL, C-string access to the contents of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
+inline stlsoft::basic_shim_string<char, true> c_str_ptr_null(field const &f)
+{
+    ORJField const  *pf =   f.get_field();
+    string_t        s;
+
+    s.reserve(pf->name.len + 1 + pf->value.len);
+
+    s.append(pf->name.ptr, pf->name.len);
+    s.append(1, '=');
+    s.append(pf->value.ptr, pf->value.len);
+
+    return stlsoft::basic_shim_string<char, true>(s.c_str(), s.length());
+}
+
 /// \brief String access shim providing C-string access to the contents of a Field instance
 ///
 /// \ingroup group_openrj_stringaccessshims
@@ -154,6 +171,16 @@ inline stlsoft::basic_shim_string<char> c_str_ptr(field const &f)
     s.append(pf->value.ptr, pf->value.len);
 
     return stlsoft::basic_shim_string<char>(s.c_str(), s.length());
+}
+
+/// \brief String access shim length of C-string form of a Field instance
+///
+/// \ingroup group_openrj_stringaccessshims
+inline size_t c_str_len(field const &f)
+{
+    ORJField const  *pf =   f.get_field();
+
+    return pf->name.len + 1 + pf->value.len;
 }
 
 /// \brief String access shim providing (potentially non-nul-terminated) C-string access to the contents of a Field instance
@@ -258,7 +285,10 @@ inline ORJRecord const *field::get_record() const
 
 namespace stlsoft
 {
+    using ::openrj::stl::c_str_ptr_null;
     using ::openrj::stl::c_str_ptr;
+    using ::openrj::stl::c_str_data;
+    using ::openrj::stl::c_str_len;
 }
 
 /* ////////////////////////////////////////////////////////////////////////// */

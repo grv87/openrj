@@ -6,7 +6,7 @@
  *              and attempts to be a smallest-possible informative example.
  *
  * Created:     24th May 2005
- * Updated:     25th May 2005
+ * Updated:     19th June 2005
  *
  * www:         http://www.openrj.org/
  *
@@ -70,6 +70,7 @@ static const char   contents[] =
     "Breed:     German \\\n"
     "           Shepherd\n"
     "%%\n"
+#if !defined(__GNUC__)
     "Name:      Pepper\n"
     "Species:   Dog\n"
     "Breed:     Border Collie\n"
@@ -83,6 +84,7 @@ static const char   contents[] =
     "Breed:     Shetland \\\n"
     "           Sheepdog\n"
     "%%\n"
+#endif /* compiler */
     "Name:      Sparky\n"
     "Species:   Cat\n"
     "%%\n";
@@ -93,16 +95,18 @@ int main(int /* argc */, char * /* argv */[])
 {
     try
     {
-        // 1. Create a database instance on memory, so use memory_database
+        // 1. Create a database instance on memory, using openrj::stl::memory_database
+
+        cout << endl << "1. Create a database instance on memory, using openrj::stl::memory_database" << endl << endl;
 
         unsigned                        flags   =   0;  // No special flags here.
         openrj::stl::memory_database    db(&contents[0], sizeof(contents), flags);
 
         // 2. Display database characteristics
 
-        cout << endl << "2. Display database characteristics:" << endl;
+        cout << endl << "2. Display database characteristics:" << endl << endl;
 
-        cout    << "Database has " 
+        cout    << "  Database has " 
                 << db.num_lines() << " lines in " 
                 << db.num_fields() << " fields in "
                 << db.num_records() << " records"
@@ -110,15 +114,15 @@ int main(int /* argc */, char * /* argv */[])
 
         // 3. Enumerate the contents using subscript operators
 
-        cout << endl << "3. Enumerate records and their fields using subscript operators:" << endl;
+        cout << endl << "3. Enumerate records and their fields using subscript operators:" << endl << endl;
 
         { for(size_t iRecord = 0; iRecord < db.size(); ++iRecord)
         {
             openrj::stl::record record(db[iRecord]);
 
-            cout    << "record-#" << iRecord
+            cout    << "  record-#" << iRecord
                     << " " << record.comment() << " "
-                    << " (" << db.size() << " fields)"
+                    << " (" << record.size() << " fields)"
                     << endl;
 
             for(size_t iField = 0; iField < record.size(); ++iField)
@@ -127,13 +131,13 @@ int main(int /* argc */, char * /* argv */[])
                 std::string         name    =   field.name();
                 std::string         value   =   field.value();
 
-                cout << "  field-#" << iField << ": " << field << endl;
+                cout << "    field-#" << iField << ": " << field << endl;
             }
         }}
 
         // 4. Enumerate the contents using begin()/end() methods
 
-        cout << endl << "4. Enumerate records and their fields using begin()/end() methods:" << endl;
+        cout << endl << "4. Enumerate records and their fields using begin()/end() methods:" << endl << endl;
 
         openrj::stl::database_base::const_iterator   begin   =   db.begin();
         openrj::stl::database_base::const_iterator   end     =   db.end();
@@ -142,9 +146,9 @@ int main(int /* argc */, char * /* argv */[])
         {
             openrj::stl::record record(*begin);
 
-            cout    << "record"
+            cout    << "  record"
                     << " " << record.comment() << " "
-                    << " (of " << db.size() << " fields)"
+                    << " (" << record.size() << " fields)"
                     << endl;
 
             openrj::stl::record::const_iterator begin   =   record.begin();
@@ -156,40 +160,44 @@ int main(int /* argc */, char * /* argv */[])
                 std::string         name    =   field.name();
                 std::string         value   =   field.value();
 
-                // VC++ 6.0 and earlier don't do the insertion operator properly
-#if !defined(__STLSOFT_COMPILER_IS_MSVC) || \
-_MSC_VER > 1200
-                cout << "  field" << " " << field << endl;
-#else /* ? compiler */
-                cout << "  field" << " " << stlsoft::c_str_ptr(field) << endl;
-#endif /* compiler */
+                cout << "    field" << " " << field << endl;
             }
         }}
 
 #ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS // Not all compilers support this, so ...
         // 5. Enumerate all the fields of the database en bloc
 
-        cout << endl << "5. Enumerate all the fields of the database en bloc:" << endl;
+        cout << endl << "5. Enumerate all the fields of the database en bloc:" << endl << endl;
 
         cout << endl << "All fields:" << endl;
         std::copy(db.fields_begin(), db.fields_end(), std::ostream_iterator<openrj::stl::field>(std::cout, "\n"));
 #endif /* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */
 
-#if 0
         // 6. Carry out some name lookups
-            if(record.has_field("Name"))
+        { for(size_t iRecord = 0; iRecord < db.size(); ++iRecord)
+        {
+            openrj::stl::record record(db[iRecord]);
+
+            cout    << "  record-#" << iRecord
+                    << " " << record.comment() << " "
+                    << " (" << record.size() << " fields)"
+                    << endl;
+
+            if(record.has_field("Breed"))
             {
-                openrj::stl::string_t   value       =   record["Name"];
+                openrj::stl::string_t   value       =   record["Breed"];
 
-                cout << "This record has a \"Name\" field, whose value is " << value << endl;
-
-                size_t                  numNames    =   record.count_fields("Name");
-
-                STLSOFT_SUPPRESS_UNUSED(numNames);
+                cout << "    This record has a \"Breed\" field, whose value is " << value << endl;
             }
-#endif /* 0 */
+            else
+            {
+                cout << "    This record does not have a \"Breed\" field" << endl;
+            }
 
+            size_t                  numNames    =   record.count_fields("Species");
 
+            STLSOFT_SUPPRESS_UNUSED(numNames);
+        }}
     }
     catch(std::exception &x)
     {
