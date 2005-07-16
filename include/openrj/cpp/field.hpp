@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    field.hpp
+ * File:    openrj/cpp/field.hpp
  *
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 7th June 2005
+ * Updated: 10th July 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    4
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 1
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     12
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     13
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 6th June 2005
+ * Updated: 17th July 2005
  *
  * Home:    http://openrj.org/
  *
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
 # define OPENRJ_VER_C_ORJAPI_MINOR      5
-# define OPENRJ_VER_C_ORJAPI_REVISION   4
-# define OPENRJ_VER_C_ORJAPI_EDIT       33
+# define OPENRJ_VER_C_ORJAPI_REVISION   5
+# define OPENRJ_VER_C_ORJAPI_EDIT       34
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -863,28 +863,6 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
     *numRecords         =   0;
 /*  *error->invalidLine =   -1; */
 
-#if !defined(WIN32)
-    /* Remove all carriage returns. This has to be done on other platforms,
-     * since we might be using data files created on Windows.
-     */
-    for(begin = py, next = py; begin != end; ++begin)
-    {
-        if('\r' == *begin)
-        {
-            --*numChars;
-        }
-        else
-        {
-            if(next != begin)
-            {
-                *next = *begin;
-            }
-            ++next;
-        }
-    }
-    end = py + *numChars;
-#endif /* !WIN32 */
-
     /* Trim all trailing whitespace (space or tab)
      *
      * This is effected by a single pass through the data, and noting the ends
@@ -905,10 +883,25 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
 
         switch(this_char)
         {
+#if 0
+            case    '\r':
+                if( begin + 1 == end ||
+                    '\n' != begin[1])
+                {
+                }
+#endif /* 0 */
             case    '\n':
                 /* (1) Copy all from [start:begin) => dest, and advance dest */
                 cch = (size_t)(begin - start);
                 dest = copy_advance(dest, start, cch);
+                if('\r' == last_char)
+                {
+                    openrj_assert(dest > py);
+                    openrj_assert(*numChars > 0);
+
+                    --dest;
+                    --*numChars;
+                }
 
                 /* (2) One more line to insert */
                 ++numLinesToInsert;
@@ -962,6 +955,7 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
 
                 break;
             case    ' ':
+            case    '\r':
             case    '\t':
                 /* If this is the beginning of the line, then we ignore it
                  * If it's at the end of the line, then we ignore it
@@ -983,6 +977,7 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
                     for(f = (char*)begin; f != end; )
                     {
                         if( ' ' == *f ||
+                            '\r' == *f ||
                             '\t' == *f)
                         {
                             ++f;
@@ -1100,6 +1095,8 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
 
         return 0;
     }
+
+    openrj_assert((ptrdiff_t)*numChars == dest - py);
 
     return 1;
 }

@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    record.hpp
+ * File:    openrj/cpp/record.hpp
  *
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 19th June 2005
+ * Updated: 17th July 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       6
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    3
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        16
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        17
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
