@@ -71,6 +71,7 @@ This class opens and provides access to a memory-based Open-RJ database.
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
 <tr><td nowrap align=right valign=top>const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez14_0">operator[]</a> (size_t index) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Returns the requested record.</em> <a href="#openrj_1_1cpp_1_1_memory_databasez14_0"></a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez14_1">operator[]</a> (int index) const</td></tr>
 <tr><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr><td nowrap align=right valign=top>bool&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez12_0">is_open</a> () const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Indicates whether the database is open.</em> <a href="#openrj_1_1cpp_1_1_memory_databasez12_0"></a><em></em></font><br><br></td></tr>
@@ -84,6 +85,7 @@ This class opens and provides access to a memory-based Open-RJ database.
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
 <tr><td nowrap align=right valign=top>const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez14_0">operator[]</a> (size_t index) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Returns the requested record.</em> <a href="#openrj_1_1cpp_1_1_memory_databasez14_0"></a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez14_1">operator[]</a> (int index) const</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Construction</div></td></tr>
 <tr><td nowrap align=right valign=top>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez27_0">MemoryDatabase</a> (char const *contents, size_t cbContents, unsigned flags=0)</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Constructs a database instance from the given memory, and the optional flags.</em> <a href="#openrj_1_1cpp_1_1_memory_databasez27_0"></a><em></em></font><br><br></td></tr>
@@ -104,6 +106,7 @@ This class opens and provides access to a memory-based Open-RJ database.
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
 <tr><td nowrap align=right valign=top>const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez14_0">operator[]</a> (size_t index) const</td></tr>
 <tr><td>&nbsp;</td><td><font size=-1><em>Returns the requested record.</em> <a href="#openrj_1_1cpp_1_1_memory_databasez14_0"></a><em></em></font><br><br></td></tr>
+<tr><td nowrap align=right valign=top>const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a>&nbsp;</td><td valign=bottom><a class="el" href="classopenrj_1_1cpp_1_1_memory_database.html#openrj_1_1cpp_1_1_memory_databasez14_1">operator[]</a> (int index) const</td></tr>
 </table>
 <hr><h2>Member Typedef Documentation</h2>
 <a name="openrj_1_1cpp_1_1_memory_databasez26_0" doxytag="openrj::cpp::MemoryDatabase::class_type"></a><p>
@@ -409,6 +412,35 @@ Returns the number of records in the database.
 
 <p>
 Indicates whether the database is open.
+<p>
+    </td>
+  </tr>
+</table>
+<a name="openrj_1_1cpp_1_1_memory_databasez14_1" doxytag="openrj::cpp::MemoryDatabase::operator[]"></a><p>
+<table width="100%" cellpadding="2" cellspacing="0" border="0">
+  <tr>
+    <td class="md">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top"> const <a class="el" href="classopenrj_1_1cpp_1_1_record.html">Record</a> operator[] </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="md" nowrap valign="top">int&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>&nbsp; <em>index</em>          </td>
+          <td class="md" valign="top">)&nbsp;</td>
+          <td class="md" nowrap> const<code> [inline, inherited]</code></td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing=5 cellpadding=0 border=0>
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
 <p>
     </td>
   </tr>

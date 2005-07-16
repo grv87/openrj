@@ -43,7 +43,7 @@
 00004 <span class="comment"> * Purpose: DatabaseBase class, in the C++ mapping of the Open-RJ library</span>
 00005 <span class="comment"> *</span>
 00006 <span class="comment"> * Created: 12th April 2005</span>
-00007 <span class="comment"> * Updated: 25th May 2005</span>
+00007 <span class="comment"> * Updated: 12th July 2005</span>
 00008 <span class="comment"> *</span>
 00009 <span class="comment"> * Home:    http://openrj.org/</span>
 00010 <span class="comment"> *</span>
@@ -87,8 +87,8 @@
 00052 <span class="preprocessor">#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION</span>
 00053 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MAJOR       1</span>
 00054 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MINOR       0</span>
-00055 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    2</span>
-00056 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        4</span>
+00055 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    3</span>
+00056 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        5</span>
 00057 <span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_DOCUMENTATION_SKIP_SECTION */</span>
 00058 
 00059 <span class="comment">/* </span>
@@ -173,28 +173,32 @@
 00167 
 00168         <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1cpp_1_1_record.html">Record</a>(m_database-&gt;<a class="code" href="structopenrj_1_1_o_r_j_database_a.html#openrj_1_1_o_r_j_database_am6">records</a>[index]);
 00169     }
-00171 
-00174 <span class="keyword">private</span>:
-00175     <a class="code" href="namespaceopenrj.html#a4">ORJDatabase</a> <span class="keyword">const</span>   *m_database;
-00177 
-00178 <span class="comment">// Not to be implemented</span>
-00179 <span class="keyword">private</span>:
-00180     <a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a>(<a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a> <span class="keyword">const</span> &amp;);
-00181     <a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a> <span class="keyword">const</span> &amp;operator =(<a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a> <span class="keyword">const</span> &amp;);
-00182 };
-00183 
-00184 <span class="comment">/* </span>
-00185 <span class="comment"> * Namespace</span>
-00186 <span class="comment"> */</span>
+<a name="l00170"></a><a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_memory_databasez14_1">00170</a>     <span class="keyword">const</span> <a class="code" href="classopenrj_1_1cpp_1_1_record.html">Record</a> <a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_memory_databasez14_0">operator []</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
+00171 <span class="keyword">    </span>{
+00172         <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_memory_databasez14_0">operator []</a>(static_cast&lt;size_t&gt;(index));
+00173     }
+00175 
+00178 <span class="keyword">private</span>:
+00179     <a class="code" href="namespaceopenrj.html#a4">ORJDatabase</a> <span class="keyword">const</span>   *m_database;
+00181 
+00182 <span class="comment">// Not to be implemented</span>
+00183 <span class="keyword">private</span>:
+00184     <a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a>(<a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a> <span class="keyword">const</span> &amp;);
+00185     <a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a> <span class="keyword">const</span> &amp;operator =(<a class="code" href="classopenrj_1_1cpp_1_1_database_base.html#openrj_1_1cpp_1_1_database_basez11_2">DatabaseBase</a> <span class="keyword">const</span> &amp;);
+00186 };
 00187 
-00188 } <span class="comment">// namespace cpp</span>
-00189 } <span class="comment">// namespace openrj</span>
-00190 
-00191 <span class="comment">/* </span>
-00192 <span class="comment"></span>
-00193 <span class="comment">#endif /* !OPENRJ_INCL_OPENRJ_CPP_HPP_DATABASEBASE */</span>
+00188 <span class="comment">/* </span>
+00189 <span class="comment"> * Namespace</span>
+00190 <span class="comment"> */</span>
+00191 
+00192 } <span class="comment">// namespace cpp</span>
+00193 } <span class="comment">// namespace openrj</span>
 00194 
 00195 <span class="comment">/* </span>
+00196 <span class="comment"></span>
+00197 <span class="comment">#endif /* !OPENRJ_INCL_OPENRJ_CPP_HPP_DATABASEBASE */</span>
+00198 
+00199 <span class="comment">/* </span>
 </pre></div><table width = "100%">
  <tr>
   <td width = "100%">

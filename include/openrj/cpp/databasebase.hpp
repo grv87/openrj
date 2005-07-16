@@ -4,7 +4,7 @@
  * Purpose: DatabaseBase class, in the C++ mapping of the Open-RJ library
  *
  * Created: 12th April 2005
- * Updated: 25th May 2005
+ * Updated: 12th July 2005
  *
  * Home:    http://openrj.org/
  *
@@ -52,8 +52,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MINOR       0
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    2
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        4
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    3
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        5
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -166,6 +166,10 @@ public:
         openrj_assert(index <= GetNumRecords());
 
         return Record(m_database->records[index]);
+    }
+    const Record operator [](int index) const
+    {
+        return operator [](static_cast<size_t>(index));
     }
 /// @}
 

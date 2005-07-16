@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    openrj-cpp.hpp
+ * File:    openrj/cpp/openrj.hpp
  *
  * Purpose: Root header file for the C++ mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 25th May 2005
+ * Updated: 10th July 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       4
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        13
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        14
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

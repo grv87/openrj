@@ -4,7 +4,7 @@
  * Purpose: Implementation file of the Open-RJ Ruby mapping.
  *
  * Created: 15th June 2004
- * Updated: 25th May 2005
+ * Updated: 30th June 2005
  *
  * Home:    http://openrj.org/
  *
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_RUBY_MAJOR     1
 # define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     8
-# define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  1
-# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      18
+# define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  2
+# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      19
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -1046,6 +1046,9 @@ static VALUE openrj_usage(VALUE self)
         ,   "                                  instance is returned. If the index is out of"
         ,   "                                  bounds, then the default value provided is"
         ,   "                                  returned."
+        ,   "        include?                - indicates whether the given name is the name of a"
+        ,   "                                  field in the record"
+        ,   "        member?                 - same as include?"
         ,   "        to_s                    - returns a string form of the record"
         ,   "    Class: Field"
         ,   "      Attributes:"

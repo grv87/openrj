@@ -1,10 +1,10 @@
 /* /////////////////////////////////////////////////////////////////////////////
- * File:    database.hpp
+ * File:    openrj/cpp/database.hpp
  *
  * Purpose: Database class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 25th May 2005
+ * Updated: 10th July 2005
  *
  * Home:    http://openrj.org/
  *
@@ -53,7 +53,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MAJOR     1
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MINOR     6
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      18
+# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      19
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
