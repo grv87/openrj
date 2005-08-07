@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 17th July 2005
+ * Updated: 8th August 2005
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
-# define OPENRJ_VER_C_ORJAPI_MINOR      5
-# define OPENRJ_VER_C_ORJAPI_REVISION   5
-# define OPENRJ_VER_C_ORJAPI_EDIT       34
+# define OPENRJ_VER_C_ORJAPI_MINOR      6
+# define OPENRJ_VER_C_ORJAPI_REVISION   3
+# define OPENRJ_VER_C_ORJAPI_EDIT       38
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -73,6 +73,7 @@
 #include <openrj/openrj_assert.h>
 #include <openrj/openrj_memory.h>
 
+#include <stdarg.h>
 #ifndef OPENRJ_NO_STDIO
 # include <stdio.h>
 #endif /* !OPENRJ_NO_STDIO */
@@ -90,9 +91,48 @@
 
 #define round_up_16_(x)     (((x) + 15) & (~15))
 
+/* /////////////////////////////////////////////////////////////////////////////
+ * Macros
+ */
+
+#ifndef NUM_ELEMENTS
+# define NUM_ELEMENTS(x)    (sizeof(x) / sizeof((x)[0]))
+#endif /* !NUM_ELEMENTS */
+
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define false              (0)
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * Compiler/library compatibility
+ */
+
+#if defined(__DMC__)
+# define openrj_vsnprintf_  vsnprintf
+
+int openrj_snprintf_(char *dest, int cch, char *fmt, ...)
+{
+    va_list args;
+    int     ret;
+
+    va_start(args, fmt);
+    ret = vsnprintf(dest, cch, fmt, args);
+    va_end(args);
+
+    return ret;
+}
+#elif defined(_MSC_VER)
+# define openrj_snprintf_   _snprintf
+# define openrj_vsnprintf_  _vsnprintf
+#else /* ? compiler */
+# define openrj_snprintf_   snprintf
+# define openrj_vsnprintf_  vsnprintf
+#endif /* compiler */
+
+#if defined(_MSC_VER) && \
+    _MSC_VER >= 1300
+# pragma warning(disable : 4709)
+#endif /* compiler */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Forward declarations
@@ -728,6 +768,42 @@ ORJ_CALL(ORJFieldA const*) ORJ_Record_FindFieldByNameA( /* [in] */ ORJRecordA co
     return NULL;
 }
 
+ORJ_CALL(ORJFieldA const*) ORJ_Record_FindNextFieldA(   /* [in] */ ORJRecordA const *record
+                                                    ,   /* [in] */ ORJFieldA const  *fieldAfter /* = NULL */
+                                                    ,   /* [in] */ char const       *fieldName  /* = NULL */
+                                                    ,   /* [in] */ char const       *fieldValue /* = NULL */)
+{
+    ORJFieldA const *begin;
+    ORJFieldA const *end;
+
+    openrj_assert(NULL != record);
+    openrj_assert(NULL == fieldAfter || (fieldAfter >= &record->fields[0] && fieldAfter < &record->fields[record->numFields]));
+
+    begin   =   (NULL == fieldAfter) ? &record->fields[0] : (ORJFieldA*)(fieldAfter + 1);
+    end     =   &record->fields[record->numFields];
+    for(; begin != end; ++ begin)
+    {
+        /* Test name */
+        if( NULL != fieldName &&
+            0 != strncmp(fieldName, begin->name.ptr, begin->name.len))
+        {
+            continue;
+        }
+
+        /* Test value */
+        if( NULL != fieldValue &&
+            0 != strncmp(fieldValue, begin->value.ptr, begin->value.len))
+        {
+            continue;
+        }
+
+        return begin;
+    }
+
+    return NULL;
+}
+
+
 ORJ_CALL(ORJDatabaseA const*) ORJ_Record_GetDatabaseA(/* [in] */ ORJRecordA const *record)
 {
     openrj_assert(NULL != record);
@@ -780,6 +856,107 @@ ORJ_CALL(ORJRecordA const*) ORJ_Field_GetRecordA(  /* [in] */ ORJFieldA const *f
     openrj_assert(NULL != field);
 
     return (ORJRecordA const*)field->reserved0;
+}
+
+ORJ_CALL(int) ORJ_FormatErrorA( /* [in] */ char             *dest
+                            ,   /* [in] */ size_t           cchDest
+                            ,   /* [in] */ ORJRC            rc
+                            ,   /* [in] */ ORJError const   *error  /* = NULL */
+                            ,   /* [in] */ char const       *fmt
+                            ,   /* [in] */ ...
+                            )
+{
+    va_list         args;
+    char            e[201];
+    char            f[1001];
+    char const      *E;
+    int             n;
+
+    openrj_assert(NULL != dest || 0 == cchDest);
+    openrj_assert(NULL != fmt);
+    openrj_assert(strlen(fmt) < 768);
+
+    va_start(args, fmt);
+
+    if( NULL != error &&
+        ORJ_RC_PARSEERROR == rc)
+    {
+        openrj_snprintf_(   &e[0]
+                        ,   NUM_ELEMENTS(e) - 1
+                        ,   "parse error at line %d, column %d: %s"
+                        ,   error->invalidLine
+                        ,   error->invalidColumn
+                        ,   ORJ_GetParseErrorStringA(error->parseError));
+        e[NUM_ELEMENTS(e) - 1] = '\0';
+    }
+    else
+    {
+        strncpy(&e[0], ORJ_GetErrorStringA(rc), NUM_ELEMENTS(e) - 1);
+        e[NUM_ELEMENTS(e) - 1] = '\0';
+    }
+
+    E = strstr(fmt, "%E");
+    if(NULL != E)
+    {
+        const size_t    cchFmt  =   strlen(fmt);
+        const size_t    cchPre  =   (size_t)(E - fmt);
+        const size_t    cchPost =   cchFmt - (2 + cchPre);
+        const size_t    cchErr  =   strlen(e);
+
+        if(cchDest < cchPre + cchErr + cchPost + 1)
+        {
+            goto plain_printf;
+        }
+
+        strncpy(&f[0], fmt, cchPre);
+        strncpy(&f[0] + cchPre, e, cchErr);
+        strncpy(&f[0] + cchPre + cchErr, fmt + cchPre + 2, cchPost);
+        f[cchPre + cchErr + cchPost] = '\0';
+
+        n = openrj_vsnprintf_(&dest[0], cchDest - 1, f, args);
+        if(n < 0)
+        {
+            n = (int)cchDest - 1;
+        }
+    }
+    else
+    {
+        /* No %E specifiers, so just sprintf() the given arguments, and
+         * append ": <error string>"
+         */
+plain_printf:
+        n = openrj_vsnprintf_(&dest[0], cchDest, fmt, args);
+        if(n < 0)
+        {
+            n = (int)cchDest - 1;
+        }
+        if((size_t)(n + 1) < cchDest)
+        {
+            size_t  remaining   =   (cchDest - 1) - n;
+
+            if(remaining > 0)
+            {
+                dest[--remaining, n++] = ':';
+            }
+            if(remaining > 0)
+            {
+                dest[--remaining, n++] = ' ';
+            }
+
+            strncpy(&dest[n], e, remaining);
+            n += remaining;
+            dest[n] = '\0';
+        }
+    }
+
+    if(cchDest > 0)
+    {
+        dest[cchDest - 1] = '\0';
+    }
+
+    va_end(args);
+
+    return n;
 }
 
 /* ////////////////////////////////////////////////////////////////////////// */
@@ -839,9 +1016,6 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
     char const  *begin;
     char const  *start;
     char        *dest;
-#if !defined(WIN32)
-    char        *next;
-#endif /* !WIN32 */
     char        last_char               =   0;
     int         numLinesToInsert;
     int         numInitialWsToSkip      =   0;
@@ -1002,6 +1176,15 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
                         start = f + 1;
                         ++numLinesToInsert;
                     }
+                }
+
+                if(1 == leadingCommentChars)
+                {
+                    /* This addresses the bug whereby a line "% %" was deemed
+                     * a valid record terminator
+                     */
+                    leadingCommentChars =   0;
+                    numInitialWsToSkip  =   0;
                 }
                 break;
             case    '%':
