@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 10th July 2005
+ * Updated: 8th August 2005
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_H_OPENRJ_MAJOR      1
-# define OPENRJ_VER_H_OPENRJ_MINOR      14
-# define OPENRJ_VER_H_OPENRJ_REVISION   2
-# define OPENRJ_VER_H_OPENRJ_EDIT       44
+# define OPENRJ_VER_H_OPENRJ_MINOR      15
+# define OPENRJ_VER_H_OPENRJ_REVISION   1
+# define OPENRJ_VER_H_OPENRJ_EDIT       45
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -82,13 +82,14 @@
 # define OPENRJ_VER_1_3_2       0x01030200
 # define OPENRJ_VER_1_3_3       0x01030300
 # define OPENRJ_VER_1_3_4       0x01030400
+# define OPENRJ_VER_1_4_1       0x01040100
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
-#define OPENRJ_VER_MINOR    3
-#define OPENRJ_VER_REVISION 4
+#define OPENRJ_VER_MINOR    4
+#define OPENRJ_VER_REVISION 1
 
-#define OPENRJ_VER  OPENRJ_VER_1_3_4
+#define OPENRJ_VER  OPENRJ_VER_1_4_1
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -563,6 +564,18 @@ ORJ_CALL(ORJFieldA const*) ORJ_Record_FindFieldByNameA( /* [in] */ ORJRecordA co
                                                     ,   /* [in] */ char const       *fieldName
                                                     ,   /* [in] */ char const       *fieldValue);
 
+/** \brief Finds a field in a record, relative to a specified field, based on optional name and/or value
+ *
+ * \param record The record from which to retrieve the field
+ * \param fieldAfter The field to start the search from. NULL to get the first field.
+ * \param fieldName The name of the field. May be NULL for no filtering on name
+ * \param fieldValue The value of the field. May be NULL for no filtering on value
+ */
+ORJ_CALL(ORJFieldA const*) ORJ_Record_FindNextFieldA(   /* [in] */ ORJRecordA const *record
+                                                    ,   /* [in] */ ORJFieldA const  *fieldAfter /* = NULL */
+                                                    ,   /* [in] */ char const       *fieldName  /* = NULL */
+                                                    ,   /* [in] */ char const       *fieldValue /* = NULL */);
+
 /** \brief Gives the database associated with the record
  *
  * \param record The record. May not be NULL
@@ -679,6 +692,34 @@ ORJ_CALL(char const *) ORJ_GetParseErrorStringA( /* [in] */ ORJ_PARSE_ERROR erro
  * \note If the error is not recognised, the function returns 0
  */
 ORJ_CALL(size_t) ORJ_GetParseErrorStringLengthA( /* [in] */ ORJ_PARSE_ERROR errorCode);
+
+
+/* \brief Formats an error string 
+ *
+ * Formats an error string, specifying information for error code and parse
+ * error structure information.
+ *
+ * \param dest Pointer to a character buffer to receive the formatted results
+ * \param cchDest Length of dest in characters
+ * \param rc The Open-RJ result code
+ * \param error The Open-RJ parsing error structure. Only consulted if 
+ *   rc == ORJ_RC_PARSEERROR. May be NULL.
+ * \param fmt Format string. May contain the special format specifier %E, which
+ *   the formatted error string will replace. If the %E is not specified, then
+ *   ": " and the formatted error string will be appended to the end of the
+ *   string.
+ *
+ * \note Length of fmt string must be <= 768 characters
+ *
+ */
+
+ORJ_CALL(int) ORJ_FormatErrorA( /* [in] */ char             *dest
+                            ,   /* [in] */ size_t           cchDest
+                            ,   /* [in] */ ORJRC            rc
+                            ,   /* [in] */ ORJError const   *error  /* = NULL */
+                            ,   /* [in] */ char const       *fmt
+                            ,   /* [in] */ ...
+                            );
 
 /** @} */
 
@@ -931,6 +972,7 @@ inline size_t c_str_len(ORJ_PARSE_ERROR pe)
  * std::cout << pe << std::end; // Prints "The last line in the database was not terminated by a line-feed"
  *
  * </pre>
+ * \endhtmlonly
  * 
  * @{
  */

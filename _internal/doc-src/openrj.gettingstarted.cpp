@@ -1,5 +1,5 @@
 
-// Updated: 25th May 2005
+// Updated: 8th August 2005
 
 /** \page page_gettingstarted Getting Started
  *
@@ -8,6 +8,7 @@
  * This section guides you to finding sample programs for your chosed language.
  * Just click on the language below, to be taken to the example programs:
  *
+ * \ref section_building_core_libs | 
  * \ref section_sample_C | \ref section_sample_Ch |
  * \ref section_sample_Cpp | \ref section_sample_Python | 
  * \ref section_sample_Ruby
@@ -15,6 +16,27 @@
  */
  
 /** \page page_using_C Using Open-RJ in C
+ *
+ * \section section_building_core_libs Building the base libraries
+ *
+ * 1. Open a console window with appropriate environment set up for your chosen
+ * compiler.
+ *
+ * 2. Navigate to the requesite directory under the Open-RJ build directory. For
+ * example, if your compiler is Borland C/C++ 5.6, then change directory to
+ * $OPENRJ_DEV/build/bc56 (where $OPENRJ_DEV is the actual directory into which
+ * you have installed the Open-RJ distribution.
+ *
+ * 3. Execute the MAKE command. For compilers that support multiple platforms,
+ * there will be multiple makefiles in the directory, e.g. makefile.mac, 
+ * makefile.win32. In that case, you should stipulate the makefile, using the
+ * -f flag. For others, that are one platform only, there will just be a single
+ * file named makefile.
+ *
+ * So, to build the files and test programs for Borland
+ * C/C++ 5.6, which is a Win32-only compiler you would simply execute "make".
+ * Conversely, for GCC, which is supported on multiple platforms, you would
+ * execute the command "make -f makefile.unix".
  *
  * \section section_sample_C Using Open-RJ in C
  *
