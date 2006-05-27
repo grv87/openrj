@@ -4,11 +4,11 @@
  * Purpose: Forward declarations for the Open-RJ STL mapping
  *
  * Created: 27th November 2004
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,15 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/stl/openrjfwd.hpp Forward declarations for the Open-RJ STL mapping
+/** \file openrj/stl/openrjfwd.hpp
  *
+ * \brief [C++ only] Forward declarations for the
+ *  \link openrj::stl Open-RJ/STL\endlink mapping.
+ *
+ * This file is useful for the case where you wish to implement your
+ * components in terms of types of the openrj::stl namespace, but do not
+ * need to include the full definitions in order to define the
+ * components.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_STL_HPP_OPENRJFWD
@@ -53,7 +60,7 @@
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJFWD_MAJOR      1
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJFWD_MINOR      1
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJFWD_REVISION   1
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJFWD_EDIT       6
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJFWD_EDIT       7
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,7 +69,7 @@
 
 namespace openrj
 {
-/// \brief The Open-RJ STL namespace - \c openrj::stl
+/// \brief The namespace of the Open-RJ/STL mapping.
 ///
 /// This contains the field, record, file_database and memory_database classes,
 /// along with the exception class database_exception

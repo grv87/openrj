@@ -4,11 +4,11 @@
  * Purpose: Helper functions for the Open-RJ C++ mapping
  *
  * Created: 12th April 2005
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/functions.hpp Helper functions for the Open-RJ C++ mapping
+/** \file openrj/cpp/functions.hpp
  *
+ * \brief [C++ only] Helper functions for the Open-RJ C++ mapping
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_HPP_FUNCTIONS
@@ -51,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MAJOR      1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MINOR      0
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_REVISION   1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_EDIT       4
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MINOR      1
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_REVISION   2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_EDIT       7
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -65,7 +66,9 @@
 #include <openrj/cpp/record.hpp>
 #include <openrj/cpp/databasebase.hpp>
 
+#include <stlsoft/auto_buffer.hpp>
 #include <stlsoft/string_access.hpp>
+#include <stdio.h>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Namespace
@@ -83,9 +86,34 @@ namespace cpp
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 namespace helper
 {
-    inline Record throw_for_missing_Record(char const *reason)
+    inline Record throw_for_missing_Record(char const *reason, char const *recordName)
     {
-        throw ::std::out_of_range(reason);
+        try
+        {
+            const size_t                cchReason       =   ::strlen(reason);
+            const size_t                cchRecordName   =   ::strlen(recordName);
+            stlsoft::auto_buffer<char>  message(cchReason + 2 + cchRecordName + 1);
+
+            if(message.empty())
+            {
+                goto plain_throw;
+            }
+            else
+            {
+                ::sprintf(&message[0], "%*s: %*s", (int)cchReason, reason, (int)cchRecordName, recordName);
+
+                throw ::std::out_of_range(message.data());
+            }
+        }
+        catch(std::out_of_range &)
+        {
+            throw;
+        }
+        catch(...)
+        {
+plain_throw:
+            throw ::std::out_of_range(reason);
+        }
 
         return Record();
     }
@@ -96,6 +124,18 @@ namespace helper
 /* /////////////////////////////////////////////////////////////////////////////
  * Functions
  */
+
+/// \brief Looks up the named field in a record, or returns a default value if not found
+///
+/// \param fieldName The named of the field to be searched for
+/// \param r0 The record to be searched
+/// \param defaultValue The default value to be used if the named field is not found in the record
+///
+/// \return The value matching the field found in r0, or \c defaultValue if not found
+inline String Lookup(char const *fieldName, Record const &r0, char const *defaultValue)
+{
+    return r0.HasField(fieldName) ? r0[fieldName] : defaultValue;
+}
 
 /// \brief Looks up the named field in one of two records, or throws exception if not found in either
 ///
@@ -125,8 +165,6 @@ inline String Lookup(char const *fieldName, Record const &r0, Record const &r1, 
 }
 
 
-
-
 inline Record FindFirstRecordWithFieldName(DatabaseBase const &db, char const *name)
 {
     { for(size_t i = 0; i < db.GetNumRecords(); ++i)
@@ -137,7 +175,7 @@ inline Record FindFirstRecordWithFieldName(DatabaseBase const &db, char const *n
         }
     }}
 
-    return helper::throw_for_missing_Record("Matching record not found");
+    return helper::throw_for_missing_Record("Matching record not found", name);
 }
 
 template <typename S>

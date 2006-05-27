@@ -4,7 +4,7 @@
  * Purpose: Implementation file of the memory handling for the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 25th May 2005
+ * Updated: 1st January 2006
  *
  * Home:    http://openrj.org/
  *
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
 # define OPENRJ_VER_C_ORJMEM_MINOR      1
-# define OPENRJ_VER_C_ORJMEM_REVISION   2
-# define OPENRJ_VER_C_ORJMEM_EDIT       5
+# define OPENRJ_VER_C_ORJMEM_REVISION   3
+# define OPENRJ_VER_C_ORJMEM_EDIT       6
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@
  */
 
 #include <openrj/openrj.h>
-#include <openrj/openrj_assert.h>
+/* #include <openrj/openrj_assert.h> */
 #include <openrj/openrj_memory.h>
 
 #include <stdlib.h>

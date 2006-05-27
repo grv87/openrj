@@ -4,11 +4,11 @@
  * Purpose: Helper functions for use with the Open-RJ STL mapping
  *
  * Created: 2nd December 2004
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,10 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/stl/utility.hpp Helper functions for use with the Open-RJ STL mapping
+/** \file openrj/stl/utility.hpp
  *
+ * \brief [C++ only] Helper functions for use with the
+ *  \link openrj::stl Open-RJ/STL\endlink mapping.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_STL_HPP_UTILITY
@@ -53,7 +55,7 @@
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_MAJOR    1
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_MINOR    0
 # define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_REVISION 2
-# define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_EDIT     5
+# define OPENRJ_VER_OPENRJ_STL_HPP_UTILITY_EDIT     6
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

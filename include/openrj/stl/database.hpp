@@ -5,11 +5,11 @@
  *          Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 7th June 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,8 +39,10 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/stl/database.hpp file_database and memory_database classes, in the STL mapping of the Open-RJ library
+/** \file openrj/stl/database.hpp
  *
+ * \brief [C++ only] Definition of openrj::stl::file_database and
+ *  openrj::stl::memory_database classes.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_STL_HPP_DATABASE
@@ -53,8 +55,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       7
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    2
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        33
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    5
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        37
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -74,7 +76,7 @@
 
 #include <iterator>
 
-#include <stlsoft/indirect_reverse_iterator.hpp>
+#include <stlsoft/iterators/indirect_reverse_iterator.hpp>
 #include <stlsoft/iterator.hpp>
 #include <stlsoft/proxy_iterator.hpp>
 
@@ -93,7 +95,8 @@
 #if defined(__BORLANDC__) || \
     defined(__COMO__x) || \
     defined(__DMC__) || \
-    defined(__GNUC__) || \
+    (   defined(__GNUC__) && \
+        __GNUC__ < 4) || \
     (   defined(_MSC_VER) && \
         (   _MSC_VER < 1200 || \
             _MSC_VER == 1300)) /* For some reason VC++ 7.0 (not 6.0, 7.1) has a fit with this. */
@@ -162,7 +165,7 @@ public:
     typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_field_iterator
                                                         ,   field
                                                         ,   field // Return by value!
-                                                        ,   void*
+                                                        ,   void
                                                         ,   difference_type
                                                         >   const_reverse_field_iterator;
 # endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
@@ -178,19 +181,23 @@ public:
 
 #if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// The non-mutating (const) reverse iterator type
-#  if 0 // Can't use reverse_iterator, because const_iterator is a forward-declared member class
+#  if 0
     typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_iterator
                                                         ,   value_type
                                                         ,   value_type // Return by value!
-                                                        ,   void*
+                                                        ,   void
                                                         ,   difference_type
                                                         >   const_reverse_iterator;
 #  else /* ? 0 */
+    // Can't use reverse_iterator, because const_iterator is a forward-declared member 
+    // class - this now appears incorrect. Somehow I've made subsequent changes that
+    // nullify the requirement. TODO: Investigate further ...
     typedef stlsoft_ns_qual(indirect_reverse_iterator)<     const_iterator
                                                         ,   value_type
                                                         ,   value_type // Return by value!
-                                                        ,   void*
+                                                        ,   void
                                                         ,   difference_type
+                                                        ,   std::random_access_iterator_tag
                                                         >   const_reverse_iterator;
 #  endif /* 0 */
 #endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */

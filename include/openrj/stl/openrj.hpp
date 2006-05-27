@@ -4,11 +4,11 @@
  * Purpose: Root header file for the STL mapping of the Open-RJ library
  *
  * Created: 28th September 2004
- * Updated: 22nd June 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,10 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/stl/openrj.hpp Root header file for the C++ mapping of the Open-RJ library
+/** \file openrj/stl/openrj.hpp
  *
+ * [C++ only] Defines common typedefs and exception types used in the
+ *  \link openrj::stl Open-RJ/STL\endlink mapping.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_STL_HPP_OPENRJ
@@ -51,9 +53,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     3
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     4
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  1
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      14
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      18
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -63,11 +65,16 @@
 #include <openrj/openrj.h>
 #include <openrj/openrj_assert.h>
 
+#ifdef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# include <openrj/stl/openrjfwd.hpp>
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+
 #if defined(ORJ_NO_EXCEPTIONS)
 # error The Open-RJ STL mapping is not compilable in the absence of exceptions
 #endif /* ORJ_NO_EXCEPTIONS */
 
-#include <stlsoft.h>
+#include <stlsoft/stlsoft.h>
 
 #if !defined(_STLSOFT_VER_1_8_4)
 # error STLSoft version 1.8.4 or greater required. (www.stlsoft.org/downloads.html)
@@ -98,10 +105,6 @@
 
 namespace openrj
 {
-/// \brief The Open-RJ/STL namespace - \c openrj::stl
-///
-/// This contains the field, record, file_database and memory_database classes,
-/// along with the exception class database_exception
 namespace stl
 {
 
@@ -109,6 +112,7 @@ namespace stl
  * Typedefs
  */
 
+/** \brief String type used by the openrj::stl namespace. */
 #if defined(OPENRJ_USE_CUSTOM_STRING)
 typedef OPENRJ_CUSTOM_STRING_TYPE       string_t;
 #else /* OPENRJ_USE_CUSTOM_STRING */
@@ -139,10 +143,10 @@ public:
         , m_error(error)
         , m_message(create_message_(rc, error))
     {}
-#ifdef __STLSOFT_COMPILER_IS_GCC
+#ifdef STLSOFT_COMPILER_IS_GCC
     virtual ~database_exception() throw()
     {}
-#endif /* __STLSOFT_COMPILER_IS_GCC */
+#endif /* compiler */
 /// @}
 
 /// \name Accessors

@@ -4,11 +4,11 @@
  * Purpose: DatabaseBase class, in the C++ mapping of the Open-RJ library
  *
  * Created: 12th April 2005
- * Updated: 12th July 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/databasebase.hpp DatabaseBase class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/databasebase.hpp
  *
+ * \brief [C++ only] Definition of the openrj::cpp::DatabaseBase class.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_HPP_DATABASEBASE
@@ -51,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MAJOR       1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MINOR       0
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    3
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        5
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MINOR       1
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    1
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        7
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -161,15 +162,39 @@ public:
     ///
     /// \param index The index of the record to be returned. Must be less than the
     /// value returned by GetNumRecords()
+    const Record    GetRecord(size_t index) const
+    {
+        return operator [](index);
+    }
+
+    /// \brief Returns the requested record
+    ///
+    /// \param index The index of the record to be returned. Must be less than the
+    /// value returned by GetNumRecords()
     const Record operator [](size_t index) const
     {
         openrj_assert(index <= GetNumRecords());
 
         return Record(m_database->records[index]);
     }
+    /// \brief Returns the requested record
+    ///
+    /// \param index The index of the record to be returned. Must be less than the
+    /// value returned by GetNumRecords()
     const Record operator [](int index) const
     {
         return operator [](static_cast<size_t>(index));
+    }
+
+    /// \brief Returns the requested record
+    ///
+    /// \param index The index of the record to be returned. Must be less than the
+    /// value returned by GetNumRecords()
+    const Field GetField(size_t index) const
+    {
+        openrj_assert(index <= GetNumFields());
+
+        return Field(&m_database->fields[index]);
     }
 /// @}
 

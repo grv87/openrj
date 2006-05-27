@@ -4,11 +4,11 @@
  * Purpose: Assertions for the Open-RJ C-API
  *
  * Created: 11th June 2004
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,20 +38,23 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/openrj_assert.h Assertions for the Open-RJ C-API */
+/** \file openrj/openrj_assert.h
+ *
+ * \brief [C, C++] Assertions for the Open-RJ C-API
+ */
 
-#ifndef OPENRJ_INCL_H_OPENRJ_ASSERT
-#define OPENRJ_INCL_H_OPENRJ_ASSERT
+#ifndef OPENRJ_INCL_OPENRJ_H_OPENRJ_ASSERT
+#define OPENRJ_INCL_OPENRJ_H_OPENRJ_ASSERT
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
-# define OPENRJ_VER_H_OPENRJ_ASSERT_MAJOR       1
-# define OPENRJ_VER_H_OPENRJ_ASSERT_MINOR       1
-# define OPENRJ_VER_H_OPENRJ_ASSERT_REVISION    2
-# define OPENRJ_VER_H_OPENRJ_ASSERT_EDIT        9
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_ASSERT_MAJOR    1
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_ASSERT_MINOR    3
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_ASSERT_REVISION 1
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_ASSERT_EDIT     13
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -68,7 +71,7 @@
  * Functions and macros
  */
 
-/** \def openrj_assert(expr)
+/** \def OPENRJ_ASSERT(expr)
  *
  * Evaluates the expression, and aborts the program if it evaluates to zero/false
  *
@@ -78,13 +81,45 @@
  */
 
 #if defined(_MSC_VER)
-# define openrj_assert(expr)    _ASSERTE(expr)
+# define OPENRJ_ASSERT(expr)    _ASSERTE(expr)
 #else /* ? compiler */
-# define openrj_assert(expr)    assert(expr)
+# define OPENRJ_ASSERT(expr)    assert(expr)
+#endif /* compiler */
+
+/** \def openrj_assert(expr)
+ *
+ * Defines a compile-time assertion.
+ *
+ * \param expr Must be non-zero, or compilation will fail.
+ *
+ * \deprecated This is deprecated in favour of OPENRJ_ASSERT().
+ *
+ * \note This is a simple \#define for OPENRJ_ASSERT().
+ */
+#define openrj_assert(expr)         OPENRJ_ASSERT(expr)
+
+/** \def OPENRJ_MESSAGE_ASSERT
+ * \brief Assert macro for the Open-RJ API
+ *
+ * If the given expressions evaluates to false (0), the execution is halted and
+ * an error message given.
+ *
+ * \param m The literal string describing the failed condition
+ * \param x The expression that must evaluate to \c true
+ */
+
+#if defined(__WATCOMC__)
+# define OPENRJ_MESSAGE_ASSERT(m, x)        OPENRJ_ASSERT(x)
+#elif defined(__COMO__) || \
+       defined(__GNUC__) || \
+       defined(__MWERKS__)
+# define OPENRJ_MESSAGE_ASSERT(m, x)        OPENRJ_ASSERT(((m) && (x)))
+#else /* ? compiler */
+# define OPENRJ_MESSAGE_ASSERT(m, x)        OPENRJ_ASSERT(((m), (x)))
 #endif /* compiler */
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
-#endif /* !OPENRJ_INCL_H_OPENRJ_ASSERT */
+#endif /* !OPENRJ_INCL_OPENRJ_H_OPENRJ_ASSERT */
 
 /* ////////////////////////////////////////////////////////////////////////// */

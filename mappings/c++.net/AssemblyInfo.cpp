@@ -4,11 +4,11 @@
  * Purpose:
  *
  * Created:     3rd August 2004
- * Updated:     18th February 2005
+ * Updated:     24th May 2006
  *
  * Author:      Matthew Wilson
  *
- * Copyright:   Synesis Software Pty Ltd, 2004-2005. All rights reserved.
+ * Copyright:   Synesis Software Pty Ltd, (c) 2004-2006. All rights reserved.
  *
  * Home:        http://www.openrj.orj/
  *

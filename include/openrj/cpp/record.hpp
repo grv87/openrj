@@ -4,11 +4,11 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 17th July 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/record.hpp Record class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/record.hpp
  *
+ * [C++ only] Definition of the openrj::cpp::Record class.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_H_RECORD
@@ -51,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       6
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    3
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        17
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       7
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    2
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        20
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -63,12 +64,14 @@
 #include <openrj/cpp/openrj.hpp>
 #include <openrj/cpp/field.hpp>
 
-#include <stlsoft.h>
+#include <stlsoft/stlsoft.h>
+#include <stlsoft/auto_buffer.hpp>
 #ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
 # include <stlsoft/meta.hpp>
 # include <stlsoft/meta/yesno.hpp>
 #endif /* __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
 
+#include <stdio.h>
 #include <algorithm>
 #include <stdexcept>
 
@@ -214,13 +217,19 @@ public:
     /// \endhtmlonly
     String operator [](char const *name) const
     {
+        openrj_assert(NULL != name);
+
         ORJField const  *begin  =   &m_record->fields[0];
         ORJField const  *end    =   &m_record->fields[m_record->numFields];
         ORJField const  *it     =   ::std::find_if(begin, end, match_name(name));
 
         if(it == end)
         {
-            throw ::std::out_of_range("Field not found");
+            const size_t                nameLen     =   ::strlen(name);
+            static const char           fmt[]       =   "Field \"%s\" not found";
+            stlsoft::auto_buffer<char>  buff(nameLen + stlsoft_num_elements(fmt));
+
+            throw ::std::out_of_range((0 == buff.size()) ? "Field not found" : (::sprintf(&buff[0], fmt, name), buff.data()));
         }
 
         return String(it->value.ptr, it->value.len);

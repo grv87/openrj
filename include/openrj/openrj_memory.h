@@ -4,11 +4,11 @@
  * Purpose: Memory aspect of the Open-RJ C-API
  *
  * Created: 11th June 2004
- * Updated: 25th May 2005
+ * Updated: 5th March 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,27 +42,27 @@
  *
  */
 
-#ifndef OPENRJ_INCL_H_OPENRJ_MEMORY
-#define OPENRJ_INCL_H_OPENRJ_MEMORY
+#ifndef OPENRJ_INCL_OPENRJ_H_OPENRJ_MEMORY
+#define OPENRJ_INCL_OPENRJ_H_OPENRJ_MEMORY
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
-# define OPENRJ_VER_H_OPENRJ_MEMORY_MAJOR       1
-# define OPENRJ_VER_H_OPENRJ_MEMORY_MINOR       0
-# define OPENRJ_VER_H_OPENRJ_MEMORY_REVISION    4
-# define OPENRJ_VER_H_OPENRJ_MEMORY_EDIT        7
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MEMORY_MAJOR    1
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MEMORY_MINOR    0
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MEMORY_REVISION 5
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MEMORY_EDIT     9
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
  */
 
-#ifndef OPENRJ_INCL_H_OPENRJ
+#ifndef OPENRJ_INCL_OPENRJ_H_OPENRJ
 # error Must include openrj.h before openrj_memory.h. (Actually, you shouldn not really be including this anyway!)
-#endif /* !OPENRJ_INCL_H_OPENRJ */
+#endif /* !OPENRJ_INCL_OPENRJ_H_OPENRJ */
 
 #include <stdlib.h>
 
@@ -78,6 +78,6 @@ ORJ_CALL(void) openrj_ator_free_(IORJAllocator *ator, void *pv);
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
-#endif /* !OPENRJ_INCL_H_OPENRJ_MEMORY */
+#endif /* !OPENRJ_INCL_OPENRJ_H_OPENRJ_MEMORY */
 
 /* ////////////////////////////////////////////////////////////////////////// */

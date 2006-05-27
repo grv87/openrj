@@ -4,7 +4,7 @@
  * Purpose:     Test program for the D mapping of Open-RJ.
  *
  * Created      14th July 2004
- * Updated:     30th September 2004
+ * Updated:     13th December 2005
  *
  * Status:      Wizard-generated
  *
@@ -14,8 +14,6 @@
  *              All rights reserved.
  *
  *              www:        http://www.synesis.com.au/software
- *
- *              email:      software@synesis.com.au
  *
  *              This source code is placed into the public domain 2004
  *              by Matthew Wilson. There are no restrictions

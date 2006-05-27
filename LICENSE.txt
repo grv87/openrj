@@ -1,0 +1,11 @@
+Open-RJ - License
+-----------------
+
+Open-RJ uses the BSD-form license, as described in the
+accompanying doc\html\index.html file.
+
+
+
+----------------------------------------------------------------------------
+END OF FILE
+----------------------------------------------------------------------------

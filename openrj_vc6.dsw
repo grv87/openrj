@@ -3,67 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "C_full"=.\TEST\C_full\vc6\C_full.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "C_simple"=.\test\C_simple\vc6\C_simple.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Cpp_full"=.\Test\Cpp_full\vc6\Cpp_full.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Cpp_simple"=.\test\Cpp_simple\vc6\Cpp_simple.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "D"=.\Mappings\D\D.dsp - Package Owner=<4>
+Project: "example_c_1"=.\examples\c\example_c_1\vc6\example_c_1.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DLL"=.\MAPPINGS\DLL\vc6\DLL.dsp - Package Owner=<4>
+Project: "example_c_2"=.\examples\c\example_c_2\vc6\example_c_2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -83,14 +23,11 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "STL_full"=.\Test\STL_full\vc6\STL_full.dsp - Package Owner=<4>
+Project: "example_cpp_1"=.\examples\cpp\example_cpp_1\vc6\example_cpp_1.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -98,14 +35,11 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "STL_simple"=.\test\STL_simple\vc6\STL_simple.dsp - Package Owner=<4>
+Project: "example_cpp_2"=.\examples\cpp\example_cpp_2\vc6\example_cpp_2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -113,9 +47,30 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name openrj
-    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "example_stl_1"=.\examples\stl\example_stl_1\vc6\example_stl_1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "example_stl_2"=.\examples\stl\example_stl_2\vc6\example_stl_2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -132,7 +87,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "openrj_Ch"=.\mappings\Ch\vc6\openrj_Ch.dsp - Package Owner=<4>
+Project: "sample_c_1"=.\samples\c\sample_c_1\vc6\sample_c_1.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -144,7 +99,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "openrj_Python"=.\mappings\Python\vc6\openrj_python.dsp - Package Owner=<4>
+Project: "sample_c_2"=.\samples\c\sample_c_2\vc6\sample_c_2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -156,7 +111,118 @@ Package=<4>
 
 ###############################################################################
 
-Project: "openrj_Ruby"=.\mappings\Ruby\vc6\openrj_ruby.dsp - Package Owner=<4>
+Project: "sample_cpp_1"=.\samples\cpp\sample_cpp_1\vc6\sample_cpp_1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "sample_stl_1"=.\samples\stl\sample_stl_1\vc6\sample_stl_1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "sample_stl_2"=.\samples\stl\sample_stl_2\vc6\sample_stl_2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "sample_stl_3"=.\samples\stl\sample_stl_3\vc6\sample_stl_3.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name openrj
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "test_c_1"=.\test\c\test_c_1\vc6\test_c_1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_c_2"=.\test\c\test_c_2\vc6\test_c_2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_cpp_1"=.\test\cpp\test_cpp_1\vc6\test_cpp_1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_cpp_2"=.\test\cpp\test_cpp_2\vc6\test_cpp_2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_stl_1"=.\test\stl\test_stl_1\vc6\test_stl_1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_stl_2"=.\test\stl\test_stl_2\vc6\test_stl_2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
