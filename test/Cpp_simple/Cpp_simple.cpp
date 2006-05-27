@@ -120,7 +120,7 @@ int main(int /* argc */, char * /* argv */[])
 
             cout    << "record-#" << iRecord
                     << " " << record.GetComment() << " "
-                    << " (" << db.GetNumRecords() << " fields)"
+                    << " (" << record.GetNumFields() << " fields)"
                     << endl;
 
             for(size_t iField = 0; iField < record.GetNumFields(); ++iField)

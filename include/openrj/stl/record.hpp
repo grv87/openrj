@@ -4,11 +4,11 @@
  * Purpose: record class, in the STL mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 22nd June 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/stl/record.hpp Record class, in the C++ mapping of the Open-RJ library
+/** \file openrj/stl/record.hpp
  *
+ * \brief [C++ only] Definition of the openrj::stl::record class.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_STL_HPP_RECORD
@@ -51,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     6
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  3
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      22
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     7
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  4
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      28
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -73,7 +74,7 @@
 #include <iterator>
 #include <stdexcept>
 
-#include <stlsoft/indirect_reverse_iterator.hpp>
+#include <stlsoft/iterators/indirect_reverse_iterator.hpp>
 #include <stlsoft/iterator.hpp>
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -122,19 +123,23 @@ public:
 
 #if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// The non-mutating (const) reverse iterator type
-#  if 0 // Can't use reverse_iterator, because const_iterator is a forward-declared member class
+#  if 0
     typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_iterator
                                                         ,   value_type
-                                                        ,   value_type // Return by value!
-                                                        ,   void*
+                                                        ,   value_type
+                                                        ,   void
                                                         ,   difference_type
                                                         >   const_reverse_iterator;
 #  else /* ? 0 */
+    // Can't use reverse_iterator, because const_iterator is a forward-declared member 
+    // class - this now appears incorrect. Somehow I've made subsequent changes that
+    // nullify the requirement. TODO: Investigate further ...
     typedef stlsoft_ns_qual(indirect_reverse_iterator)<     const_iterator
                                                         ,   value_type
                                                         ,   value_type // Return by value!
-                                                        ,   void*
+                                                        ,   void
                                                         ,   difference_type
+                                                        ,   stlsoft_ns_qual_std(random_access_iterator_tag)
                                                         >   const_reverse_iterator;
 #  endif /* 0 */
 #endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
@@ -171,6 +176,18 @@ public:
     /// \brief Indicates whether the record contains one or more fields of the given name
     bool has_field(string_t const &name) const;
 
+#if defined(STLSOFT_COMPILER_IS_INTEL)
+    bool has_field(char const *name) const
+    {
+        return this->has_field(string_t(name));
+    }
+#endif /* compiler */
+
+#if 0
+    /// \brief Indicates whether the record contains one or more fields of the given name and value
+    bool has_field(string_t const &name, string_t const &value) const;
+#endif /* 0 */
+
     /// \brief Indicates the number of contained fields with the given name
     size_t count_fields(string_t const &name) const;
 
@@ -181,6 +198,13 @@ public:
     ///
     /// \return The value of the named field. There is no error return
     const string_t operator [](string_t const &name) const; // throw (std::out_of_range)
+
+#if defined(STLSOFT_COMPILER_IS_INTEL)
+    const string_t operator [](char const *name) const
+    {
+        return this->operator [](string_t(name));
+    }
+#endif /* compiler */
 
     /// \brief Returns the value of the first field of the given name, or the given
     /// default if none exists
@@ -230,6 +254,7 @@ private:
     }
 
     ORJField const  *find_field_(string_t const &name) const;
+//    ORJField const  *find_field_(string_t const &name, string_t const &value) const;
     size_t          count_fields_(string_t const &name) const;
 
 private:
@@ -270,8 +295,8 @@ public:
 public:
     bool is_equal(const_iterator const &rhs) const;
 
-#if defined(__BORLANDC__) || \
-defined(__DMC__)
+#if defined(STLSOFT_COMPILER_IS_BORLAND) || \
+    defined(STLSOFT_COMPILER_IS_DMC)
     bool operator ==(const_iterator const &rhs) const;
     bool operator !=(const_iterator const &rhs) const;
 #endif /* compiler */
@@ -460,7 +485,7 @@ inline ORJField const *record::find_field_(string_t const &name) const
 
         if(e != it)
         {
-#if defined(__STLSOFT_COMPILER_IS_GCC) && \
+#if defined(STLSOFT_COMPILER_IS_GCC) && \
     __GNUC__ < 3
             // This copes with the non-standard GCC 2.x standard library, but
             // will also work with a good one (albeit less efficiently).
@@ -558,16 +583,23 @@ inline bool record::has_field(string_t const &name) const
     return NULL != find_field_(name);
 }
 
+#if 0
+inline bool record::has_field(string_t const &name, string_t const &value) const
+{
+    return NULL != find_field_(name, value);
+}
+#endif /* 0 */
+
 inline size_t record::count_fields(string_t const &name) const
 {
     return count_fields_(name);
 }
 
-#if defined(__STLSOFT_COMPILER_IS_MSVC) && \
+#if defined(STLSOFT_COMPILER_IS_MSVC) && \
     _MSC_VER >= 1200
 # pragma warning(push)
 # pragma warning(disable : 4702)
-#endif /* __STLSOFT_COMPILER_IS_MSVC */
+#endif /* compiler */
 
 inline const string_t record::operator [](string_t const &name) const // throw (std::out_of_range)
 {
@@ -581,10 +613,10 @@ inline const string_t record::operator [](string_t const &name) const // throw (
     return field(&*r).value();
 }
 
-#if defined(__STLSOFT_COMPILER_IS_MSVC) && \
+#if defined(STLSOFT_COMPILER_IS_MSVC) && \
     _MSC_VER >= 1200
 # pragma warning(pop)
-#endif /* __STLSOFT_COMPILER_IS_MSVC */
+#endif /* compiler */
 
 inline string_t record::get_field_value(string_t const &name, string_t const &defValue) const
 {

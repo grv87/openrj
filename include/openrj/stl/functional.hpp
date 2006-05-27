@@ -4,11 +4,11 @@
  * Purpose: Functors for use with the Open-RJ STL mapping
  *
  * Created: 10th November 2004
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,10 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/stl/functional.hpp Functors for use with the Open-RJ STL mapping
+/** \file openrj/stl/functional.hpp
  *
+ * [C++ only] Functors for use with the
+ *  \link openrj::stl Open-RJ/STL\endlink mapping.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_STL_HPP_FUNCTIONAL
@@ -51,9 +53,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_MAJOR     1
-# define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_MINOR     0
+# define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_MINOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_REVISION  2
-# define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_EDIT      5
+# define OPENRJ_VER_OPENRJ_STL_HPP_FUNCTIONAL_EDIT      8
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -89,24 +91,45 @@ namespace stl
 /// given name
 struct record_has_field
 {
+/// \name Construction
+/// @{
 public:
-    record_has_field(char const *fieldName)
+    /// Constructs an instance with the given field name
+    ///
+    /// \param fieldName The name of the field against which records will be tested
+    explicit record_has_field(char const *fieldName)
         : m_fieldName(fieldName)
     {}
+    /// Constructs an instance with the given field name
+    ///
+    /// \param fieldName The name of the field against which records will be tested
     template <typename S>
-    record_has_field(S const &fieldName)
+    explicit record_has_field(S const &fieldName)
         : m_fieldName(::stlsoft::c_str_ptr(fieldName))
     {}
+/// @}
 
+/// \name Operators
+/// @{
 public:
+    /// \brief Tests the given record to see whether it contains (one or more of)
+    /// the required field
     template <typename R>
     bool operator ()(R const &record) const
     {
         return record.has_field(m_fieldName);
     }
+/// @}
 
+/// \name Members
+/// @{
 private:
-    string_t    m_fieldName;
+    const string_t    m_fieldName;
+/// @}
+
+// Not to be implemented
+private:
+    record_has_field &operator =(record_has_field const &);
 };
 
 /* /////////////////////////////////////////////////////////////////////////////

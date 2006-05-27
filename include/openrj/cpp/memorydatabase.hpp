@@ -4,11 +4,11 @@
  * Purpose: MemoryDatabase class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/memorydatabase.hpp MemoryDatabase class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/memorydatabase.hpp
  *
+ * \brief [C++ only] Definition of the openrj::cpp::MemoryDatabase class.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_HPP_MEMORYDATABASE
@@ -53,7 +54,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_HPP_MEMORYDATABASE_MAJOR     1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_MEMORYDATABASE_MINOR     0
 # define OPENRJ_VER_OPENRJ_CPP_HPP_MEMORYDATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_MEMORYDATABASE_EDIT      2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_MEMORYDATABASE_EDIT      3
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

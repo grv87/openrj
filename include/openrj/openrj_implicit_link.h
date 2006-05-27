@@ -4,11 +4,11 @@
  * Purpose: Implicit linking for the Open-RJ API
  *
  * Created: 8th April 2005
- * Updated: 25th May 2005
+ * Updated: 5th March 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,116 +42,33 @@
  *
  */
 
-#ifndef OPENRJ_INCL_H_OPENRJ_IMPLICIT_LINK
-#define OPENRJ_INCL_H_OPENRJ_IMPLICIT_LINK
+#ifndef OPENRJ_INCL_OPENRJ_H_OPENRJ_IMPLICIT_LINK
+#define OPENRJ_INCL_OPENRJ_H_OPENRJ_IMPLICIT_LINK
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
-# define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_MAJOR       1
-# define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_MINOR       0
-# define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_REVISION    1
-# define OPENRJ_VER_H_OPENRJ_IMPLICIT_LINK_EDIT        2
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_IMPLICIT_LINK_MAJOR     2
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_IMPLICIT_LINK_MINOR     0
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_IMPLICIT_LINK_REVISION  2
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_IMPLICIT_LINK_EDIT      3
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
  */
 
-#ifndef OPENRJ_INCL_H_OPENRJ
+#ifndef OPENRJ_INCL_OPENRJ_H_OPENRJ
 # include <openrj/openrj.h>
-#endif /* !OPENRJ_INCL_H_OPENRJ */
-
-#if defined(__BORLANDC__)
-#elif defined(__COMO__)
-#elif defined(__DMC__)
-#elif defined(__GNUC__)
-#elif defined(__INTEL_COMPILER)
-
-# if defined(WIN32)
-
-#  if __INTEL_COMPILER == 600
-#   define   OPENRJ_IMPL_LINK_COMPILER_NAME  "icl6"
-#  elif __INTEL_COMPILER == 700
-#   define   OPENRJ_IMPL_LINK_COMPILER_NAME  "icl7"
-#  elif __INTEL_COMPILER == 800
-#   define   OPENRJ_IMPL_LINK_COMPILER_NAME  "icl8"
-#  else
-#   error Intel C/C++ version not supported
-#  endif /* _MSC_VER */
-
-#  if defined(_MT)
-#   if defined(_DLL)
-#    define  OPENRJ_IMPL_LINK_THREADING_TYPE ".dll"
-#   else /* ? _DLL */
-#    define  OPENRJ_IMPL_LINK_THREADING_TYPE ".mt"
-#   endif /* _DLL */
-#  else /* ? _MT */
-#   define   OPENRJ_IMPL_LINK_THREADING_TYPE ""
-#  endif /* _MT */
-
-#  if defined(_DEBUG)
-#   define   OPENRJ_IMPL_LINK_DEBUG_TYPE     ".debug"
-#  else /* ? _DEBUG */
-#   define   OPENRJ_IMPL_LINK_DEBUG_TYPE     ""
-#  endif /* _DEBUG */
-
-#  define    OPENRJ_IMPL_LINK_LIBRARY_NAME   "openrj." OPENRJ_IMPL_LINK_COMPILER_NAME OPENRJ_IMPL_LINK_THREADING_TYPE OPENRJ_IMPL_LINK_DEBUG_TYPE ".lib"
-
-#  pragma comment(lib, OPENRJ_IMPL_LINK_LIBRARY_NAME)
-
-
-
-# else /* ? WIN32 */
-#  error Open-RJ only supports implicit linking pragmas for Intel compiler on Win32 platform
-# endif /* WIN32 */
-
-
-#elif defined(__MWERKS__)
-#elif defined(__WATCOMC__)
-#elif defined(_MSC_VER)
-
-# if _MSC_VER == 1200
-#  define   OPENRJ_IMPL_LINK_COMPILER_NAME  "vc6"
-# elif _MSC_VER == 1300
-#  define   OPENRJ_IMPL_LINK_COMPILER_NAME  "vc7"
-# elif _MSC_VER == 1310
-#  define   OPENRJ_IMPL_LINK_COMPILER_NAME  "vc71"
-# elif _MSC_VER == 1400
-#  define   OPENRJ_IMPL_LINK_COMPILER_NAME  "vc8"
-# else
-#  error Visual C++ version not supported
-# endif /* _MSC_VER */
-
-# if defined(_MT)
-#  if defined(_DLL)
-#   define  OPENRJ_IMPL_LINK_THREADING_TYPE ".dll"
-#  else /* ? _DLL */
-#   define  OPENRJ_IMPL_LINK_THREADING_TYPE ".mt"
-#  endif /* _DLL */
-# else /* ? _MT */
-#  define   OPENRJ_IMPL_LINK_THREADING_TYPE ""
-# endif /* _MT */
-
-# if defined(_DEBUG)
-#  define   OPENRJ_IMPL_LINK_DEBUG_TYPE     ".debug"
-# else /* ? _DEBUG */
-#  define   OPENRJ_IMPL_LINK_DEBUG_TYPE     ""
-# endif /* _DEBUG */
-
-# define    OPENRJ_IMPL_LINK_LIBRARY_NAME   "openrj." OPENRJ_IMPL_LINK_COMPILER_NAME OPENRJ_IMPL_LINK_THREADING_TYPE OPENRJ_IMPL_LINK_DEBUG_TYPE ".lib"
-
-# pragma comment(lib, OPENRJ_IMPL_LINK_LIBRARY_NAME)
-
-#else /* ? compiler */
-# error Compiler not recognised
-#endif /* compiler */
-
+#endif /* !OPENRJ_INCL_OPENRJ_H_OPENRJ */
+#ifndef OPENRJ_INCL_OPENRJ_H_IMPLICIT_LINK
+# include <openrj/implicit_link.h>
+#endif /* !OPENRJ_INCL_OPENRJ_H_IMPLICIT_LINK */
 
 /* ////////////////////////////////////////////////////////////////////////// */
 
-#endif /* !OPENRJ_INCL_H_OPENRJ_IMPLICIT_LINK */
+#endif /* !OPENRJ_INCL_OPENRJ_H_OPENRJ_IMPLICIT_LINK */
 
 /* ////////////////////////////////////////////////////////////////////////// */

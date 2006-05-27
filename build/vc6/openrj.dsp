@@ -55,7 +55,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug"
 
@@ -78,14 +78,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.debug.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug MultiThreaded"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "openrj___Win32_Debug_MultiThreaded"
-# PROP BASE Intermediate_Dir "openrj___Win32_Debug_MultiThreaded"
+# PROP BASE Output_Dir "DebugMT"
+# PROP BASE Intermediate_Dir "DebugMT"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -100,15 +100,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj_debug.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.debug.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.debug.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Release MultiThreaded"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "openrj___Win32_Release_MultiThreaded"
-# PROP BASE Intermediate_Dir "openrj___Win32_Release_MultiThreaded"
+# PROP BASE Output_Dir "ReleaseMT"
+# PROP BASE Intermediate_Dir "ReleaseMT"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
@@ -123,15 +123,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug MultiThreaded DLL"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "openrj___Win32_Debug_MultiThreaded_DLL"
-# PROP BASE Intermediate_Dir "openrj___Win32_Debug_MultiThreaded_DLL"
+# PROP BASE Output_Dir "DebugMTDLL"
+# PROP BASE Intermediate_Dir "DebugMTDLL"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -146,15 +146,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.debug.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.debug.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.dll.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.dll.debug.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Release MultiThreaded DLL"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "openrj___Win32_Release_MultiThreaded_DLL"
-# PROP BASE Intermediate_Dir "openrj___Win32_Release_MultiThreaded_DLL"
+# PROP BASE Output_Dir "ReleaseMTDLL"
+# PROP BASE Intermediate_Dir "ReleaseMTDLL"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
@@ -169,15 +169,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.vc6.mt.dll.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.dll.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.mt.dll.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Release pseudoUNIX"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "openrj___Win32_Release_pseudoUNIX"
-# PROP BASE Intermediate_Dir "openrj___Win32_Release_pseudoUNIX"
+# PROP BASE Output_Dir "ReleaseUNIX"
+# PROP BASE Intermediate_Dir "ReleaseUNIX"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
@@ -192,15 +192,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.unix.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.unix.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.unix.lib"
 
 !ELSEIF  "$(CFG)" == "openrj - Win32 Debug pseudoUNIX"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "openrj___Win32_Debug_pseudoUNIX"
-# PROP BASE Intermediate_Dir "openrj___Win32_Debug_pseudoUNIX"
+# PROP BASE Output_Dir "DebugUNIX"
+# PROP BASE Intermediate_Dir "DebugUNIX"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -215,8 +215,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.debug.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\openrj.unix.debug.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.unix.debug.lib"
+# ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.unix.debug.lib"
 
 !ENDIF 
 
@@ -269,6 +269,74 @@ SOURCE=..\..\include\openrj\openrj_memory.h
 # End Source File
 # End Group
 # End Group
+# End Group
+# Begin Group "Documentation"
+
+# PROP Default_Filter "txt;src"
+# Begin Group "Distribution Source"
+
+# PROP Default_Filter "txt"
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\AUTHORS.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\CHANGES.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\FAQ.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\HISTORY.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\INSTALL.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\LICENSE.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\NEWS.txt"
+# End Source File
+# Begin Source File
+
+SOURCE="..\..\_internal\dist-src\README.txt"
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE="..\..\_internal\doc-src\mainpage.src"
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\_internal\makefile
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\new_stucture.txt
+# End Source File
+# Begin Source File
+
+SOURCE=..\openrj.tmplgen
+# End Source File
+# End Group
+# Begin Group "Test Files"
+
+# PROP Default_Filter "orj"
+# Begin Source File
+
+SOURCE="..\..\samples\icpp-books\icpp-books.orj"
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\samples\pets\pets.orj
+# End Source File
 # End Group
 # End Target
 # End Project

@@ -1,0 +1,15 @@
+Open-RJ - FAQ
+-------------
+
+There are currently no Open-RJ FAQs. If you post a question on the 
+STLSoft newsgroup (news://news.digitalmars.com/c++.stlsoft/)
+it will be used to create one.
+
+Please prefix your post with "[openrj] ".
+
+
+
+
+----------------------------------------------------------------------------
+END OF FILE
+----------------------------------------------------------------------------

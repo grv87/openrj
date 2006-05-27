@@ -4,11 +4,11 @@
  * Purpose: Forward declarations for the Open-RJ C++ mapping
  *
  * Created: 27th November 2004
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,15 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/openrjfwd.hpp Forward declarations for the Open-RJ C++ mapping
+/** \file openrj/cpp/openrjfwd.hpp
  *
+ * \brief [C++ only] Forward declarations for the
+ *  \link openrj::cpp Open-RJ/C++\endlink mapping.
+ *
+ * This file is useful for the case where you wish to implement your
+ * components in terms of types of the openrj::cpp namespace, but do not
+ * need to include the full definitions in order to define the
+ * components.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_HPP_OPENRJFWD
@@ -53,7 +60,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_HPP_OPENRJFWD_MAJOR      1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_OPENRJFWD_MINOR      1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_OPENRJFWD_REVISION   1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_OPENRJFWD_EDIT       6
+# define OPENRJ_VER_OPENRJ_CPP_HPP_OPENRJFWD_EDIT       8
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,7 +69,7 @@
 
 namespace openrj
 {
-/// \brief The Open-RJ C++ namespace - \c openrj::cpp
+/// \brief The namespace of the Open-RJ/C++ mapping.
 ///
 /// This contains the Field, Record, FileDatabase and MemoryDatabase classes,
 /// along with the exception class DatabaseException

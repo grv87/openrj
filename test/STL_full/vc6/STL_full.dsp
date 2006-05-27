@@ -7,19 +7,19 @@
 CFG=STL_full - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "STL_full.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "STL_full.mak" CFG="STL_full - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "STL_full - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE "STL_full - Win32 Debug" (based on "Win32 (x86) Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -28,6 +28,7 @@ CFG=STL_full - Win32 Debug
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
+
 
 !IF  "$(CFG)" == "STL_full - Win32 Release"
 
@@ -81,7 +82,7 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 openrj.vc6.debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.0 /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -106,11 +107,11 @@ SOURCE=..\STL_full.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\openrj.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\openrj_assert.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj_assert.h"
 # End Source File
 # End Group
 # Begin Group "STL_full Mapping"
@@ -118,19 +119,19 @@ SOURCE=..\..\..\include\openrj\openrj_assert.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\stl\database.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\database.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\stl\field.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\field.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\stl\openrj.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\openrj.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\stl\record.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\record.hpp"
 # End Source File
 # End Group
 # End Group
@@ -142,159 +143,163 @@ SOURCE=..\..\..\include\openrj\stl\record.hpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\address_hiding_veneer.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\util\std\algorithm.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\allocator_base.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\allocator_base.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\auto_buffer.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\allocator_selector.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\auto_destructor.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\auto_buffer.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\char_traits.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\auto_destructor.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\constraints.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\char_traits.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/inprogress\stlsoft\indirect_reverse_iterator.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\constraints.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\integer_to_string.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\iterators\indirect_reverse_iterator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\iterator.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\integer_to_string.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\meta.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\meta\is_function_pointer_type.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\new_allocator.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\iterator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\proxy_iterator.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\util\std\library_discriminator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\sap_cast.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\meta.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\sign_traits.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\internal\cccap\msvc.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\simple_algorithms.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\meta\n_types.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\size_traits.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\algorithms\pod.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft.h
+SOURCE="$(STLSOFT)\include\stlsoft\proxy_iterator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_address_hiding_veneer.h
+SOURCE="$(STLSOFT)\include\stlsoft\sap_cast.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_allocator_base.h
+SOURCE="$(STLSOFT)\include\stlsoft\shim_string.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_auto_buffer.h
+SOURCE="$(STLSOFT)\include\stlsoft\sign_traits.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_auto_destructor.h
+SOURCE="$(STLSOFT)\include\stlsoft\size_traits.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_cccap_msvc.h
+SOURCE="$(STLSOFT)\include\stlsoft\util\std_swap.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_char_traits.h
+SOURCE="$(STLSOFT)\include\stlsoft.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_constraints.h
+SOURCE="$(STLSOFT)\include\stlsoft\stlsoft.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_integer_to_string.h
+SOURCE="$(STLSOFT)\include\stlsoft_meta.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_iterator.h
+SOURCE="$(STLSOFT)\include\stlsoft_proxy_iterator.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_meta.h
+SOURCE="$(STLSOFT)\include\stlsoft_shim_string.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_new_allocator.h
+SOURCE="$(STLSOFT)\include\stlsoft_string_access.h"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_proxy_iterator.h
+SOURCE="$(STLSOFT)\include\stlsoft\string_access.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_sap_cast.h
+SOURCE="$(STLSOFT)\include\stlsoft\string_access_fwd.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_shim_string.h
+SOURCE="$(STLSOFT)\include\stlsoft\type_traits.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_sign_traits.h
+SOURCE="$(STLSOFT)\include\stlsoft\meta\yesno.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_simple_algorithms.h
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_base.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_size_traits.h
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_features.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_string_access.h
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_selector.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft_type_traits.h
+SOURCE="$(STLSOFT)\include\stlsoft\meta\base_type_traits.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\string_access_fwd.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\meta\capabilities.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\type_traits.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\collections\collections.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=$(STLSOFT_INCLUDE)/stlsoft\meta\yesno.hpp
+SOURCE="$(STLSOFT)\include\stlsoft\meta\select_first_type_if.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\meta\size_of.hpp"
 # End Source File
 # End Group
 # End Group

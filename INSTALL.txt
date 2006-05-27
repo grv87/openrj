@@ -1,0 +1,11 @@
+Open-RJ - Install
+-----------------
+
+Open-RJ requires manual installation, by copying files after building,
+as described in the accompanying doc\html\index.html file.
+
+
+
+----------------------------------------------------------------------------
+END OF FILE
+----------------------------------------------------------------------------

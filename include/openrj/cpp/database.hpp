@@ -4,11 +4,11 @@
  * Purpose: Database class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 10th July 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,16 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/database.hpp Database class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/database.hpp
  *
+ * \brief [C++ only] [DEPRECATED] Header file that causes inclusion of both
+ *  openrj::cpp::FileDatabase and openrj::cpp::MemoryDatabase classes.
+ *
+ * \deprecated This file is included for backwards compatibility. You should
+ *  instead select to include either
+ *  <code>openrj/cpp/filedatabase.hpp</code> (for openrj::cpp::FileDatabase)
+ *  or
+ *  <code>openrj/cpp/memorydatabase.hpp</code> (for openrj::cpp::MemoryDatabase).
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_H_DATABASE
@@ -53,7 +61,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MAJOR     1
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_MINOR     6
 # define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      19
+# define OPENRJ_VER_OPENRJ_CPP_H_DATABASE_EDIT      20
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

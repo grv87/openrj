@@ -4,11 +4,11 @@
  * Purpose: FileDatabase class, in the C++ mapping of the Open-RJ library
  *
  * Created: 12th April 2005
- * Updated: 25th May 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/filedatabase.hpp FileDatabase class, in the C++ mapping of the Open-RJ library
+/** \file openrj/cpp/filedatabase.hpp
  *
+ * \brief [C++ only] Definition of the openrj::cpp::FileDatabase class.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_HPP_FILEDATABASE
@@ -53,7 +54,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FILEDATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FILEDATABASE_MINOR       0
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FILEDATABASE_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FILEDATABASE_EDIT        2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FILEDATABASE_EDIT        3
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////

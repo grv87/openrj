@@ -4,11 +4,11 @@
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 10th July 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,9 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/field.hpp This is the root file of the Open-RJ C-API
+/** \file openrj/cpp/field.hpp
  *
+ * [C++ only] Definition of the openrj::cpp::Field class.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_H_FIELD
@@ -52,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    4
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 1
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     13
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 2
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     15
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,8 +63,8 @@
 
 #include <openrj/cpp/openrj.hpp>
 
-#include <stlsoft_shim_string.h>
-#include <stlsoft_string_access.h>
+#include <stlsoft/shim_string.hpp>
+#include <stlsoft/string_access.hpp>
 
 #include <string.h>
 

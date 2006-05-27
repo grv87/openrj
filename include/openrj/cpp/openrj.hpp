@@ -4,11 +4,11 @@
  * Purpose: Root header file for the C++ mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 10th July 2005
+ * Updated: 28th May 2006
  *
  * Home:    http://openrj.org/
  *
- * Copyright 2004-2005, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,8 +38,10 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj/cpp/openrj.hpp This is the root file of the Open-RJ C++ -API
+/** \file openrj/cpp/openrj.hpp
  *
+ * [C++ only] Defines common typedefs and exception types used in the
+ *  \link openrj::cpp Open-RJ/C++\endlink mapping.
  */
 
 #ifndef OPENRJ_INCL_OPENRJ_CPP_H_OPENRJ
@@ -53,7 +55,7 @@
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       4
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        14
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        16
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -62,6 +64,10 @@
 
 #include <openrj/openrj.h>
 #include <openrj/openrj_assert.h>
+
+#ifdef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# include <openrj/cpp/openrjfwd.hpp>
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #ifndef STLSOFT_INCL_STLSOFT_HPP_STRING_ACCESS
 # include <stlsoft/string_access.hpp>
@@ -92,10 +98,6 @@
 
 namespace openrj
 {
-    /// \brief The Open-RJ/C++ namespace - \c openrj::cpp
-    ///
-    /// This contains the Field, Record, FileDatabase and MemoryDatabase classes,
-    /// along with the exception class DatabaseException
     namespace cpp
     {
         class Field;

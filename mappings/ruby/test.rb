@@ -2,7 +2,7 @@
 
 require 'openrj'
 
-db = OpenRJ::Database::new('H:\freelibs\openrj\bin\wp_articles.txt', 0)
+db = OpenRJ::Database::new('../../samples/pets/pets.orj')
 #db = OpenRJ::Database::new('H:\freelibs\openrj\bin\wp_bust_2.txt', 0)
 
 puts "Num lines:   " + String(db.numLines)
