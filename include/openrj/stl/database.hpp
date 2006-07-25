@@ -55,8 +55,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       7
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    5
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        37
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    6
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        38
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,9 @@
     defined(__COMO__x) || \
     defined(__DMC__) || \
     (   defined(__GNUC__) && \
-        __GNUC__ < 4) || \
+        (   __GNUC__ < 3) || \
+            (   __GNUC__ == 3 && \
+                __GNUC_MINOR__ < 2)) || \
     (   defined(_MSC_VER) && \
         (   _MSC_VER < 1200 || \
             _MSC_VER == 1300)) /* For some reason VC++ 7.0 (not 6.0, 7.1) has a fit with this. */

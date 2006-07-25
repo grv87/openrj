@@ -4,7 +4,7 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 28th May 2006
+ * Updated: 1st June 2006
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       7
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    2
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        20
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    3
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        21
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@
 #include <openrj/cpp/field.hpp>
 
 #include <stlsoft/stlsoft.h>
-#include <stlsoft/auto_buffer.hpp>
+#include <stlsoft/memory/auto_buffer.hpp>
 #ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
 # include <stlsoft/meta.hpp>
 # include <stlsoft/meta/yesno.hpp>

@@ -433,10 +433,6 @@ SOURCE="$(STLSOFT)\include\stlsoft\util\std\algorithm.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_base.hpp"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_features.hpp"
 # End Source File
 # Begin Source File
@@ -445,23 +441,15 @@ SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_selector.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\auto_buffer.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\auto_buffer.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\auto_destructor.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\auto_destructor.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\meta\base_type_traits.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\capabilities.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\char_traits.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\string\char_traits.hpp"
 # End Source File
 # Begin Source File
 
@@ -477,7 +465,7 @@ SOURCE="$(STLSOFT)\include\stlsoft\iterators\indirect_reverse_iterator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\integer_to_string.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\conversion\integer_to_string.hpp"
 # End Source File
 # Begin Source File
 
@@ -501,15 +489,7 @@ SOURCE="$(STLSOFT)\include\stlsoft\proxy_iterator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\sap_cast.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\select_first_type_if.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\shim_string.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\string\shim_string.hpp"
 # End Source File
 # Begin Source File
 

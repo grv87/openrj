@@ -4,7 +4,7 @@
  * Purpose: Helper functions for the Open-RJ C++ mapping
  *
  * Created: 12th April 2005
- * Updated: 28th May 2006
+ * Updated: 14th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MAJOR      1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_MINOR      1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_REVISION   2
-# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_EDIT       7
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_REVISION   3
+# define OPENRJ_VER_OPENRJ_CPP_HPP_FUNCTIONS_EDIT       8
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -66,8 +66,8 @@
 #include <openrj/cpp/record.hpp>
 #include <openrj/cpp/databasebase.hpp>
 
-#include <stlsoft/auto_buffer.hpp>
-#include <stlsoft/string_access.hpp>
+#include <stlsoft/memory/auto_buffer.hpp>
+#include <stlsoft/shims/access/string.hpp>
 #include <stdio.h>
 
 /* /////////////////////////////////////////////////////////////////////////////

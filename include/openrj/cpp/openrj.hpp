@@ -4,7 +4,7 @@
  * Purpose: Root header file for the C++ mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 28th May 2006
+ * Updated: 14th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -54,8 +54,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_MINOR       4
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        16
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_REVISION    2
+# define OPENRJ_VER_OPENRJ_CPP_H_OPENRJ_EDIT        17
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -70,9 +70,9 @@
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #ifndef STLSOFT_INCL_STLSOFT_HPP_STRING_ACCESS
-# include <stlsoft/string_access.hpp>
+# include <stlsoft/shims/access/string.hpp>
 #endif /* !STLSOFT_INCL_STLSOFT_HPP_STRING_ACCESS */
-#include <stlsoft/string_view.hpp>
+#include <stlsoft/string/string_view.hpp>
 
 #include <exception>
 

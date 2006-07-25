@@ -7,21 +7,21 @@
 CFG=DLL - Win32 Debug Multithreaded
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "DLL.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "DLL.mak" CFG="DLL - Win32 Debug Multithreaded"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "DLL - Win32 Release Multithreaded DLL" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "DLL - Win32 Debug Multithreaded DLL" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "DLL - Win32 Release Multithreaded" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "DLL - Win32 Debug Multithreaded" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -30,6 +30,7 @@ CFG=DLL - Win32 Debug Multithreaded
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
+
 
 !IF  "$(CFG)" == "DLL - Win32 Release Multithreaded DLL"
 
@@ -137,7 +138,7 @@ LINK32=link.exe
 # ADD BASE LINK32 openrj.vc6.mt.debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\Bin/openrj.debug.dll" /pdbtype:sept /libpath:"..\..\..\lib"
 # ADD LINK32 openrj.vc6.mt.debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\Bin/openrj.vc6.debug.dll" /pdbtype:sept /libpath:"..\..\..\lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -168,11 +169,11 @@ SOURCE="..\openrj-dll.def"
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\openrj.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\openrj_assert.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj_assert.h"
 # End Source File
 # End Group
 # End Group

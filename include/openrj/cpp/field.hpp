@@ -4,7 +4,7 @@
  * Purpose: Field class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 28th May 2006
+ * Updated: 14th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MAJOR    1
 # define OPENRJ_VER_OPENRJ_CPP_H_FIELD_MINOR    4
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 2
-# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     15
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_REVISION 3
+# define OPENRJ_VER_OPENRJ_CPP_H_FIELD_EDIT     16
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -63,8 +63,8 @@
 
 #include <openrj/cpp/openrj.hpp>
 
-#include <stlsoft/shim_string.hpp>
-#include <stlsoft/string_access.hpp>
+#include <stlsoft/string/shim_string.hpp>
+#include <stlsoft/shims/access/string.hpp>
 
 #include <string.h>
 

@@ -4,7 +4,7 @@
  * Purpose: Implementation file for OpenRJ::Database class
  *
  * Created: 3rd August 2004
- * Updated: 15th March 2006
+ * Updated: 12th June 2006
  *
  * Home:    http://openrj.org/
  *
@@ -48,8 +48,8 @@
 
 #define STLSOFT_NO_CHAR_TRAITS_LIBRARY_CALLS
 
-#include <stlsoft/char_traits.hpp>
-#include <stlsoft/integer_to_string.hpp>
+#include <stlsoft/conversion/integer_to_string.hpp>
+#include <stlsoft/string/char_traits.hpp>
 
 #include <windows.h>
 

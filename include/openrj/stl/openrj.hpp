@@ -4,7 +4,7 @@
  * Purpose: Root header file for the STL mapping of the Open-RJ library
  *
  * Created: 28th September 2004
- * Updated: 28th May 2006
+ * Updated: 13th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -54,8 +54,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     4
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  1
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      18
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  2
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      19
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -76,11 +76,11 @@
 
 #include <stlsoft/stlsoft.h>
 
-#if !defined(_STLSOFT_VER_1_8_4)
-# error STLSoft version 1.8.4 or greater required. (www.stlsoft.org/downloads.html)
+#if !defined(_STLSOFT_VER_1_9_1)
+# error STLSoft version 1.9.1 or greater required. (www.stlsoft.org/downloads.html)
 #endif /* STLSoft version */
 
-#include <stlsoft/integer_to_string.hpp>
+#include <stlsoft/conversion/integer_to_string.hpp>
 
 #include <exception>
 #if defined(OPENRJ_USE_CUSTOM_STRING)

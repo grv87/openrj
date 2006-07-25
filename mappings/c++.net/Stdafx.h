@@ -44,6 +44,8 @@
 
 #pragma once
 
+//#define INDEXER_RETURNS_STRING // Can't use this, because C# (or C++.NET) dimly 
+
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
  */

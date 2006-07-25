@@ -1,10 +1,10 @@
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * File:    openrj.ruby.c
  *
  * Purpose: Implementation file of the Open-RJ Ruby mapping.
  *
  * Created: 15th June 2004
- * Updated: 24th May 2006
+ * Updated: 13th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -35,25 +35,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * ////////////////////////////////////////////////////////////////////////// */
+ * ////////////////////////////////////////////////////////////////////// */
 
 
-/** \file openrj.ruby.c Implementation file of the memory handling for the Open-RJ library
+/** \file openrj.ruby.c
+ *
+ * \brief [C] Implementation file of the memory handling for the Open-RJ
+ *   library.
  *
  */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_RUBY_MAJOR     1
-# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     11
+# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     12
 # define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  1
-# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      23
+# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      24
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Includes
  */
 
@@ -70,7 +73,7 @@
 # include <alloca.h>
 #endif /* OS */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Compiler warnings
  */
 
@@ -91,7 +94,7 @@
 
 #define _DEBUG
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Helper functions & macros
  */
 
@@ -106,7 +109,7 @@
 # define NUM_ELEMENTS(x)            (sizeof(x) / sizeof(0[(x)]))
 #endif /* NUM_ELEMENTS */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Simple debugging
  */
 
@@ -149,7 +152,7 @@ static void Trace_Stub(char const *fmt, ...)
 # define TRACETODEBUGGER    (1) ? ((void)0) : Trace_Stub
 #endif /* debug */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Classes & Modules
  */
 
@@ -162,7 +165,7 @@ static VALUE    cRecord;                /* The Record class:            ::OpenRJ
 static VALUE    cField;                 /* The Field class:             ::OpenRJ::Field             */
 static VALUE    cFieldNameError;        /* Exception class, thrown when bad field name given        */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Helper functions & macros
  */
 
@@ -172,7 +175,7 @@ static VALUE rb_str_from_ORJStringA(ORJStringA const *str)
     return rb_str_new(str->ptr, str->len);
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * __DatabaseHolder__
  *
  * This class is used to hold a reference on to the Open-RJ database handle.
@@ -214,7 +217,7 @@ static ORJDatabase const *__DatabaseHolder___get_database_(VALUE __database__)
     return database;
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Field
  *
  * Instances of this class return their member
@@ -331,7 +334,7 @@ static VALUE Field_equals(VALUE lhs, VALUE rhs)
     return Field_equals_(Field_get_field_(lhs), Field_get_field_(rhs)) ? Qtrue : Qfalse;
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Record
  */
 
@@ -616,7 +619,7 @@ static VALUE Record_comment(VALUE self)
     return rb_str_new(record->comment.ptr, record->comment.len);
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Database
  */
 
@@ -831,7 +834,44 @@ static VALUE Database_equals(VALUE lhs, VALUE rhs)
     return Database_equals_(lhs_database, rhs_database) ? Qtrue : Qfalse;
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+
+static VALUE Database_records_(VALUE self)
+{
+    VALUE               __database__    =   rb_iv_get(self, "@__database__");
+    ORJDatabase const   *database       =   __DatabaseHolder___get_database_(__database__);
+    size_t              cRecords        =   ORJ_Database_GetNumRecordsA(database);
+    VALUE               ar              =   rb_ary_new();
+    size_t              i;
+
+    for(i = 0; i < cRecords; ++i)
+    {
+        VALUE   r   =   Record_create_(__database__, self, &database->records[i]);
+
+        rb_ary_push(ar, r);
+    }
+
+    return ar;
+}
+
+static VALUE Database_fields_(VALUE self)
+{
+    VALUE               __database__    =   rb_iv_get(self, "@__database__");
+    ORJDatabase const   *database       =   __DatabaseHolder___get_database_(__database__);
+    size_t              cFields        =   ORJ_Database_GetNumFieldsA(database);
+    VALUE               ar              =   rb_ary_new();
+    size_t              i;
+
+    for(i = 0; i < cFields; ++i)
+    {
+        VALUE   r   =   Field_create_(__database__, self, &database->fields[i]);
+
+        rb_ary_push(ar, r);
+    }
+
+    return ar;
+}
+
+/* /////////////////////////////////////////////////////////////////////////
  * FileDatabase
  */
 
@@ -921,7 +961,7 @@ static VALUE FileDatabase_initialize_v(int argc, VALUE *argv, VALUE self)
     return ret;
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * MemoryDatabase
  */
 
@@ -990,7 +1030,7 @@ static VALUE MemoryDatabase_initialize(VALUE self, VALUE contents_, VALUE flags_
     return self;
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * module functions
  */
 
@@ -1014,6 +1054,8 @@ static VALUE openrj_usage(VALUE self)
         ,   "        numLines                - the number of lines in the database file"
         ,   "        numFields               - the total number of fields in the database"
         ,   "        numRecords              - the total number of records in the database"
+        ,   "        fields                  - an array of all fields in the database"
+        ,   "        records                 - an array of all records in the database"
         ,   "      Methods:"
         ,   "        each                    - enumerates the records in the database"
         ,   "        each_record             - same as each"
@@ -1094,7 +1136,7 @@ static VALUE openrj_usage(VALUE self)
     return ar;
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Module registration
  */
 
@@ -1144,6 +1186,8 @@ void Init_openrj()
     rb_define_attr(cDatabaseBase,   "numLines", 1, 0);
     rb_define_attr(cDatabaseBase,   "numFields", 1, 0);
     rb_define_attr(cDatabaseBase,   "numRecords", 1, 0);
+    rb_define_method(cDatabaseBase, "records", Database_records_, 0);
+    rb_define_method(cDatabaseBase, "fields", Database_fields_, 0);
 
     TRACETODEBUGGER("Creating FileDatabase class\n");
     cFileDatabase = rb_define_class_under(mOpenRJ, "FileDatabase", cDatabaseBase);
@@ -1187,4 +1231,4 @@ void Init_openrj()
     TRACETODEBUGGER("Initialised openrj extension for Ruby\n");
 }
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////// */

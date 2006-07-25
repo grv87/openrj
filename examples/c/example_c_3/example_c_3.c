@@ -86,40 +86,40 @@ int main()
     {
         size_t  iRecord;
 
-        printf(	"Database has %ld lines in %ld fields in %ld records\n"
-			,	(long)ORJ_Database_GetNumLinesA(db)
-			,	(long)ORJ_Database_GetNumFieldsA(db)
-			,	(long)ORJ_Database_GetNumRecordsA(db));
+        printf( "Database has %ld lines in %ld fields in %ld records\n"
+            ,   (long)ORJ_Database_GetNumLinesA(db)
+            ,   (long)ORJ_Database_GetNumFieldsA(db)
+            ,   (long)ORJ_Database_GetNumRecordsA(db));
 
         printf("Enumerating all records in the database, and displaying the \"Breed\" fields:\n");
 
         for(iRecord = 0; iRecord < ORJ_Database_GetNumRecordsA(db); ++iRecord)
         {
             ORJRecordA const    *record;
-			ORJFieldA const		*breed;
+            ORJFieldA const     *breed;
 
             ORJ_Database_GetRecordA(db, iRecord, &record);
 
-			breed	=	ORJ_Record_FindFieldByNameA(record, "BREED", NULL);
+            breed   =   ORJ_Record_FindFieldByNameA(record, "BREED", NULL);
 
-			if(NULL == breed)
-			{
-				printf("record does not contain a field called \"Breed\"\n");
-			}
-			else
-			{
-				ORJFieldA const		*name		=	ORJ_Record_FindFieldByNameA(record, "NAME", NULL);
-				ORJFieldA const		*species	=	ORJ_Record_FindFieldByNameA(record, "SPECIES", NULL);
-				ORJStringA const	*comment;
+            if(NULL == breed)
+            {
+                printf("record does not contain a field called \"Breed\"\n");
+            }
+            else
+            {
+                ORJFieldA const     *name       =   ORJ_Record_FindFieldByNameA(record, "NAME", NULL);
+                ORJFieldA const     *species    =   ORJ_Record_FindFieldByNameA(record, "SPECIES", NULL);
+                ORJStringA const    *comment;
 
-				ORJ_Record_GetCommentA(record, &comment);
+                ORJ_Record_GetCommentA(record, &comment);
 
-				printf("record-#%ld; %.*s (%ld fields)\n", (long)iRecord, (int)comment->len, comment->ptr, (long)ORJ_Record_GetNumFieldsA(record));
-				printf("  %.*s=%.*s\n", (int)name->name.len, name->name.ptr, (int)name->value.len, name->value.ptr);
-				printf("  %.*s=%.*s\n", (int)species->name.len, species->name.ptr, (int)species->value.len, species->value.ptr);
-				printf("  %.*s=%.*s\n", (int)breed->name.len, breed->name.ptr, (int)breed->value.len, breed->value.ptr);
-			}
-		}
+                printf("record-#%ld; %.*s (%ld fields)\n", (long)iRecord, (int)comment->len, comment->ptr, (long)ORJ_Record_GetNumFieldsA(record));
+                printf("  %.*s=%.*s\n", (int)name->name.len, name->name.ptr, (int)name->value.len, name->value.ptr);
+                printf("  %.*s=%.*s\n", (int)species->name.len, species->name.ptr, (int)species->value.len, species->value.ptr);
+                printf("  %.*s=%.*s\n", (int)breed->name.len, breed->name.ptr, (int)breed->value.len, breed->value.ptr);
+            }
+        }
 
         /* Finally, free the database */
         ORJ_FreeDatabase(db);

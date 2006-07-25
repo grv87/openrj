@@ -7,16 +7,16 @@
 CFG=openrj - Win32 Debug pseudoUNIX
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "openrj.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "openrj.mak" CFG="openrj - Win32 Debug pseudoUNIX"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "openrj - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "openrj - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "openrj - Win32 Debug MultiThreaded" (based on "Win32 (x86) Static Library")
@@ -25,7 +25,7 @@ CFG=openrj - Win32 Debug pseudoUNIX
 !MESSAGE "openrj - Win32 Release MultiThreaded DLL" (based on "Win32 (x86) Static Library")
 !MESSAGE "openrj - Win32 Release pseudoUNIX" (based on "Win32 (x86) Static Library")
 !MESSAGE "openrj - Win32 Debug pseudoUNIX" (based on "Win32 (x86) Static Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -33,6 +33,7 @@ CFG=openrj - Win32 Debug pseudoUNIX
 # PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
+
 
 !IF  "$(CFG)" == "openrj - Win32 Release"
 
@@ -218,7 +219,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.unix.debug.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\openrj.1.vc6.unix.debug.lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -257,15 +258,15 @@ SOURCE=..\..\src\orjstr.c
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\include\openrj\openrj.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\include\openrj\openrj_assert.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj_assert.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\include\openrj\openrj_memory.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj_memory.h"
 # End Source File
 # End Group
 # End Group

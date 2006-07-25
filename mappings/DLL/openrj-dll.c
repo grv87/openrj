@@ -57,31 +57,31 @@
  * Constants and definitions
  */
 
-#define SYDLLVER_PLATFORM_WINDOWS		0x00000001      /* Windows 9x */
-#define SYDLLVER_PLATFORM_NT			0x00000002      /* Windows NT */
+#define SYDLLVER_PLATFORM_WINDOWS       0x00000001      /* Windows 9x */
+#define SYDLLVER_PLATFORM_NT            0x00000002      /* Windows NT */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
-#define _mccVerHi		OPENRJ_VER_MAJOR
-#define _mccVerLo		OPENRJ_VER_MINOR
-#define _mccBldNum		OPENRJ_VER_REVISION
-#define _mccPlatform	SYDLLVER_PLATFORM_WINDOWS
+#define _mccVerHi       OPENRJ_VER_MAJOR
+#define _mccVerLo       OPENRJ_VER_MINOR
+#define _mccBldNum      OPENRJ_VER_REVISION
+#define _mccPlatform    SYDLLVER_PLATFORM_WINDOWS
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Entry points
  */
 
-int WINAPI DllMain(	HINSTANCE	hinst
-				,	DWORD		reason
-				,	LPVOID		lpReserved)
+int WINAPI DllMain( HINSTANCE   hinst
+                ,   DWORD       reason
+                ,   LPVOID      lpReserved)
 {
-	((void)hinst);
-	((void)reason);
-	((void)lpReserved);
+    ((void)hinst);
+    ((void)reason);
+    ((void)lpReserved);
 
-	return TRUE;
+    return TRUE;
 }
 
 
@@ -96,32 +96,32 @@ typedef struct tagDllVersionInfo
 
 HRESULT CALLBACK DllGetVersion(DllVersionInfo *pvi)
 {
-	HRESULT					hr;
-	static DllVersionInfo	s_verinfo =
-	{
-		sizeof(s_verinfo),
-		_mccVerHi,
-		_mccVerLo,
-		_mccBldNum,
-		_mccPlatform
-	};
+    HRESULT                 hr;
+    static DllVersionInfo   s_verinfo =
+    {
+        sizeof(s_verinfo),
+        _mccVerHi,
+        _mccVerLo,
+        _mccBldNum,
+        _mccPlatform
+    };
 
-	if(!pvi)
-	{
-		hr = E_POINTER;
-	}
-	else if(pvi->cbSize != s_verinfo.cbSize)
-	{
-		hr = E_INVALIDARG;
-	}
-	else
-	{
-		*pvi = s_verinfo;
+    if(!pvi)
+    {
+        hr = E_POINTER;
+    }
+    else if(pvi->cbSize != s_verinfo.cbSize)
+    {
+        hr = E_INVALIDARG;
+    }
+    else
+    {
+        *pvi = s_verinfo;
 
-		hr = S_OK;
-	}
+        hr = S_OK;
+    }
 
-	return hr;
+    return hr;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////

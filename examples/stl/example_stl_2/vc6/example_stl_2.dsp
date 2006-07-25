@@ -7,16 +7,16 @@
 CFG=example_stl_2 - Win32 Debug NoX
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "example_stl_2.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "example_stl_2.mak" CFG="example_stl_2 - Win32 Debug NoX"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "example_stl_2 - Win32 Debug" (based on "Win32 (x86) Application")
 !MESSAGE "example_stl_2 - Win32 Debug NoX" (based on "Win32 (x86) Application")
 !MESSAGE "example_stl_2 - Win32 Debug Multithreaded" (based on "Win32 (x86) Application")
@@ -29,7 +29,7 @@ CFG=example_stl_2 - Win32 Debug NoX
 !MESSAGE "example_stl_2 - Win32 Release Multithreaded" (based on "Win32 (x86) Application")
 !MESSAGE "example_stl_2 - Win32 Release Multithreaded DLL" (based on "Win32 (x86) Application")
 !MESSAGE "example_stl_2 - Win32 Release Multithreaded DLL NoX" (based on "Win32 (x86) Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -38,6 +38,7 @@ CFG=example_stl_2 - Win32 Debug NoX
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
+
 
 !IF  "$(CFG)" == "example_stl_2 - Win32 Debug"
 
@@ -361,7 +362,7 @@ LINK32=link.exe
 # ADD BASE LINK32 openrj.1.vc6.lib /nologo /version:1.0 /subsystem:console /machine:I386 /out:"..\..\..\..\bin/example_stl_2.vc6.exe" /libpath:"../../../../lib"
 # ADD LINK32 openrj.1.vc6.dll.nox.lib /nologo /version:1.0 /subsystem:console /machine:I386 /out:"..\..\..\..\bin/example_stl_2.vc6.dll.nox.exe" /libpath:"../../../../lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -404,11 +405,11 @@ SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\field.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\include\openrj\stl\functional.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\functional.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\include\openrj\stl\iterator.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\iterator.hpp"
 # End Source File
 # Begin Source File
 
@@ -416,7 +417,7 @@ SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\openrj.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\include\openrj\stl\openrjfwd.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\openrjfwd.hpp"
 # End Source File
 # Begin Source File
 
@@ -424,7 +425,7 @@ SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\record.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\..\include\openrj\stl\utility.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\stl\utility.hpp"
 # End Source File
 # End Group
 # Begin Source File

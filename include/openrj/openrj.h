@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 28th May 2006
+ * Updated: 13th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_MAJOR       1
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       19
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        52
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_REVISION    2
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        53
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -85,13 +85,14 @@
 # define OPENRJ_VER_1_3_4       0x01030400
 # define OPENRJ_VER_1_4_1       0x01040100
 # define OPENRJ_VER_1_5_1       0x01050100
+# define OPENRJ_VER_1_5_2       0x01050200
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
 #define OPENRJ_VER_MINOR    5
-#define OPENRJ_VER_REVISION 1
+#define OPENRJ_VER_REVISION 2
 
-#define OPENRJ_VER  OPENRJ_VER_1_5_1
+#define OPENRJ_VER  OPENRJ_VER_1_5_2
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -780,7 +781,6 @@ inline char const *c_str_ptr_null_a(ORJStringA const &s)
 {
     return (0 != s.len) ? s.ptr : NULL;
 }
-
 /** \brief Nul-terminated, possibly NULL, C-string representation of the given ORJStringA instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -798,7 +798,6 @@ inline char const *c_str_ptr_a(ORJStringA const &s)
 {
     return s.ptr;   /* This is ok, because Open-RJ guarantees that strings will be nul-terminated */
 }
-
 /** \brief Nul-terminated C-string representation of the given ORJStringA instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -816,7 +815,6 @@ inline char const *c_str_data_a(ORJStringA const &s)
 {
     return s.ptr;
 }
-
 /** \brief Nul-terminated C-string representation of the given ORJStringA instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -826,6 +824,14 @@ inline char const *c_str_data(ORJStringA const &s)
     return c_str_data_a(s);
 }
 
+/** \brief Length of the C-string representation of the given ORJStringA instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline size_t c_str_len_a(ORJStringA const &s)
+{
+    return s.len;
+}
 /** \brief Length of the C-string representation of the given ORJStringA instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -845,7 +851,6 @@ inline char const *c_str_ptr_null_a(ORJRC rc)
 
     return ('\0' != s) ? s : NULL;
 }
-
 /** \brief Nul-terminated, possibly NULL, C-string representation of the given ORJRC instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -863,7 +868,6 @@ inline char const *c_str_ptr_a(ORJRC rc)
 {
     return ORJ_GetErrorStringA(rc);
 }
-
 /** \brief Nul-terminated C-string representation of the given ORJRC instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -881,7 +885,6 @@ inline char const *c_str_data_a(ORJRC rc)
 {
     return ORJ_GetErrorStringA(rc);
 }
-
 /** \brief Not necessarily nul-terminated C-string representation of the given ORJRC instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -891,6 +894,14 @@ inline char const *c_str_data(ORJRC rc)
     return c_str_data_a(rc);
 }
 
+/** \brief Length of the C-string representation of the given ORJRC instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline size_t c_str_len_a(ORJRC rc)
+{
+    return ORJ_GetErrorStringLengthA(rc);
+}
 /** \brief Length of the C-string representation of the given ORJRC instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -910,7 +921,6 @@ inline char const *c_str_ptr_null_a(ORJ_PARSE_ERROR pe)
 
     return ('\0' != s) ? s : NULL;
 }
-
 /** \brief Nul-terminated, possibly NULL, C-string representation of the given ORJ_PARSE_ERROR instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -928,7 +938,6 @@ inline char const *c_str_ptr_a(ORJ_PARSE_ERROR pe)
 {
     return ORJ_GetParseErrorStringA(pe);
 }
-
 /** \brief Nul-terminated C-string representation of the given ORJ_PARSE_ERROR instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -946,7 +955,6 @@ inline char const *c_str_data_a(ORJ_PARSE_ERROR pe)
 {
     return ORJ_GetParseErrorStringA(pe);
 }
-
 /** \brief Not necessarily nul-terminated C-string representation of the given ORJ_PARSE_ERROR instance
  *
  * \ingroup group_openrj_stringaccessshims
@@ -961,6 +969,14 @@ inline char const *c_str_data(ORJ_PARSE_ERROR pe)
  * \ingroup group_openrj_stringaccessshims
  */
 inline size_t c_str_len(ORJ_PARSE_ERROR pe)
+{
+    return ORJ_GetParseErrorStringLengthA(pe);
+}
+/** \brief Length of the C-string representation of the given ORJ_PARSE_ERROR instance
+ *
+ * \ingroup group_openrj_stringaccessshims
+ */
+inline size_t c_str_len_a(ORJ_PARSE_ERROR pe)
 {
     return ORJ_GetParseErrorStringLengthA(pe);
 }
@@ -1068,6 +1084,7 @@ namespace stlsoft
     using ::openrj::c_str_ptr;
     using ::openrj::c_str_data_a;
     using ::openrj::c_str_data;
+    using ::openrj::c_str_len_a;
     using ::openrj::c_str_len;
 }
 
