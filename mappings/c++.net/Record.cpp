@@ -4,7 +4,7 @@
  * Purpose: Implementation file for OpenRJ::Record class
  *
  * Created: 3rd August 2004
- * Updated: 13th March 2006
+ * Updated: 1st June 2006
  *
  * Home:    http://openrj.org/
  *
@@ -112,6 +112,42 @@ namespace OpenRJ
         }
 
         return num;
+    }
+
+    String *Record::GetFieldValue(String *fieldName)
+    {
+        return this->GetFieldValue_(::dotnetstl::c_string_accessor<char>(fieldName));
+    }
+    String *Record::GetFieldValue(String *fieldName, String *defaultValue)
+    {
+        return this->GetFieldValue_(::dotnetstl::c_string_accessor<char>(fieldName), ::dotnetstl::c_string_accessor<char>(defaultValue));
+    }
+
+    String *Record::GetFieldValue_(char const *fieldName)
+    {
+        ::openrj::ORJFieldA const   *pField =   ::openrj::ORJ_Record_FindNextFieldA(m_record, NULL, fieldName, NULL);
+
+        if(NULL == pField)
+        {
+            String  *message = String::Concat(new String("Record does not contain a field named \""), fieldName, "\"");
+
+            throw new UnknownFieldNameException(fieldName, message);
+        }
+
+        return new String(pField->value.ptr, 0, pField->value.len);
+    }
+    String *Record::GetFieldValue_(char const *fieldName, char const *defaultValue)
+    {
+        ::openrj::ORJFieldA const   *pField =   ::openrj::ORJ_Record_FindNextFieldA(m_record, NULL, fieldName, NULL);
+
+        if(NULL == pField)
+        {
+            return defaultValue;
+        }
+        else
+        {
+            return new String(pField->value.ptr, 0, pField->value.len);
+        }
     }
 
 // TODO: Show how, when using the String* returning form (using new String(pField->value.ptr, 0, pField->value.len);)

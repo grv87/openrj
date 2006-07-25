@@ -4,7 +4,7 @@
  * Purpose: Definition of the OpenRJ::Record class
  *
  * Created: 3rd August 2004
- * Updated: 13th March 2006
+ * Updated: 1st June 2006
  *
  * Home:    http://openrj.org/
  *
@@ -102,6 +102,14 @@ namespace OpenRJ
         /// Indicates whether a record has one or more fields of the given name
         int                             HasField(String *fieldName);
 
+        /// Returns the value associated with the (first) field with the
+        /// given name.
+        String                          *GetFieldValue(String *fieldName);
+        /// Returns the value associated with the (first) field with the
+        /// given name, or the given default if no fields exist with that
+        /// name.
+        String                          *GetFieldValue(String *fieldName, String *defaultValue);
+
         /// Access the fields by index
         __property Field                *get_Item(int index);
 #ifdef INDEXER_RETURNS_STRING
@@ -122,6 +130,8 @@ namespace OpenRJ
     private:
         int     HasField_(char const *fieldName);
         Fields  *GetNamedFields_(char const *fieldName);
+        String  *GetFieldValue_(char const *fieldName);
+        String  *GetFieldValue_(char const *fieldName, char const *defaultValue);
     /// @}
 
     /// \name Members

@@ -7,22 +7,23 @@
 CFG=openrj - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "openrj.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "openrj.mak" CFG="openrj - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "openrj - Win32 Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "openrj - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 CPP=cl.exe
+
 
 !IF  "$(CFG)" == "openrj - Win32 Release"
 
@@ -72,7 +73,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"..\..\lib\openrj.debug.lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -93,18 +94,22 @@ SOURCE=..\..\src\orjmem.c
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Group "Open-RJ Header Files"
+
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\include\openrj.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\include\openrj_assert.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj_assert.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\include\openrj_memory.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj_memory.h"
 # End Source File
+# End Group
 # End Group
 # End Target
 # End Project

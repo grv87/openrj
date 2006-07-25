@@ -7,25 +7,26 @@
 CFG=Ch - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Ch.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Ch.mak" CFG="Ch - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Ch - Win32 Release" (based on "Win32 (x86) Generic Project")
 !MESSAGE "Ch - Win32 Debug" (based on "Win32 (x86) Generic Project")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 MTL=midl.exe
+
 
 !IF  "$(CFG)" == "Ch - Win32 Release"
 
@@ -53,7 +54,7 @@ MTL=midl.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -131,11 +132,11 @@ SOURCE=.\ORJ_Record_GetFieldA.chf
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\include\openrj\openrj.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\include\openrj\openrj_assert.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj_assert.h"
 # End Source File
 # End Group
 # End Group

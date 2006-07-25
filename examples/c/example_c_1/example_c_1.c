@@ -87,10 +87,10 @@ int main()
     {
         size_t  iRecord;
 
-        printf(	"Database has %ld lines in %ld fields in %ld records\n"
-			,	(long)ORJ_Database_GetNumLinesA(db)
-			,	(long)ORJ_Database_GetNumFieldsA(db)
-			,	(long)ORJ_Database_GetNumRecordsA(db));
+        printf( "Database has %ld lines in %ld fields in %ld records\n"
+            ,   (long)ORJ_Database_GetNumLinesA(db)
+            ,   (long)ORJ_Database_GetNumFieldsA(db)
+            ,   (long)ORJ_Database_GetNumRecordsA(db));
 
         printf("Enumerating all fields in the database:\n");
 

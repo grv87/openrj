@@ -7,19 +7,19 @@
 CFG=Cpp_simple - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Cpp_simple.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Cpp_simple.mak" CFG="Cpp_simple - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Cpp_simple - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE "Cpp_simple - Win32 Debug" (based on "Win32 (x86) Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -28,6 +28,7 @@ CFG=Cpp_simple - Win32 Debug
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
+
 
 !IF  "$(CFG)" == "Cpp_simple - Win32 Release"
 
@@ -81,7 +82,7 @@ LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 openrj.vc6.debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /version:1.0 /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -254,11 +255,11 @@ SOURCE=$(STLSOFT_INCLUDE)/stlsoft\meta\yesno.hpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\openrj.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\openrj_assert.h
+SOURCE="$(OPENRJ_ROOT)\include\openrj\openrj_assert.h"
 # End Source File
 # End Group
 # Begin Group "C++ Mapping"
@@ -266,31 +267,31 @@ SOURCE=..\..\..\include\openrj\openrj_assert.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\database.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\database.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\databasebase.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\databasebase.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\field.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\field.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\filedatabase.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\filedatabase.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\memorydatabase.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\memorydatabase.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\openrj.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\openrj.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\include\openrj\cpp\record.hpp
+SOURCE="$(OPENRJ_ROOT)\include\openrj\cpp\record.hpp"
 # End Source File
 # End Group
 # End Group

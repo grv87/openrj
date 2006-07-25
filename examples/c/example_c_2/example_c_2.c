@@ -87,10 +87,10 @@ int main()
     {
         size_t  iRecord;
 
-        printf(	"Database has %ld lines in %ld fields in %ld records\n"
-			,	(long)db->numLines
-			,	(long)db->numFields
-			,	(long)db->numRecords);
+        printf( "Database has %ld lines in %ld fields in %ld records\n"
+            ,   (long)db->numLines
+            ,   (long)db->numFields
+            ,   (long)db->numRecords);
 
         printf("Enumerating all fields in the database:\n");
 
@@ -100,8 +100,8 @@ int main()
             ORJRecordA const    *record;
             ORJStringA const    *comment;
 
-            record	=	&db->records[iRecord];
-			comment	=	&record->comment;
+            record  =   &db->records[iRecord];
+            comment =   &record->comment;
 
             if(0 != comment->len)
             {
@@ -118,9 +118,9 @@ int main()
                 ORJStringA const    *name;
                 ORJStringA const    *value;
 
-                field	=	&record->fields[iField];
-				name	=	&field->name;
-				value	=	&field->value;
+                field   =   &record->fields[iField];
+                name    =   &field->name;
+                value   =   &field->value;
 
                 printf("  field-#%ld %.*s=%.*s\n", (long)iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
             }

@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment"> * Purpose: Root header file for the STL mapping of the Open-RJ library</span>
 <a name="l00005"></a>00005 <span class="comment"> *</span>
 <a name="l00006"></a>00006 <span class="comment"> * Created: 28th September 2004</span>
-<a name="l00007"></a>00007 <span class="comment"> * Updated: 28th May 2006</span>
+<a name="l00007"></a>00007 <span class="comment"> * Updated: 13th July 2006</span>
 <a name="l00008"></a>00008 <span class="comment"> *</span>
 <a name="l00009"></a>00009 <span class="comment"> * Home:    http://openrj.org/</span>
 <a name="l00010"></a>00010 <span class="comment"> *</span>
@@ -100,8 +100,8 @@
 <a name="l00054"></a>00054 <span class="preprocessor">#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION</span>
 <a name="l00055"></a>00055 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1</span>
 <a name="l00056"></a>00056 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     4</span>
-<a name="l00057"></a>00057 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  1</span>
-<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      18</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  2</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      19</span>
 <a name="l00059"></a>00059 <span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_DOCUMENTATION_SKIP_SECTION */</span>
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061 <span class="comment">/* /////////////////////////////////////////////////////////////////////////////</span>
@@ -122,11 +122,11 @@
 <a name="l00076"></a>00076 
 <a name="l00077"></a>00077 <span class="preprocessor">#include &lt;stlsoft/stlsoft.h&gt;</span>
 <a name="l00078"></a>00078 
-<a name="l00079"></a>00079 <span class="preprocessor">#if !defined(_STLSOFT_VER_1_8_4)</span>
-<a name="l00080"></a>00080 <span class="preprocessor"></span><span class="preprocessor"># error STLSoft version 1.8.4 or greater required. (www.stlsoft.org/downloads.html)</span>
+<a name="l00079"></a>00079 <span class="preprocessor">#if !defined(_STLSOFT_VER_1_9_1)</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span><span class="preprocessor"># error STLSoft version 1.9.1 or greater required. (www.stlsoft.org/downloads.html)</span>
 <a name="l00081"></a>00081 <span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* STLSoft version */</span>
 <a name="l00082"></a>00082 
-<a name="l00083"></a>00083 <span class="preprocessor">#include &lt;stlsoft/integer_to_string.hpp&gt;</span>
+<a name="l00083"></a>00083 <span class="preprocessor">#include &lt;stlsoft/conversion/integer_to_string.hpp&gt;</span>
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085 <span class="preprocessor">#include &lt;exception&gt;</span>
 <a name="l00086"></a>00086 <span class="preprocessor">#if defined(OPENRJ_USE_CUSTOM_STRING)</span>

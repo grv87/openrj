@@ -85,24 +85,24 @@ int main()
     }
     else
     {
-		size_t	i;
+        size_t  i;
 
         printf("Enumerating all fields in the database:\n");
 
-		for(i = 0; i < db->numFields; ++i)
-		{
-			ORJField const	*field;
+        for(i = 0; i < db->numFields; ++i)
+        {
+            ORJField const  *field;
 
-			rc = ORJ_Database_GetFieldA(db, i, &field);
+            rc = ORJ_Database_GetFieldA(db, i, &field);
 
-			/* Asserting on a runtime condition is an absolute no-no. In this case it
-			 * is legitimate because we're working on a memory database whose contents
-			 * are fixed.
-			 */
-			assert(ORJ_RC_SUCCESS == rc);
+            /* Asserting on a runtime condition is an absolute no-no. In this case it
+             * is legitimate because we're working on a memory database whose contents
+             * are fixed.
+             */
+            assert(ORJ_RC_SUCCESS == rc);
 
-			printf("  %.*s=%.*s\n", (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
-		}
+            printf("  %.*s=%.*s\n", (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
+        }
 
         /* Free the database */
         ORJ_FreeDatabase(db);

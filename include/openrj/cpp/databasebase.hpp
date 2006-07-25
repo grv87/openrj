@@ -4,7 +4,7 @@
  * Purpose: DatabaseBase class, in the C++ mapping of the Open-RJ library
  *
  * Created: 12th April 2005
- * Updated: 28th May 2006
+ * Updated: 10th July 2006
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_MINOR       1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    1
-# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        7
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_REVISION    2
+# define OPENRJ_VER_OPENRJ_CPP_HPP_DATABASEBASE_EDIT        8
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@
 #include <openrj/cpp/field.hpp>
 #include <openrj/cpp/record.hpp>
 
-#include <stlsoft/operator_bool_adaptor.hpp>
+#include <stlsoft/util/operator_bool_adaptor.hpp>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Namespace

@@ -139,7 +139,7 @@ DOC_EXCLUDE_FILE_PATTERNS =\
  \
 
 DOC_INPUT_DIRS_AND_FILES	= \
- $(PROJ_DOC_SRC_DIR)\mainpage.src \
+ $(MAINPAGE_SRC) \
  $(PROJ_INCLUDE_DIR)\openrj \
  $(PROJ_INCLUDE_DIR)\openrj\cpp \
  $(PROJ_INCLUDE_DIR)\openrj\stl \

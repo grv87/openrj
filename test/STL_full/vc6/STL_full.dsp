@@ -147,23 +147,39 @@ SOURCE="$(STLSOFT)\include\stlsoft\util\std\algorithm.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\allocator_base.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_base.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\allocator_selector.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_features.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\auto_buffer.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_selector.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\auto_destructor.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\auto_buffer.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\memory\auto_destructor.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\meta\base_type_traits.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\meta\capabilities.hpp"
 # End Source File
 # Begin Source File
 
 SOURCE="$(STLSOFT)\include\stlsoft\char_traits.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\collections\collections.hpp"
 # End Source File
 # Begin Source File
 
@@ -179,10 +195,6 @@ SOURCE="$(STLSOFT)\include\stlsoft\integer_to_string.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\meta\is_function_pointer_type.hpp"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\iterator.hpp"
 # End Source File
 # Begin Source File
@@ -191,15 +203,7 @@ SOURCE="$(STLSOFT)\include\stlsoft\util\std\library_discriminator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\meta.hpp"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\internal\cccap\msvc.h"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\n_types.hpp"
 # End Source File
 # Begin Source File
 
@@ -215,11 +219,19 @@ SOURCE="$(STLSOFT)\include\stlsoft\sap_cast.hpp"
 # End Source File
 # Begin Source File
 
+SOURCE="$(STLSOFT)\include\stlsoft\meta\select_first_type_if.hpp"
+# End Source File
+# Begin Source File
+
 SOURCE="$(STLSOFT)\include\stlsoft\shim_string.hpp"
 # End Source File
 # Begin Source File
 
 SOURCE="$(STLSOFT)\include\stlsoft\sign_traits.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\meta\size_of.hpp"
 # End Source File
 # Begin Source File
 
@@ -231,27 +243,11 @@ SOURCE="$(STLSOFT)\include\stlsoft\util\std_swap.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft.h"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\stlsoft.h"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft_meta.h"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft_proxy_iterator.h"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft_shim_string.h"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft_string_access.h"
 # End Source File
 # Begin Source File
 
@@ -263,43 +259,7 @@ SOURCE="$(STLSOFT)\include\stlsoft\string_access_fwd.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\type_traits.hpp"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\meta\yesno.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_base.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_features.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_selector.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\base_type_traits.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\capabilities.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\collections\collections.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\select_first_type_if.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\size_of.hpp"
 # End Source File
 # End Group
 # End Group

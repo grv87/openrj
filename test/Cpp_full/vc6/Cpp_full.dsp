@@ -107,15 +107,31 @@ SOURCE=..\Cpp_full.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\allocator_selector.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\util\std\algorithm.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\auto_buffer.hpp"
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_base.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_features.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\memory\allocator_selector.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\memory\auto_buffer.hpp"
 # End Source File
 # Begin Source File
 
 SOURCE="$(STLSOFT)\include\stlsoft\meta\base_type_traits.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\meta\capabilities.hpp"
 # End Source File
 # Begin Source File
 
@@ -131,18 +147,6 @@ SOURCE="$(STLSOFT)\include\stlsoft\constraints.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\meta\is_function_pointer_type.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\is_pointer_type.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\is_same_type.hpp"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\iterator.hpp"
 # End Source File
 # Begin Source File
@@ -151,15 +155,7 @@ SOURCE="$(STLSOFT)\include\stlsoft\util\std\library_discriminator.hpp"
 # End Source File
 # Begin Source File
 
-SOURCE="$(STLSOFT)\include\stlsoft\meta.hpp"
-# End Source File
-# Begin Source File
-
 SOURCE="$(STLSOFT)\include\stlsoft\internal\cccap\msvc.h"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\meta\n_types.hpp"
 # End Source File
 # Begin Source File
 
@@ -179,11 +175,19 @@ SOURCE="$(STLSOFT)\include\stlsoft\sap_cast.hpp"
 # End Source File
 # Begin Source File
 
+SOURCE="$(STLSOFT)\include\stlsoft\meta\select_first_type_if.hpp"
+# End Source File
+# Begin Source File
+
 SOURCE="$(STLSOFT)\include\stlsoft\shim_string.hpp"
 # End Source File
 # Begin Source File
 
 SOURCE="$(STLSOFT)\include\stlsoft\sign_traits.hpp"
+# End Source File
+# Begin Source File
+
+SOURCE="$(STLSOFT)\include\stlsoft\meta\size_of.hpp"
 # End Source File
 # Begin Source File
 
@@ -196,10 +200,6 @@ SOURCE="$(STLSOFT)\include\stlsoft\util\std_swap.hpp"
 # Begin Source File
 
 SOURCE="$(STLSOFT)\include\stlsoft\stlsoft.h"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft_meta.h"
 # End Source File
 # Begin Source File
 
@@ -216,14 +216,6 @@ SOURCE="$(STLSOFT)\include\stlsoft\string_view.hpp"
 # Begin Source File
 
 SOURCE="$(STLSOFT)\include\stlsoft\meta\yesno.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\util\std\algorithm.hpp"
-# End Source File
-# Begin Source File
-
-SOURCE="$(STLSOFT)\include\stlsoft\allocator_base.hpp"
 # End Source File
 # End Group
 # End Group

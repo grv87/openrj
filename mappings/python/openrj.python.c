@@ -61,8 +61,8 @@
 #include <Python.h>
 
 #ifdef _MSC_VER
-# undef		statichere
-# define	statichere
+# undef     statichere
+# define    statichere
 #endif /* compiler */
 
 #ifdef SKIP_DEBUG
@@ -143,7 +143,7 @@ static struct PyMethodDef   openrj_Field_methods[] =
 {
         {   "name",     (PyCFunction)openrj_Field_name,      METH_NOARGS,    "The name of the field"     }
     ,   {   "value",    (PyCFunction)openrj_Field_value,     METH_NOARGS,    "The value of the field"    }
-    ,   {   NULL,       NULL,								0,              NULL                        }
+    ,   {   NULL,       NULL,                               0,              NULL                        }
 };
 
 statichere PyTypeObject openrj_Field_Type =
@@ -362,15 +362,15 @@ static PyObject         *openrj_Database_slice(openrj_Database *self, int from, 
 
 static struct PyMethodDef openrj_Database_methods[] =
 {
-        {   "path",         (PyCFunction)openrj_Database_path,			METH_NOARGS,    "The path of the database"                      }
-    ,   {   "records",      (PyCFunction)openrj_Database_records,		METH_NOARGS,    "A tuple of all the records in the database"    }
+        {   "path",         (PyCFunction)openrj_Database_path,          METH_NOARGS,    "The path of the database"                      }
+    ,   {   "records",      (PyCFunction)openrj_Database_records,       METH_NOARGS,    "A tuple of all the records in the database"    }
 #ifdef DATABASE_HAS_FIELDS_MEMBER
-    ,   {   "fields",       (PyCFunction)openrj_Database_fields,		METH_NOARGS,    "A tuple of all the fields in the database"     }
+    ,   {   "fields",       (PyCFunction)openrj_Database_fields,        METH_NOARGS,    "A tuple of all the fields in the database"     }
 #endif /* DATABASE_HAS_FIELDS_MEMBER */
-    ,   {   "numRecords",   (PyCFunction)openrj_Database_numRecords,	METH_NOARGS,    "The number of records in the database"         }
-    ,   {   "numFields",    (PyCFunction)openrj_Database_numFields,		METH_NOARGS,    "The number of fields in the database"          }
-    ,   {   "numLines",     (PyCFunction)openrj_Database_numLines,		METH_NOARGS,    "The number of lines in the database"           }
-    ,   {   NULL,           NULL,										0,              NULL                                            }
+    ,   {   "numRecords",   (PyCFunction)openrj_Database_numRecords,    METH_NOARGS,    "The number of records in the database"         }
+    ,   {   "numFields",    (PyCFunction)openrj_Database_numFields,     METH_NOARGS,    "The number of fields in the database"          }
+    ,   {   "numLines",     (PyCFunction)openrj_Database_numLines,      METH_NOARGS,    "The number of lines in the database"           }
+    ,   {   NULL,           NULL,                                       0,              NULL                                            }
 };
 
 static PySequenceMethods openrj_Database_as_sequence =
@@ -522,10 +522,10 @@ DL_EXPORT(void) initopenrj(void)
         PyDict_SetItemString(dictionary, "__version__", VERSION);
 
         /* Add the other "constants" */
-        ORDER_FIELDS				=   PyInt_FromLong(ORJ_FLAG_ORDERFIELDS);
-        ELIDE_BLANK_RECORDS			=   PyInt_FromLong(ORJ_FLAG_ELIDEBLANKRECORDS);
-		IGNORE_CASE_ON_LOOKUP		=	PyInt_FromLong(ORJ_FLAG_IGNORECASEONLOOKUP);
-		NO_REINTERPRET_FIELD_IDS	=	PyInt_FromLong(ORJ_FLAG_NOREINTERPRETFIELDIDS);
+        ORDER_FIELDS                =   PyInt_FromLong(ORJ_FLAG_ORDERFIELDS);
+        ELIDE_BLANK_RECORDS         =   PyInt_FromLong(ORJ_FLAG_ELIDEBLANKRECORDS);
+        IGNORE_CASE_ON_LOOKUP       =   PyInt_FromLong(ORJ_FLAG_IGNORECASEONLOOKUP);
+        NO_REINTERPRET_FIELD_IDS    =   PyInt_FromLong(ORJ_FLAG_NOREINTERPRETFIELDIDS);
 
         PyDict_SetItemString(dictionary, "ORDER_FIELDS", ORDER_FIELDS);
         PyDict_SetItemString(dictionary, "ELIDE_BLANK_RECORDS", ELIDE_BLANK_RECORDS);
@@ -737,13 +737,13 @@ static PyObject *openrj_Field_getattr(openrj_Field *self, char const *name)
 
 static int openrj_Field_compare(openrj_Field *lhs, openrj_Field *rhs)
 {
-    int		res;
-	size_t	len	=	lhs->field->name.len;
+    int     res;
+    size_t  len =   lhs->field->name.len;
 
-	if(rhs->field->name.len < len)
-	{
-		len = rhs->field->name.len;
-	}
+    if(rhs->field->name.len < len)
+    {
+        len = rhs->field->name.len;
+    }
 
 #ifdef TRACE_METHODS
     fprintf(stderr, "Field(0x%p).compare(0x%p)\n", lhs, rhs);
@@ -903,7 +903,7 @@ static PyObject *openrj_Record_getattr(openrj_Record *self, char const *name)
     }
     else if(0 == strcmp(name, "comment"))
     {
-	    return Py_BuildValue("s#", self->record->comment.ptr, self->record->comment.len);
+        return Py_BuildValue("s#", self->record->comment.ptr, self->record->comment.len);
     }
     else
     {
