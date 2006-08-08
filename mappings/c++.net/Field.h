@@ -4,7 +4,7 @@
  * Purpose: Definition of the Field class
  *
  * Created: 3rd August 2004
- * Updated: 13th March 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -37,6 +37,15 @@
  *
  * ////////////////////////////////////////////////////////////////////////// */
 
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELD_MAJOR    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELD_MINOR    2
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELD_REVISION 1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELD_EDIT     14
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
 
 #pragma once
 

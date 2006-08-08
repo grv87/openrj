@@ -24,6 +24,7 @@
 #include "Database.h"
 #include "Record.h"
 #include "Fields.h"
+#include "Field.h"
 #include "OpenRJException.h"
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -58,13 +59,15 @@ namespace OpenRJ
         IEnumerator *en =   m_records->GetEnumerator();
         for(en->Reset(); en->MoveNext(); )
         {
-            Record  *record =   static_cast<Record*>(en->get_Current());
+            Record  *record =   dotnetstl::check_cast<Record*>(en->get_Current());
 
             IEnumerator *en2    =   record->GetEnumerator();
 
             for(en2->Reset(); en2->MoveNext(); )
             {
-                m_fields->Add(en->get_Current());
+				Field	*field	=	dotnetstl::check_cast<Field*>(en2->get_Current());
+
+                m_fields->Add(field);
             }
         }
 /*
@@ -127,7 +130,7 @@ namespace OpenRJ
             throw new IndexOutOfRangeException();
         }
 
-        return static_cast<Record*>(m_records->get_Item(index));
+        return dotnetstl::check_cast<Record*>(m_records->get_Item(index));
     }
 
     Fields *Database::get_Fields()
@@ -142,8 +145,8 @@ namespace OpenRJ
 
         for(int i = 0; i < m_records->get_Count(); ++i)
         {
-            Record      *record     =   static_cast<Record*>(m_records->get_Item(i));
-            PFields_t   fields2 =   record->GetNamedFields(fieldName);
+            Record      *record =   dotnetstl::check_cast<Record*>(m_records->get_Item(i));
+            PFields_t   fields2	=   record->GetNamedFields(fieldName);
 
             for(int j = 0; j < fields2->get_Count(); ++j)
             {

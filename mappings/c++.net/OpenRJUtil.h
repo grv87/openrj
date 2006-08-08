@@ -4,7 +4,7 @@
  * Purpose: Utility functions for the Open-RJ/C++.NET mapping
  *
  * Created: 15th January 2005
- * Updated: 13th March 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -37,6 +37,15 @@
  *
  * ////////////////////////////////////////////////////////////////////////// */
 
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJUTIL_MAJOR    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJUTIL_MINOR    0
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJUTIL_REVISION 1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJUTIL_EDIT     5
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
 
 #pragma once
 

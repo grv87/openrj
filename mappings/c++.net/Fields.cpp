@@ -49,7 +49,7 @@ namespace OpenRJ
             throw new IndexOutOfRangeException();
         }
 
-        return static_cast<Field*>(m_fields->get_Item(index));
+		return dotnetstl::check_cast<Field*>(m_fields->get_Item(index));
     }
 
     IEnumerator *Fields::GetEnumerator()

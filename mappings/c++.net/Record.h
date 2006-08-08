@@ -4,7 +4,7 @@
  * Purpose: Definition of the OpenRJ::Record class
  *
  * Created: 3rd August 2004
- * Updated: 1st June 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -37,6 +37,15 @@
  *
  * ////////////////////////////////////////////////////////////////////////// */
 
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_RECORD_MAJOR       1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_RECORD_MINOR       9
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_RECORD_REVISION    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_RECORD_EDIT        18
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
 
 #pragma once
 

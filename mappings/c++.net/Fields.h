@@ -4,7 +4,7 @@
  * Purpose:     Definition of the OpenRJ::Fields class.
  *
  * Created:     3rd August 2004
- * Updated:     24th May 2006
+ * Updated:     9th August 2006
  *
  * Author:      Matthew Wilson
  *
@@ -14,6 +14,17 @@
  *
  * ////////////////////////////////////////////////////////////////////////// */
 
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELDS_MAJOR    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELDS_MINOR    5
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELDS_REVISION 1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_FIELDS_EDIT     18
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
+
+#pragma once
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes

@@ -47,6 +47,10 @@ namespace OpenRJ
         return database;
     }
 
+    MemoryDatabase::MemoryDatabase(String *contents)
+        : Database(create_database_(::dotnetstl::c_string_accessor<char>(contents), contents->get_Length(), Database::Flags::ElideBlankRecords))
+    {}
+
     MemoryDatabase::MemoryDatabase(String *contents, Flags flags)
         : Database(create_database_(::dotnetstl::c_string_accessor<char>(contents), contents->get_Length(), flags))
     {}

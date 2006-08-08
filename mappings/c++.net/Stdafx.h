@@ -4,7 +4,7 @@
  * Purpose:
  *
  * Created: 3rd August 2004
- * Updated: 13th March 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -38,6 +38,14 @@
  * ////////////////////////////////////////////////////////////////////////// */
 
 
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_STDAFX_MAJOR       1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_STDAFX_MINOR       2
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_STDAFX_REVISION    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_STDAFX_EDIT        10
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+
 // stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently,
 // but are changed infrequently
@@ -52,7 +60,8 @@
 
 #include "OpenRJ.h"
 
-#include <dotnetstl/object_enumerators.hpp>
-#include <dotnetstl/string_accessor.hpp>
+#include <dotnetstl/collections/object_enumerators.hpp>
+#include <dotnetstl/conversion/check_cast.hpp>
+#include <dotnetstl/string/string_accessor.hpp>
 
 /* ////////////////////////////////////////////////////////////////////////// */
