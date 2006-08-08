@@ -4,7 +4,7 @@
  * Purpose: Definition of the MemoryDatabase class
  *
  * Created: 14th January 2005
- * Updated: 13th March 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -37,6 +37,16 @@
  *
  * ////////////////////////////////////////////////////////////////////////// */
 
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_MEMORYDATABASE_MAJOR       1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_MEMORYDATABASE_MINOR       2
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_MEMORYDATABASE_REVISION    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_MEMORYDATABASE_EDIT        7
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
+
 #pragma once
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -68,6 +78,7 @@ namespace OpenRJ
     /// \name Construction
     /// @{
     public:
+        MemoryDatabase(String *contents); // flags == Flags::ElideBlankRecords
         MemoryDatabase(String *contents, Flags flags);
     /// @}
 

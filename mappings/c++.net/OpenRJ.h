@@ -4,7 +4,7 @@
  * Purpose: Root include for the Open-RJ/C++.NET mapping
  *
  * Created: 3rd August 2004
- * Updated: 24th May 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -37,6 +37,15 @@
  *
  * ////////////////////////////////////////////////////////////////////////// */
 
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJ_MAJOR       1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJ_MINOR       5
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJ_REVISION    1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_OPENRJ_EDIT        11
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
 
 #pragma once
 

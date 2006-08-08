@@ -93,7 +93,7 @@ namespace OpenRJ
             throw new IndexOutOfRangeException();
         }
 
-        return static_cast<Field*>(m_fields->get_Item(index));
+        return dotnetstl::check_cast<Field*>(m_fields->get_Item(index));
     }
 
     int Record::HasField(String *fieldName)
@@ -173,7 +173,7 @@ namespace OpenRJ
 
         for(int i = 0; i < m_fields->get_Count(); ++i)
         {
-            Field   *field2 =   static_cast<Field*>(m_fields->get_Item(i));
+            Field   *field2 =   dotnetstl::check_cast<Field*>(m_fields->get_Item(i));
 
             if(field2->m_field == pField)
             {
@@ -206,7 +206,7 @@ namespace OpenRJ
 
         for(int i = 0; i < m_fields->get_Count(); ++i)
         {
-            Field                       *field  =   static_cast<Field*>(m_fields->get_Item(i));
+            Field                       *field  =   dotnetstl::check_cast<Field*>(m_fields->get_Item(i));
             ::openrj::ORJFieldA const   *pField =   field->m_field;
 
             if(pField == ORJ_Record_FindNextFieldA(m_record, (0 == i) ? NULL : (pField - 1), fieldName, NULL))

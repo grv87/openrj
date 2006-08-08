@@ -4,7 +4,7 @@
  * Purpose: Definition of the Database class
  *
  * Created: 3rd August 2004
- * Updated: 24th May 2006
+ * Updated: 9th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -36,6 +36,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * ////////////////////////////////////////////////////////////////////////// */
+
+
+#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MAJOR     1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MINOR     5
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_REVISION  1
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_EDIT      17
+#endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
+/* ////////////////////////////////////////////////////////////////////// */
 
 #pragma once
 

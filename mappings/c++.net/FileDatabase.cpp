@@ -96,6 +96,11 @@ namespace OpenRJ
         return database;
     }
 
+    FileDatabase::FileDatabase(String *path) // flags == Flags::ElideBlankRecords
+		: Database(create_database_(::dotnetstl::c_string_accessor<char>(path), Database::Flags::ElideBlankRecords))
+        , m_path(path)
+    {}
+
     FileDatabase::FileDatabase(String *path, Flags flags)
         : Database(create_database_(::dotnetstl::c_string_accessor<char>(path), flags))
         , m_path(path)
