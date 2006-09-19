@@ -4,7 +4,7 @@
  * Purpose: Definition of the Database class
  *
  * Created: 3rd August 2004
- * Updated: 9th August 2006
+ * Updated: 20th September 2006
  *
  * Home:    http://openrj.org/
  *
@@ -40,9 +40,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MAJOR     1
-# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MINOR     5
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MINOR     6
 # define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_EDIT      17
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_EDIT      18
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* ////////////////////////////////////////////////////////////////////// */
@@ -102,10 +102,11 @@ namespace OpenRJ
         [Flags]
         __value enum Flags
         {
-                OrderFields             =   ::openrj::ORDER_FIELDS
-            ,   ElideBlankRecords       =   ::openrj::ELIDE_BLANK_RECORDS
-            ,   IgnoreCaseOnLookup      =   ::openrj::IGNORE_CASE_ON_LOOKUP
-            ,   NoReinterpretFieldIds   =   ::openrj::NO_REINTERPRET_FIELD_IDS
+                OrderFields                 =   ::openrj::ORDER_FIELDS
+            ,   ElideBlankRecords           =   ::openrj::ELIDE_BLANK_RECORDS
+            ,   IgnoreCaseOnLookup          =   ::openrj::IGNORE_CASE_ON_LOOKUP
+            ,   NoReinterpretFieldIds       =   ::openrj::NO_REINTERPRET_FIELD_IDS
+            ,   ForceAllFieldsIntoOneRecord =   ::openrj::FORCE_ALL_FIELDS_INTO_1_RECORD
         };
 
         __value enum ErrorCode

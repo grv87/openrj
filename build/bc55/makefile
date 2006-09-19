@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
-# Updated:  28th May 2006
+# Updated:  20th September 2006
 #
 ################################################################################
 
@@ -383,9 +383,9 @@ check.bin.dir:
 
 build.libs.core:    check.lib.dir $(TARGETS_LIBS)
 
-build.libs.com:
+build.libs.com:		makefile
 
-build.libs.dotnet:
+build.libs.dotnet:	makefile
 
 build.libs:         build.libs.core build.libs.com build.libs.dotnet
 

@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 15th May 2006
+ * Updated: 20th September 2006
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
-# define OPENRJ_VER_C_ORJAPI_MINOR      9
-# define OPENRJ_VER_C_ORJAPI_REVISION   2
-# define OPENRJ_VER_C_ORJAPI_EDIT       45
+# define OPENRJ_VER_C_ORJAPI_MINOR      10
+# define OPENRJ_VER_C_ORJAPI_REVISION   1
+# define OPENRJ_VER_C_ORJAPI_EDIT       46
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -474,7 +474,7 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
         }
         else
         {
-            /* The reallocation has succeeded, so we now. */
+            /* The reallocation has succeeded, so we now set up all the structures. */
 
             char *const             pchData2                        =   ((char*)newDb) + cbDbStruct;    /* This is hiding outer scope, but buys us const */
             char const *const       end1                            =   &pchData2[size];
@@ -746,6 +746,13 @@ static ORJRC ORJ_ExpandBlockAndParseA_( ORJDatabaseA        *db
                 OPENRJ_ASSERT(numElided <= db->numFields);
 
                 db->numFields -= numElided;
+            }
+
+            if(0 != (flags & ORJ_FLAG_FORCEALLFIELDSINTO1RECORD))
+            {
+                db->numRecords              =   1;
+                db->records[0].numFields    =   db->numFields;
+                db->records[0].fields       =   db->fields;
             }
 
             *pdatabase = db;
