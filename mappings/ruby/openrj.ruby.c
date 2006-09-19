@@ -4,7 +4,7 @@
  * Purpose: Implementation file of the Open-RJ Ruby mapping.
  *
  * Created: 15th June 2004
- * Updated: 13th July 2006
+ * Updated: 20th September 2006
  *
  * Home:    http://openrj.org/
  *
@@ -51,9 +51,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_RUBY_MAJOR     1
-# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     12
-# define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  1
-# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      24
+# define OPENRJ_VER_C_OPENRJ_RUBY_MINOR     13
+# define OPENRJ_VER_C_OPENRJ_RUBY_REVISION  2
+# define OPENRJ_VER_C_OPENRJ_RUBY_EDIT      26
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -1044,8 +1044,11 @@ static VALUE openrj_usage(VALUE self)
         ,   "Author: Matthew Wilson, Synesis Software; http://synesis.com.au/software/"
         ,   ""
         ,   "  Constants:"
-        ,   "    ORDER_FIELDS                - causes fields to be ordered"
-        ,   "    ELIDE_BLANK_RECORDS         - skips empty records"
+        ,   "    ORDER_FIELDS                    - causes fields to be ordered"
+        ,   "    ELIDE_BLANK_RECORDS             - skips empty records"
+        ,   "    IGNORE_CASE_ON_LOOKUP           - ignores case when looking up field names"
+        ,   "    NO_REINTERPRET_FIELD_IDS        - suppresses Field Identifier Reinterpretation"
+        ,   "    FORCE_ALL_FIELDS_INTO_1_RECORD  - ignores record separators, and places all fields in one record"
         ,   "  Functions:"
         ,   "    usage() - shows this usage"
         ,   "  Classes:"
@@ -1163,6 +1166,7 @@ void Init_openrj()
     rb_define_const(mOpenRJ, "IGNORE_CASE_ON_LOOKUP", rb_uint2inum(ORJ_FLAG_IGNORECASEONLOOKUP));
     rb_define_const(mOpenRJ, "ORJ_FLAG_NOREINTERPRETFIELDIDS", rb_uint2inum(ORJ_FLAG_NOREINTERPRETFIELDIDS));
     rb_define_const(mOpenRJ, "NO_REINTERPRET_FIELD_IDS", rb_uint2inum(ORJ_FLAG_NOREINTERPRETFIELDIDS));
+    rb_define_const(mOpenRJ, "FORCE_ALL_FIELDS_INTO_1_RECORD", rb_uint2inum(ORJ_FLAG_FORCEALLFIELDSINTO1RECORD));
     rb_define_module_function(mOpenRJ, "usage", openrj_usage, 0);
 
     /* __DatabaseHolder__ */

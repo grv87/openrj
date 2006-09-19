@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 9th August 2006
+ * Updated: 20th September 2006
  *
  * Home:    http://openrj.org/
  *
@@ -52,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_MAJOR       1
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       20
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       22
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        54
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        56
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -87,13 +87,15 @@
 # define OPENRJ_VER_1_5_1       0x01050100
 # define OPENRJ_VER_1_5_2       0x01050200
 # define OPENRJ_VER_1_5_3       0x01050300
+# define OPENRJ_VER_1_5_4       0x01050400
+# define OPENRJ_VER_1_6_1       0x01060100
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
-#define OPENRJ_VER_MINOR    5
-#define OPENRJ_VER_REVISION 3
+#define OPENRJ_VER_MINOR    6
+#define OPENRJ_VER_REVISION 1
 
-#define OPENRJ_VER  OPENRJ_VER_1_5_3
+#define OPENRJ_VER  OPENRJ_VER_1_6_1
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -198,15 +200,17 @@ typedef char                    orj_char_t;
  */
 enum ORJ_TAG_NAME(ORJ_FLAG)
 {
-        ORJ_FLAG_ORDERFIELDS            =   0x0001  /*!< Arranges the fields in alphabetical order */
-    ,   ORJ_FLAG_ELIDEBLANKRECORDS      =   0x0002  /*!< Causes blank records to be ignored */
-    ,   ORJ_FLAG_IGNORECASEONLOOKUP     =   0x0004  /*!< Ignores case when looking up field names. */
-    ,   ORJ_FLAG_NOREINTERPRETFIELDIDS  =   0x0100  /*!< Suppresses Field Identifier Reinterpretation (see help file) */
+        ORJ_FLAG_ORDERFIELDS                =   0x0001  /*!< Arranges the fields in alphabetical order */
+    ,   ORJ_FLAG_ELIDEBLANKRECORDS          =   0x0002  /*!< Causes blank records to be ignored */
+    ,   ORJ_FLAG_IGNORECASEONLOOKUP         =   0x0004  /*!< Ignores case when looking up field names. */
+    ,   ORJ_FLAG_NOREINTERPRETFIELDIDS      =   0x0100  /*!< Suppresses Field Identifier Reinterpretation (see help file) */
+    ,   ORJ_FLAG_FORCEALLFIELDSINTO1RECORD  =   0x0008  /*!< Causes record separators to be ignored, and all fields to be forced into a single record. */
 #ifdef __cplusplus
-    ,   ORDER_FIELDS                =   ORJ_FLAG_ORDERFIELDS
-    ,   ELIDE_BLANK_RECORDS         =   ORJ_FLAG_ELIDEBLANKRECORDS
-    ,   IGNORE_CASE_ON_LOOKUP       =   ORJ_FLAG_IGNORECASEONLOOKUP
-    ,   NO_REINTERPRET_FIELD_IDS    =   ORJ_FLAG_NOREINTERPRETFIELDIDS
+    ,   ORDER_FIELDS                    =   ORJ_FLAG_ORDERFIELDS
+    ,   ELIDE_BLANK_RECORDS             =   ORJ_FLAG_ELIDEBLANKRECORDS
+    ,   IGNORE_CASE_ON_LOOKUP           =   ORJ_FLAG_IGNORECASEONLOOKUP
+    ,   NO_REINTERPRET_FIELD_IDS        =   ORJ_FLAG_NOREINTERPRETFIELDIDS
+    ,   FORCE_ALL_FIELDS_INTO_1_RECORD  =   ORJ_FLAG_FORCEALLFIELDSINTO1RECORD
 #endif /* __cplusplus */
 };
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION

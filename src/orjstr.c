@@ -4,7 +4,7 @@
  * Purpose: Provides (English) string mappings for errors
  *
  * Created: 26th July 2004
- * Updated: 25th May 2005
+ * Updated: 16th August 2006
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
-# define OPENRJ_VER_C_ORJMEM_MINOR      1
+# define OPENRJ_VER_C_ORJMEM_MINOR      2
 # define OPENRJ_VER_C_ORJMEM_REVISION   1
-# define OPENRJ_VER_C_ORJMEM_EDIT       8
+# define OPENRJ_VER_C_ORJMEM_EDIT       9
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -61,8 +61,7 @@
 /* #include <openrj/openrj_assert.h> */
 /* #include <openrj/openrj_memory.h> */
 
-#include <stdlib.h>
-#include <string.h>
+#include <stdlib.h> /* for size_t */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Macros
@@ -81,70 +80,127 @@ typedef struct ErrorString  ErrorString;
 struct ErrorString
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 {
-    int         errorCode;
-    char const  *errorString;
+    int         errorCode;      /*!< The error code.    */
+    char const  *errorString;   /*!< The string.        */
+    size_t      len;            /*!< The string length. */
 };
 
 
-static const ErrorString    errors[] =
-{
-/*[OPENRJ:Errors-start]*/
-        {   ORJ_RC_SUCCESS              ,   "Operation was successful"                                   }
-    ,   {   ORJ_RC_CANNOTOPENJARFILE    ,   "The given file does not exist, or cannot be accessed"       }
-    ,   {   ORJ_RC_NORECORDS            ,   "The database file contained no records"                     }
-    ,   {   ORJ_RC_OUTOFMEMORY          ,   "The API suffered memory exhaustion"                         }
-    ,   {   ORJ_RC_BADFILEREAD          ,   "A read operation failed"                                    }
-    ,   {   ORJ_RC_PARSEERROR           ,   "Parsing of the database file failed due to a syntax error"  }
-    ,   {   ORJ_RC_INVALIDINDEX         ,   "An invalid index was specified"                             }
-    ,   {   ORJ_RC_UNEXPECTED           ,   "An unexpected condition was encountered"                    }
-    ,   {   ORJ_RC_INVALIDCONTENT       ,   "The database file contained invalid content"                }
-/*[OPENRJ:Errors-end]*/
-};
 
-static const ErrorString    parseErrors[] =
-{
-/*[OPENRJ:ParseErrors-start]*/
-        {   ORJ_PARSE_SUCCESS                       ,   "Parsing was successful"                                                            }
-    ,   {   ORJ_PARSE_RECORDSEPARATORINCONTINUATION ,   "A record separator was encountered during a content line continuation"             }
-    ,   {   ORJ_PARSE_UNFINISHEDLINE                ,   "The last line in the database was not terminated by a line-feed"                   }
-    ,   {   ORJ_PARSE_UNFINISHEDFIELD               ,   "The last field in the database file was not well-formed"                           }
-    ,   {   ORJ_PARSE_UNFINISHEDRECORD              ,   "The last record in the database file was not terminated by a record separator"     }
-/*[OPENRJ:ParseErrors-end]*/
-};
+#define RC_STR_DECL(rc, desc)                                                           \
+                                                                                        \
+    static const char           s_str##rc[] =   desc;                                   \
+    static const ErrorString    s_rct##rc = { rc, s_str##rc, NUM_ELEMENTS(desc) - 1 }
 
-static char const *ORJ_LookupErrorStringA_(int error, ErrorString const *mappings, size_t cMappings)
-{
-    size_t  i;
 
-    for(i = 0; i < cMappings; ++i)
+#define RC_STR_ENTRY(rc)                                                                \
+                                                                                        \
+    &s_rct##rc
+
+
+static char const *ORJ_LookupCodeA_(int error, ErrorString const **mappings, size_t cMappings, size_t *len)
+{
+    /* Use Null Object (Variable) here for len, so do not need to check
+     * elsewhere.
+     */
+    size_t  len_;
+
+    if(NULL == len)
     {
-        if(error == mappings[i].errorCode)
-        {
-            return mappings[i].errorString;
-        }
+        len = &len_;
     }
 
-    return "";
+    { size_t i; for(i = 0; i < cMappings; ++i)
+    {
+        if(error == mappings[i]->errorCode)
+        {
+            return (*len = mappings[i]->len, mappings[i]->errorString);
+        }
+    }}
+
+    return (*len = 0, "");
 }
+
+static char const *ORJ_LookupErrorStringA_(int error, size_t *len)
+{
+/*[OPENRJ:Errors-decl-start]*/
+    RC_STR_DECL(ORJ_RC_SUCCESS              ,   "Operation was successful"                                   );
+    RC_STR_DECL(ORJ_RC_CANNOTOPENJARFILE    ,   "The given file does not exist, or cannot be accessed"       );
+    RC_STR_DECL(ORJ_RC_NORECORDS            ,   "The database file contained no records"                     );
+    RC_STR_DECL(ORJ_RC_OUTOFMEMORY          ,   "The API suffered memory exhaustion"                         );
+    RC_STR_DECL(ORJ_RC_BADFILEREAD          ,   "A read operation failed"                                    );
+    RC_STR_DECL(ORJ_RC_PARSEERROR           ,   "Parsing of the database file failed due to a syntax error"  );
+    RC_STR_DECL(ORJ_RC_INVALIDINDEX         ,   "An invalid index was specified"                             );
+    RC_STR_DECL(ORJ_RC_UNEXPECTED           ,   "An unexpected condition was encountered"                    );
+    RC_STR_DECL(ORJ_RC_INVALIDCONTENT       ,   "The database file contained invalid content"                );
+/*[OPENRJ:Errors-decl-end]*/
+
+    static const ErrorString    *s_strings[] = 
+    {
+/*[OPENRJ:Errors-entry-start]*/
+        RC_STR_ENTRY(ORJ_RC_SUCCESS),
+        RC_STR_ENTRY(ORJ_RC_CANNOTOPENJARFILE),
+        RC_STR_ENTRY(ORJ_RC_NORECORDS),
+        RC_STR_ENTRY(ORJ_RC_OUTOFMEMORY),
+        RC_STR_ENTRY(ORJ_RC_BADFILEREAD),
+        RC_STR_ENTRY(ORJ_RC_PARSEERROR),
+        RC_STR_ENTRY(ORJ_RC_INVALIDINDEX),
+        RC_STR_ENTRY(ORJ_RC_UNEXPECTED),
+        RC_STR_ENTRY(ORJ_RC_INVALIDCONTENT),
+/*[OPENRJ:Errors-entry-end]*/
+    };
+
+    return ORJ_LookupCodeA_(error, s_strings, NUM_ELEMENTS(s_strings), len);
+}
+
+static char const *ORJ_LookupParseErrorStringA_(int error, size_t *len)
+{
+/*[OPENRJ:ParseErrors-start]*/
+    RC_STR_DECL(ORJ_PARSE_SUCCESS                       ,   "Parsing was successful"                                                            );
+    RC_STR_DECL(ORJ_PARSE_RECORDSEPARATORINCONTINUATION ,   "A record separator was encountered during a content line continuation"             );
+    RC_STR_DECL(ORJ_PARSE_UNFINISHEDLINE                ,   "The last line in the database was not terminated by a line-feed"                   );
+    RC_STR_DECL(ORJ_PARSE_UNFINISHEDFIELD               ,   "The last field in the database file was not well-formed"                           );
+    RC_STR_DECL(ORJ_PARSE_UNFINISHEDRECORD              ,   "The last record in the database file was not terminated by a record separator"     );
+/*[OPENRJ:ParseErrors-end]*/
+
+    static const ErrorString    *s_strings[] = 
+    {
+/*[OPENRJ:ParseErrors-entry-start]*/
+        RC_STR_ENTRY(ORJ_PARSE_SUCCESS),
+        RC_STR_ENTRY(ORJ_PARSE_RECORDSEPARATORINCONTINUATION),
+        RC_STR_ENTRY(ORJ_PARSE_UNFINISHEDLINE),
+        RC_STR_ENTRY(ORJ_PARSE_UNFINISHEDFIELD),
+        RC_STR_ENTRY(ORJ_PARSE_UNFINISHEDRECORD),
+/*[OPENRJ:ParseErrors-entry-end]*/
+    };
+
+    return ORJ_LookupCodeA_(error, s_strings, NUM_ELEMENTS(s_strings), len);
+}
+
 
 ORJ_CALL(char const *) ORJ_GetErrorStringA( /* [in] */ ORJRC errorCode)
 {
-    return ORJ_LookupErrorStringA_((int)errorCode, &errors[0], NUM_ELEMENTS(errors));
+    return ORJ_LookupErrorStringA_((int)errorCode, NULL);
 }
 
 ORJ_CALL(size_t) ORJ_GetErrorStringLengthA( /* [in] */ ORJRC errorCode)
 {
-    return strlen(ORJ_GetErrorStringA(errorCode));
+    size_t  len;
+
+    return (ORJ_LookupErrorStringA_((int)errorCode, &len), len);
 }
+
 
 ORJ_CALL(char const *) ORJ_GetParseErrorStringA( /* [in] */ ORJ_PARSE_ERROR errorCode)
 {
-    return ORJ_LookupErrorStringA_((int)errorCode, &parseErrors[0], NUM_ELEMENTS(parseErrors));
+    return ORJ_LookupParseErrorStringA_((int)errorCode, NULL);
 }
 
 ORJ_CALL(size_t) ORJ_GetParseErrorStringLengthA( /* [in] */ ORJ_PARSE_ERROR errorCode)
 {
-    return strlen(ORJ_GetParseErrorStringA(errorCode));
+    size_t  len;
+
+    return (ORJ_LookupParseErrorStringA_(errorCode, &len), len);
 }
 
 /* ////////////////////////////////////////////////////////////////////////// */

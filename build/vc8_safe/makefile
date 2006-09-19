@@ -1,7 +1,7 @@
 ################################################################################
 # File:     makefile
 #
-# Purpose:  Makefile for the Open-RJ project, for the Visual C++ 7.1
+# Purpose:  Makefile for the Open-RJ project, for the Visual C++ 8 (safe)
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
@@ -23,7 +23,7 @@
 
 # Identification
 
-COMP_TAG          =   vc71
+COMP_TAG          =   vc8_safe
 PROJ_TAG          =   openrj
 PROJ_VER_MAJOR    =   1
 PROJ_TAG_VER      =   $(PROJ_TAG).$(PROJ_VER_MAJOR)
@@ -150,15 +150,15 @@ CC_ARGS_MT_DEBUG                =   -MTd -D_DEBUG -Zi -Fd$(TARGET_PDB_MT_DEBUG) 
 CC_ARGS_DLL_DEBUG                =   -MDd -D_DEBUG -Zi -Fd$(TARGET_PDB_DLL_DEBUG) $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 CC_ARGS_DLL_RELEASE                =   -MD -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 CC_ARGS_MT_RELEASE                =   -MT -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_DEBUG                =   -MLd -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_RELEASE                =   -ML -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_DEBUG                =   -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_RELEASE                =   -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 
 CPPC_ARGS_MT_DEBUG          =   -MTd -D_DEBUG -Zi -Fd$(TARGET_PDB_MT_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 CPPC_ARGS_DLL_DEBUG          =   -MDd -D_DEBUG -Zi -Fd$(TARGET_PDB_DLL_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 CPPC_ARGS_DLL_RELEASE          =   -MD -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 CPPC_ARGS_MT_RELEASE          =   -MT -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
-CPPC_ARGS_ST_DEBUG          =   -MLd -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
-CPPC_ARGS_ST_RELEASE          =   -ML -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_DEBUG          =   -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_RELEASE          =   -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 
 # archiver flags and arguments
 

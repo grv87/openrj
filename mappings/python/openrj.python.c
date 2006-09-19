@@ -4,7 +4,7 @@
  * Purpose: Implementation for the Python mapping for Open-RJ
  *
  * Created: 1st October 2004
- * Updated: 24th May 2006
+ * Updated: 20th September 2006
  *
  * Home:    http://openrj.org/
  *
@@ -44,9 +44,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_OPENRJ_PYTHON_MAJOR     1
-# define OPENRJ_VER_C_OPENRJ_PYTHON_MINOR     4
-# define OPENRJ_VER_C_OPENRJ_PYTHON_REVISION  2
-# define OPENRJ_VER_C_OPENRJ_PYTHON_EDIT      17
+# define OPENRJ_VER_C_OPENRJ_PYTHON_MINOR     5
+# define OPENRJ_VER_C_OPENRJ_PYTHON_REVISION  1
+# define OPENRJ_VER_C_OPENRJ_PYTHON_EDIT      18
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -501,6 +501,7 @@ DL_EXPORT(void) initopenrj(void)
         PyObject    *ELIDE_BLANK_RECORDS;
         PyObject    *IGNORE_CASE_ON_LOOKUP;
         PyObject    *NO_REINTERPRET_FIELD_IDS;
+        PyObject    *FORCE_ALL_FIELDS_INTO_1_RECORD;
         PyObject    *OPENRJ_VERSION;
         PyObject    *VERSION;
 
@@ -522,15 +523,17 @@ DL_EXPORT(void) initopenrj(void)
         PyDict_SetItemString(dictionary, "__version__", VERSION);
 
         /* Add the other "constants" */
-        ORDER_FIELDS                =   PyInt_FromLong(ORJ_FLAG_ORDERFIELDS);
-        ELIDE_BLANK_RECORDS         =   PyInt_FromLong(ORJ_FLAG_ELIDEBLANKRECORDS);
-        IGNORE_CASE_ON_LOOKUP       =   PyInt_FromLong(ORJ_FLAG_IGNORECASEONLOOKUP);
-        NO_REINTERPRET_FIELD_IDS    =   PyInt_FromLong(ORJ_FLAG_NOREINTERPRETFIELDIDS);
+        ORDER_FIELDS                    =   PyInt_FromLong(ORJ_FLAG_ORDERFIELDS);
+        ELIDE_BLANK_RECORDS             =   PyInt_FromLong(ORJ_FLAG_ELIDEBLANKRECORDS);
+        IGNORE_CASE_ON_LOOKUP           =   PyInt_FromLong(ORJ_FLAG_IGNORECASEONLOOKUP);
+        NO_REINTERPRET_FIELD_IDS        =   PyInt_FromLong(ORJ_FLAG_NOREINTERPRETFIELDIDS);
+        FORCE_ALL_FIELDS_INTO_1_RECORD  =   PyInt_FromLong(ORJ_FLAG_FORCEALLFIELDSINTO1RECORD);
 
         PyDict_SetItemString(dictionary, "ORDER_FIELDS", ORDER_FIELDS);
         PyDict_SetItemString(dictionary, "ELIDE_BLANK_RECORDS", ELIDE_BLANK_RECORDS);
-        PyDict_SetItemString(dictionary, "REINTERPRET_FIELD_IDS", ELIDE_BLANK_RECORDS);
         PyDict_SetItemString(dictionary, "IGNORE_CASE_ON_LOOKUP", IGNORE_CASE_ON_LOOKUP);
+        PyDict_SetItemString(dictionary, "NO_REINTERPRET_FIELD_IDS", NO_REINTERPRET_FIELD_IDS);
+        PyDict_SetItemString(dictionary, "FORCE_ALL_FIELDS_INTO_1_RECORD", FORCE_ALL_FIELDS_INTO_1_RECORD);
     }
 
     if(PyErr_Occurred())

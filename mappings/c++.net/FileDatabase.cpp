@@ -97,7 +97,7 @@ namespace OpenRJ
     }
 
     FileDatabase::FileDatabase(String *path) // flags == Flags::ElideBlankRecords
-		: Database(create_database_(::dotnetstl::c_string_accessor<char>(path), Database::Flags::ElideBlankRecords))
+        : Database(create_database_(::dotnetstl::c_string_accessor<char>(path), Database::Flags::ElideBlankRecords))
         , m_path(path)
     {}
 

@@ -1,11 +1,11 @@
 ################################################################################
 # File:     makefile
 #
-# Purpose:  Makefile for the Open-RJ project, for the Visual C++ 8
+# Purpose:  Makefile for the Open-RJ project, for the Visual C++ 8 (normal)
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
-# Updated:  28th May 2006
+# Updated:  20th September 2006
 #
 ################################################################################
 
@@ -112,12 +112,12 @@ CPPC_DEFS           =   $(COMMON_DEFS)
 
 CC_F_NOLOGO             =   -nologo
 CC_F_COMPILE_ONLY       =   -c
-CC_F_WARNING_MAX        =   -W4
+CC_F_WARNING_MAX        =   -W4 -wd4996
 CC_F_WARNING_ERR        =   -WX
 
 CPPC_F_NOLOGO       =   -nologo
 CPPC_F_COMPILE_ONLY =   -c
-CPPC_F_WARNING_MAX  =   -W4 -wd4800
+CPPC_F_WARNING_MAX  =   -W4 -wd4996
 CPPC_F_WARNING_ERR  =   -WX
 CPPC_F_EXCEPTIONS   =   -EHsc
 CPPC_F_RTTI         =   -GR
@@ -150,15 +150,15 @@ CC_ARGS_MT_DEBUG                =   -MTd -D_DEBUG -Zi -Fd$(TARGET_PDB_MT_DEBUG) 
 CC_ARGS_DLL_DEBUG                =   -MDd -D_DEBUG -Zi -Fd$(TARGET_PDB_DLL_DEBUG) $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 CC_ARGS_DLL_RELEASE                =   -MD -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 CC_ARGS_MT_RELEASE                =   -MT -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_DEBUG                =   -MLd -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
-CC_ARGS_ST_RELEASE                =   -ML -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_DEBUG                =   -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
+CC_ARGS_ST_RELEASE                =   -DNDEBUG $(CC_FLAGS) $(CC_DEFS) $(CC_INCLUDES)
 
 CPPC_ARGS_MT_DEBUG          =   -MTd -D_DEBUG -Zi -Fd$(TARGET_PDB_MT_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 CPPC_ARGS_DLL_DEBUG          =   -MDd -D_DEBUG -Zi -Fd$(TARGET_PDB_DLL_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 CPPC_ARGS_DLL_RELEASE          =   -MD -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 CPPC_ARGS_MT_RELEASE          =   -MT -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
-CPPC_ARGS_ST_DEBUG          =   -MLd -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
-CPPC_ARGS_ST_RELEASE          =   -ML -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_DEBUG          =   -D_DEBUG -Zi -Fd$(TARGET_PDB_ST_DEBUG) $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
+CPPC_ARGS_ST_RELEASE          =   -DNDEBUG $(CPPC_FLAGS) $(CPPC_DEFS) $(CPPC_INCLUDES)
 
 # archiver flags and arguments
 
@@ -1173,9 +1173,9 @@ check.bin.dir:
 
 build.libs.core:    check.lib.dir $(TARGETS_LIBS)
 
-build.libs.com:
+build.libs.com:		makefile
 
-build.libs.dotnet:
+build.libs.dotnet:	makefile
 
 build.libs:         build.libs.core build.libs.com build.libs.dotnet
 
