@@ -5,7 +5,7 @@
  *          Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 28th May 2006
+ * Updated: 26th December 2006
  *
  * Home:    http://openrj.org/
  *
@@ -55,8 +55,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       7
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    6
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        38
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    7
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        39
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,8 @@
 
 #if defined(__BORLANDC__) || \
     defined(__COMO__x) || \
-    defined(__DMC__) || \
+    (   defined(__DMC__) && \
+        __DMC__ < 0x0843)|| \
     (   defined(__GNUC__) && \
         (   __GNUC__ < 3) || \
             (   __GNUC__ == 3 && \

@@ -4,7 +4,7 @@
  * Purpose: Definition of the Database class
  *
  * Created: 3rd August 2004
- * Updated: 20th September 2006
+ * Updated: 26th December 2006
  *
  * Home:    http://openrj.org/
  *
@@ -40,9 +40,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MAJOR     1
-# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MINOR     6
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_MINOR     7
 # define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_REVISION  1
-# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_EDIT      18
+# define OPENRJ_VER_OPENRJ_CPP_NET_H_DATABASE_EDIT      19
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* ////////////////////////////////////////////////////////////////////// */
@@ -111,24 +111,25 @@ namespace OpenRJ
 
         __value enum ErrorCode
         {
-                Success                 =   ::openrj::ORJ_RC_SUCCESS                          /*!< Operation was successful                                   */
-            ,   CannotOpenJarFile       =   ::openrj::ORJ_RC_CANNOTOPENJARFILE                /*!< The given file does not exist, or cannot be accessed       */
-            ,   NoRecords               =   ::openrj::ORJ_RC_NORECORDS                        /*!< The database file contained no records                     */
-            ,   OutOfMemory             =   ::openrj::ORJ_RC_OUTOFMEMORY                      /*!< The API suffered memory exhaustion                         */
-            ,   BadFileRead             =   ::openrj::ORJ_RC_BADFILEREAD                      /*!< A read operation failed                                    */
-            ,   ParseError              =   ::openrj::ORJ_RC_PARSEERROR                       /*!< Parsing of the database file failed due to a syntax error  */
-            ,   InvalidIndex            =   ::openrj::ORJ_RC_INVALIDINDEX                     /*!< An invalid index was specified                             */
-            ,   Unexpected              =   ::openrj::ORJ_RC_UNEXPECTED                       /*!< An unexpected condition was encountered                    */
-            ,   InvalidContent          =   ::openrj::ORJ_RC_INVALIDCONTENT                   /*!< The database file contained invalid content                */
+                Success                 =   ::openrj::ORJ_RC_SUCCESS                            /*!< Operation was successful                                   */
+            ,   CannotOpenJarFile       =   ::openrj::ORJ_RC_CANNOTOPENJARFILE                  /*!< The given file does not exist, or cannot be accessed       */
+            ,   NoRecords               =   ::openrj::ORJ_RC_NORECORDS                          /*!< The database file contained no records                     */
+            ,   OutOfMemory             =   ::openrj::ORJ_RC_OUTOFMEMORY                        /*!< The API suffered memory exhaustion                         */
+            ,   BadFileRead             =   ::openrj::ORJ_RC_BADFILEREAD                        /*!< A read operation failed                                    */
+            ,   ParseError              =   ::openrj::ORJ_RC_PARSEERROR                         /*!< Parsing of the database file failed due to a syntax error  */
+            ,   InvalidIndex            =   ::openrj::ORJ_RC_INVALIDINDEX                       /*!< An invalid index was specified                             */
+            ,   Unexpected              =   ::openrj::ORJ_RC_UNEXPECTED                         /*!< An unexpected condition was encountered                    */
+            ,   InvalidContent          =   ::openrj::ORJ_RC_INVALIDCONTENT                     /*!< The database file contained invalid content                */
         };
 
         __value enum ParseErrorCode
         {
-                ParseSuccess            =   ::openrj::ORJ_PARSE_SUCCESS                       /*!< Parsing was successful                                                         */
+                ParseSuccess            =   ::openrj::ORJ_PARSE_SUCCESS                         /*!< Parsing was successful                                                         */
             ,   RecordSeparatorInContinuation               =   ::openrj::ORJ_PARSE_RECORDSEPARATORINCONTINUATION /*!< A record separator was encountered during a content line continuation          */
-            ,   UnfinishedLine          =   ::openrj::ORJ_PARSE_UNFINISHEDLINE                /*!< The last line in the database was not terminated by a line-feed                */
-            ,   UnfinishedField         =   ::openrj::ORJ_PARSE_UNFINISHEDFIELD               /*!< The last record in the database file was not terminated by a record separator  */
-            ,   UnfinishedRecord        =   ::openrj::ORJ_PARSE_UNFINISHEDRECORD              /*!< The last record in the database file was not terminated by a record separator  */
+            ,   UnfinishedLine          =   ::openrj::ORJ_PARSE_UNFINISHEDLINE                  /*!< The last line in the database was not terminated by a line-feed                */
+            ,   UnfinishedField         =   ::openrj::ORJ_PARSE_UNFINISHEDFIELD                 /*!< The last record in the database file was not terminated by a record separator  */
+            ,   UnfinishedRecord        =   ::openrj::ORJ_PARSE_UNFINISHEDRECORD                /*!< The last record in the database file was not terminated by a record separator  */
+            ,   InvalidFieldName        =   ::openrj::ORJ_PARSE_INVALIDFIELDNAME                /*!< The field name was not valid                                                   */
         };
     /// @}
 

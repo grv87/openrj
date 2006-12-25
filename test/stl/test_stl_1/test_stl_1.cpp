@@ -5,7 +5,7 @@
  *              Open-RJ library).
  *
  * Created:     18th June 2004
- * Updated:     13th May 2006
+ * Updated:     26th December 2006
  *
  * www:         http://www.openrj.org/
  *
@@ -375,7 +375,9 @@ static int main_(int argc, char *argv[])
 #endif /* USE_STD_EXCEPTION_ONLY */
     }
 
+#if !defined(STLSOFT_COMPILER_IS_MSVC)
     STLSOFT_SUPPRESS_UNUSED(execute_unittest);
+#endif /* compiler */
 
     return EXIT_SUCCESS;
 }

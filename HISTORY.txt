@@ -1,13 +1,31 @@
 ----------------------------------------------------------------------------
 
 Created:    28th May 2006
-Updated:    20th September 2006
+Updated:    26th December 2006
 
 Open-RJ - History
 -----------------
 
 
-  20th September 2006 - Open-RJ 1.5.3 released
+  26th September 2006 - Open-RJ 1.6.2 released
+
+    general:
+      ~ fix for Visual C++ 8.0 makefile(s)
+
+    core library:
+      + addition of ORJ_PARSE_INVALIDFIELDNAME flag
+      ~ corrected bug in parsing; an empty field name now results
+              in parse error (ORJ_PARSE_INVALIDFIELDNAME)
+
+    Open-RJ/.NET:
+      + Added Database.ParseErrorCode.InvalidFieldName flag
+
+    Open-RJ/STL:
+      + updated support for field iterators for Digital Mars
+              C/C++ compiler (openrj/stl/database.hpp).
+
+
+  20th September 2006 - Open-RJ 1.6.1 released
 
     general:
       + support for Visual C++ 8.0 makefile(s)
@@ -25,7 +43,8 @@ Open-RJ - History
     Open-RJ/Ruby:
       + support for FORCE_ALL_FIELDS_INTO_1_RECORD flag
 
-  9th August 2006 - Open-RJ 1.5.2 released
+
+  9th August 2006 - Open-RJ 1.5.3 released
 
     Open-RJ/.NET:
       ~ Corrected bug in Database class, whereby the Fields property
@@ -36,7 +55,8 @@ Open-RJ - History
       + new single-parameter constructor for MemoryDatabase, which
         assumes ElideBlankRecords
 
-  26th July 2006 - Open-RJ 1.5.1 released
+
+  26th July 2006 - Open-RJ 1.5.2 released
 
     general:
       ~ Minor changes to Open-RJ/C++ and Open-RJ/STL to reflect changes
@@ -48,6 +68,7 @@ Open-RJ - History
     Open-RJ/Ruby:
       + Database.records property
       + Database.fields property
+
 
   28th May 2006 - Open-RJ 1.5.1 released
 
@@ -85,6 +106,7 @@ Open-RJ - History
     + six C++ examples
     + seven STL examples
 
+
   8th August 2005 - Open-RJ 1.4.1 released
 
     core:
@@ -93,10 +115,12 @@ Open-RJ - History
       + ORJ_Record_FindNextFieldA(), a flexible function for finding fields
         based on field positions and/or names and/or values.
 
+
   15th July 2005 - Open-RJ 1.3.4 released
 
     core:
       ~ BUG FIX: Now handles cr+lf irrespective of operating system.
+
 
   28th June 2005 - Open-RJ 1.3.3 released
 
@@ -117,6 +141,7 @@ Open-RJ - History
       + reverse iterator support in the record and database classes of the
         STL mapping.
 
+
   26th May 2005 - Open-RJ 1.3.2 released
 
     Open-RJ/C++:
@@ -130,6 +155,7 @@ Open-RJ - History
     Open-RJ/C++:
       + The Record class has enhanced subscript operators to prevent
         ambiguous resolution when used with literal integers.
+
 
   23rd May 2005 - Open-RJ 1.3.1 released
 
@@ -152,6 +178,7 @@ Open-RJ - History
     Open-RJ/Ruby:
       + comment attribute on record class
 
+
   4th March 2005 - Open-RJ 1.2.1 released
 
       core:
@@ -166,6 +193,7 @@ Open-RJ - History
 
     Open-RJ/STL:
       ~ the classes are now separated out into individual headers
+
 
   29th September 2004 - Open-RJ 1.0.1 released
 

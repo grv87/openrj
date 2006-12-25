@@ -4,7 +4,7 @@
  * Purpose: Provides (English) string mappings for errors
  *
  * Created: 26th July 2004
- * Updated: 16th August 2006
+ * Updated: 26th December 2006
  *
  * Home:    http://openrj.org/
  *
@@ -48,9 +48,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJMEM_MAJOR      1
-# define OPENRJ_VER_C_ORJMEM_MINOR      2
+# define OPENRJ_VER_C_ORJMEM_MINOR      3
 # define OPENRJ_VER_C_ORJMEM_REVISION   1
-# define OPENRJ_VER_C_ORJMEM_EDIT       9
+# define OPENRJ_VER_C_ORJMEM_EDIT       11
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ struct ErrorString
 #define RC_STR_DECL(rc, desc)                                                           \
                                                                                         \
     static const char           s_str##rc[] =   desc;                                   \
-    static const ErrorString    s_rct##rc = { rc, s_str##rc, NUM_ELEMENTS(desc) - 1 }
+    static const ErrorString    s_rct##rc = { rc, s_str##rc, NUM_ELEMENTS(s_str##rc) - 1 }
 
 
 #define RC_STR_ENTRY(rc)                                                                \
@@ -161,6 +161,7 @@ static char const *ORJ_LookupParseErrorStringA_(int error, size_t *len)
     RC_STR_DECL(ORJ_PARSE_UNFINISHEDLINE                ,   "The last line in the database was not terminated by a line-feed"                   );
     RC_STR_DECL(ORJ_PARSE_UNFINISHEDFIELD               ,   "The last field in the database file was not well-formed"                           );
     RC_STR_DECL(ORJ_PARSE_UNFINISHEDRECORD              ,   "The last record in the database file was not terminated by a record separator"     );
+    RC_STR_DECL(ORJ_PARSE_INVALIDFIELDNAME              ,   "The field name was not valid"                                                      );
 /*[OPENRJ:ParseErrors-end]*/
 
     static const ErrorString    *s_strings[] = 
@@ -171,6 +172,7 @@ static char const *ORJ_LookupParseErrorStringA_(int error, size_t *len)
         RC_STR_ENTRY(ORJ_PARSE_UNFINISHEDLINE),
         RC_STR_ENTRY(ORJ_PARSE_UNFINISHEDFIELD),
         RC_STR_ENTRY(ORJ_PARSE_UNFINISHEDRECORD),
+        RC_STR_ENTRY(ORJ_PARSE_INVALIDFIELDNAME),
 /*[OPENRJ:ParseErrors-entry-end]*/
     };
 
