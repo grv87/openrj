@@ -4,7 +4,7 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 1st June 2006
+ * Updated: 26th December 2006
  *
  * Home:    http://openrj.org/
  *
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       7
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    3
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        21
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    4
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        22
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,8 @@
 #include <stlsoft/stlsoft.h>
 #include <stlsoft/memory/auto_buffer.hpp>
 #ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
-# include <stlsoft/meta.hpp>
+# include <stlsoft/meta/is_integral_type.hpp>
+# include <stlsoft/meta/select_first_type_if.hpp>
 # include <stlsoft/meta/yesno.hpp>
 #endif /* __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
 
@@ -256,7 +257,7 @@ public:
     /// \retval A Field wrapper to the requested field. If not found, an
     /// instance of std::out_of_range is thrown. There is no error return
     template <typename S>
-    typename stlsoft::select_first_type<Field, String, stlsoft::is_integral_type<S>::value>::type operator [](S const &name) const
+    typename stlsoft::select_first_type_if<Field, String, stlsoft::is_integral_type<S>::value>::type operator [](S const &name) const
     {
         typedef typename stlsoft::is_integral_type<S>::type     yesno_type;
 

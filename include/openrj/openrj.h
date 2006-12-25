@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 20th September 2006
+ * Updated: 26th December 2006
  *
  * Home:    http://openrj.org/
  *
@@ -52,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_MAJOR       1
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       22
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       23
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_REVISION    1
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        56
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        57
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -89,13 +89,14 @@
 # define OPENRJ_VER_1_5_3       0x01050300
 # define OPENRJ_VER_1_5_4       0x01050400
 # define OPENRJ_VER_1_6_1       0x01060100
+# define OPENRJ_VER_1_6_2       0x01060200
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
 #define OPENRJ_VER_MINOR    6
-#define OPENRJ_VER_REVISION 1
+#define OPENRJ_VER_REVISION 2
 
-#define OPENRJ_VER  OPENRJ_VER_1_6_1
+#define OPENRJ_VER  OPENRJ_VER_1_6_2
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -247,6 +248,7 @@ enum ORJ_TAG_NAME(ORJ_PARSE_ERROR)
     ,   ORJ_PARSE_UNFINISHEDLINE                /*!< The last line in the database was not terminated by a line-feed                */
     ,   ORJ_PARSE_UNFINISHEDFIELD               /*!< The last record in the database file was not terminated by a record separator  */
     ,   ORJ_PARSE_UNFINISHEDRECORD              /*!< The last record in the database file was not terminated by a record separator  */
+    ,   ORJ_PARSE_INVALIDFIELDNAME              /*!< The field name was not valid                                                   */
 /*[OPENRJ:ParseErrors-end]*/
 };
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION

@@ -4,7 +4,7 @@
  * Purpose:     C test program for the Open-RJ library.
  *
  * Created:     11th June 2004
- * Updated:     13th May 2006
+ * Updated:     26th December 2006
  *
  * www:         http://www.openrj.org/
  *
@@ -49,6 +49,8 @@
 
 static void usage(int bExit, char const *reason, int invalidArg, int argc, char *argv[]);
 static int  run_unittests(void);
+static int  run_unittest1(void);
+static int  run_unittest2(void);
 static int  execute_unittest(ORJDatabaseA const *database);
 
 /* ////////////////////////////////////////////////////////////////////////// */
@@ -306,6 +308,30 @@ static int execute_unittest(ORJDatabaseA const *database)
 
 static int run_unittests()
 {
+    int iRes    =   EXIT_SUCCESS;
+    int i;
+
+    i = run_unittest1();
+
+    if( EXIT_SUCCESS == iRes &&
+        EXIT_SUCCESS != i)
+    {
+        iRes = i;
+    }
+
+    i = run_unittest2();
+
+    if( EXIT_SUCCESS == iRes &&
+        EXIT_SUCCESS != i)
+    {
+        iRes = i;
+    }
+
+    return iRes;
+}
+
+static int run_unittest1()
+{
     static const char   contents[] =
 
         "%% Sample Open-RJ database - Cats and Dogs\n"
@@ -415,6 +441,64 @@ static int run_unittests()
             ORJ_FreeDatabase(database);
 
             return (0 == iRet) ? EXIT_SUCCESS : EXIT_FAILURE;
+        }
+    }
+}
+
+static int run_unittest2()
+{
+    static const char   contents[] =
+
+        "%% Sample Open-RJ database - Cats and Dogs\n"
+        "%% Created:   28th September 2004\n"
+        "%% Updated:   29th September 2004\n"
+        "Name:      Barney\n"
+        "Species:   Dog\n"
+        "Breed:     Bijon \\\n"
+        "           Frieze\n"
+        "%%\n"
+        "  : \n"
+        "Species:   Cat\n"
+        "    :\n"
+        "    : \n"
+        "%%\n"
+        "Name:      Moet\n"
+        "Species:   Dog\n"
+        "Breed:     Boxer\n"
+        "%%\n"
+        "Name:      Rebel\n"
+        "Species:   Dog\n"
+        "Breed:     German \\\n"
+        "           Shepherd\n"
+        "%%\n"
+        "Name:      Sparky\n"
+        "Species:   Cat\n"
+        "%%\n";
+
+    /* 1. Test that the incorrectly formed (empty) field name causes parsing to return an error */
+    {
+        ORJDatabase const   *database;
+        ORJError            error;
+        const unsigned      flags       =   0;
+        ORJRC               rc          =   ORJ_CreateDatabaseFromMemoryA(&contents[0], sizeof(contents), NULL, flags, &database, &error);
+        const unsigned      errorLine   =   8;
+
+        if( ORJ_RC_PARSEERROR != rc ||
+            error.parseError != ORJ_PARSE_INVALIDFIELDNAME)
+        {
+            fprintf(stderr, "Failed to detect format error in contents!\n");
+
+            return EXIT_FAILURE;
+        }
+        else if(errorLine != error.invalidLine)
+        {
+            fprintf(stderr, "Failed to detect location of format error in contents. Expected line %d; actual line %d\n", errorLine, error.invalidLine);
+
+            return EXIT_FAILURE;
+        }
+        else
+        {
+            return EXIT_SUCCESS;
         }
     }
 }

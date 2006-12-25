@@ -4,7 +4,7 @@
  * Purpose: Implementation file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 20th September 2006
+ * Updated: 26th December 2006
  *
  * Home:    http://openrj.org/
  *
@@ -49,8 +49,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_C_ORJAPI_MAJOR      1
 # define OPENRJ_VER_C_ORJAPI_MINOR      10
-# define OPENRJ_VER_C_ORJAPI_REVISION   1
-# define OPENRJ_VER_C_ORJAPI_EDIT       46
+# define OPENRJ_VER_C_ORJAPI_REVISION   2
+# define OPENRJ_VER_C_ORJAPI_EDIT       47
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -1348,8 +1348,21 @@ static int process_field_markers(char * const py, size_t *numChars, size_t *numL
                             return 0;
                         }
                     }
-                } /* Fall through */
+                }
+				goto default_case; /* Fall through */
+			case	':':
+                if( 0 == column ||
+                    numInitialWsToSkip > 0)
+                {
+                    error->invalidLine      =   (unsigned)line;
+                    error->invalidColumn    =   (unsigned)column;
+                    error->parseError       =   ORJ_PARSE_INVALIDFIELDNAME;
+
+                    return 0;
+                }
+				goto default_case; /* Fall through */
             default:
+default_case:
                 numInitialWsToSkip = 0;
                 break;
         }
