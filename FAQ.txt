@@ -1,13 +1,11 @@
 Open-RJ - FAQ
 -------------
 
-There are currently no Open-RJ FAQs. If you post a question on the 
-STLSoft newsgroup (news://news.digitalmars.com/c++.stlsoft/)
-it will be used to create one.
+There are currently no Open-RJ FAQs. If you post a question on either of
+the following two locations it will be used to create one. Either of:
 
-Please prefix your post with "[openrj] ".
-
-
+- the Open Discussion forum (http://sourceforge.net/forum/forum.php?forum_id=382978)
+- the Open-RJ users mailing list: openrj-users@lists.sourceforge.net
 
 
 ----------------------------------------------------------------------------

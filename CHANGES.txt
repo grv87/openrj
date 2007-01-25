@@ -3,7 +3,205 @@
 Open-RJ - Changes
 -----------------
 
-See the accompanying HISTORY.TXT file for details of changes.
+
+  27th September 2006 - Open-RJ 1.6.3 released
+
+    general:
+      + now roots the distribution under openrj-X.Y,
+	    e.g. openrj-3.4.3
+
+
+  26th September 2006 - Open-RJ 1.6.2 released
+
+    general:
+      ~ fix for Visual C++ 8.0 makefile(s)
+
+    core library:
+      + addition of ORJ_PARSE_INVALIDFIELDNAME flag
+      ~ corrected bug in parsing; an empty field name now results
+              in parse error (ORJ_PARSE_INVALIDFIELDNAME)
+
+    Open-RJ/.NET:
+      + Added Database.ParseErrorCode.InvalidFieldName flag
+
+    Open-RJ/STL:
+      + updated support for field iterators for Digital Mars
+              C/C++ compiler (openrj/stl/database.hpp).
+
+
+  20th September 2006 - Open-RJ 1.6.1 released
+
+    general:
+      + support for Visual C++ 8.0 makefile(s)
+
+    core library:
+      + support for ORJ_FLAG_FORCEALLFIELDSINTO1RECORD flag
+      ~ strings now avoids any runtime cost for length evaluation
+
+    Open-RJ/.NET:
+      + Support for ForceAllFieldsIntoOneRecord flag
+
+    Open-RJ/Python:
+      + support for FORCE_ALL_FIELDS_INTO_1_RECORD flag
+
+    Open-RJ/Ruby:
+      + support for FORCE_ALL_FIELDS_INTO_1_RECORD flag
+
+
+  9th August 2006 - Open-RJ 1.5.3 released
+
+    Open-RJ/.NET:
+      ~ Corrected bug in Database class, whereby the Fields property
+        actually returned a collection of Record instances, rather than
+        Field instances.
+      + new single-parameter constructor for FileDatabase, which
+        assumes ElideBlankRecords
+      + new single-parameter constructor for MemoryDatabase, which
+        assumes ElideBlankRecords
+
+
+  26th July 2006 - Open-RJ 1.5.2 released
+
+    general:
+      ~ Minor changes to Open-RJ/C++ and Open-RJ/STL to reflect changes
+        to STLSoft libraries directory structure.
+
+    Open-RJ/.NET:
+      + Record.GetFieldValue() method overloads
+
+    Open-RJ/Ruby:
+      + Database.records property
+      + Database.fields property
+
+
+  28th May 2006 - Open-RJ 1.5.1 released
+
+    core library:
+      + field name aliases
+      + case-insensitive field lookups
+      + ORJ_Database_GetFieldA()
+
+    Open-RJ/C++:
+      + Lookup() function (openrj/cpp/functions.hpp)
+
+    Open-RJ/STL:
+      + field_assoc_insert_iterator class (openrj/stl/iterator.hpp).
+
+    Open-RJ/.NET:
+      + Fields collection class
+      + Record.Comment property
+      + Record.HasField()
+      + Record.GetNamedFields()
+      + Database.Flags enumeration
+      + Database.ErrorCode enumeration
+      + Database.ParseErrorCode enumeration
+      + Database.Fields property
+      + Database.GetNamedFields()
+
+    Open-RJ/Python:
+      + IGNORE_CASE_ON_LOOKUP
+      + NO_REINTERPRET_FIELD_IDS
+
+    Open-RJ/Ruby:
+      + IGNORE_CASE_ON_LOOKUP
+      + NO_REINTERPRET_FIELD_IDS
+
+    + eight C examples
+    + six C++ examples
+    + seven STL examples
+
+
+  8th August 2005 - Open-RJ 1.4.1 released
+
+    core:
+
+      + ORJ_FormatErrorA(), rich error formatting function
+      + ORJ_Record_FindNextFieldA(), a flexible function for finding fields
+        based on field positions and/or names and/or values.
+
+
+  15th July 2005 - Open-RJ 1.3.4 released
+
+    core:
+      ~ BUG FIX: Now handles cr+lf irrespective of operating system.
+
+
+  28th June 2005 - Open-RJ 1.3.3 released
+
+    core:
+      ~ BUG FIX: fixed an assert in orjapi.c, which erroneously fired when
+        a record marker had trailing whitespace.
+      + Compatible with Mac OS-X
+      + added c_str_ptr_null and c_str_data string access shims, for
+        ::openrj, ::openrj::cpp and ::openrj::stl constructs.
+
+    Open-RJ/C++:
+      + openrj::cpp::Record now uses Static Covariance (aka
+        Argument-dependent Covariance) for subscript operator. This means
+        that if it's an integer then a Field is returned, and if it's a
+        string then the value (as a string) is returned.
+
+    Open-RJ/STL:
+      + reverse iterator support in the record and database classes of the
+        STL mapping.
+
+
+  26th May 2005 - Open-RJ 1.3.2 released
+
+    Open-RJ/C++:
+    Open-RJ/STL:
+      + The Record/record classes, in the Open-RJ/C++ and Open-RJ/STL
+        mappings respectively, now return const Field/field instances, to
+        prevent misuse in the following form:
+
+          record[0] = record[1]; // Will now not compile
+
+    Open-RJ/C++:
+      + The Record class has enhanced subscript operators to prevent
+        ambiguous resolution when used with literal integers.
+
+
+  23rd May 2005 - Open-RJ 1.3.1 released
+
+    core:
+      + record comments are now made available through the API.
+      + implicit link header
+
+    Open-RJ/C++:
+      ~ the database classes are now separated out into individual headers
+      + (in)equality operators for Field class
+      + Record::GetComment()
+      + Record::HasFieldWithValue()
+
+    Open-RJ/STL:
+      + record::get_comment()
+
+    Open-RJ/Python:
+      + comment attribute on record class
+
+    Open-RJ/Ruby:
+      + comment attribute on record class
+
+
+  4th March 2005 - Open-RJ 1.2.1 released
+
+      core:
+        + ORJ_CreateDatabaseFromMemoryA() - facilitates reading databases
+          from memory
+        + ORJ_GetErrorStringA()
+        + ORJ_GetParseErrorStringA()
+
+    Open-RJ/C++:
+      + FileDatabase class
+      + MemoryDatabase class
+
+    Open-RJ/STL:
+      ~ the classes are now separated out into individual headers
+
+
+  29th September 2004 - Open-RJ 1.0.1 released
+
+    initial release
 
 
 ----------------------------------------------------------------------------

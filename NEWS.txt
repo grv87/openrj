@@ -3,6 +3,8 @@ Open-RJ - News
 
 News:
 
+    26th January 2007 - Open-RJ 1.6.3 released
+
     26th December 2006 - Open-RJ 1.6.2 released
 
     20th September 2006 - Open-RJ 1.6.1 released
