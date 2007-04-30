@@ -1,7 +1,7 @@
 ################################################################################
 # File:     makefile
 #
-# Purpose:  Makefile for the Open-RJ project, for the Visual C++ 8 (normal)
+# Purpose:  Makefile for the Open-RJ project, for the Visual C++ 8 (safe)
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
@@ -23,7 +23,7 @@
 
 # Identification
 
-COMP_TAG          =   vc8
+COMP_TAG          =   vc8_safe
 PROJ_TAG          =   openrj
 PROJ_VER_MAJOR    =   1
 PROJ_TAG_VER      =   $(PROJ_TAG).$(PROJ_VER_MAJOR)
@@ -106,12 +106,12 @@ CPPC_DEFS           =   $(COMMON_DEFS)
 
 CC_F_NOLOGO             =   -nologo
 CC_F_COMPILE_ONLY       =   -c
-CC_F_WARNING_MAX        =   -W4 -wd4996
+CC_F_WARNING_MAX        =   -W4
 CC_F_WARNING_ERR        =   -WX
 
 CPPC_F_NOLOGO       =   -nologo
 CPPC_F_COMPILE_ONLY =   -c
-CPPC_F_WARNING_MAX  =   -W4 -wd4996 -wd4800
+CPPC_F_WARNING_MAX  =   -W4
 CPPC_F_WARNING_ERR  =   -WX
 CPPC_F_EXCEPTIONS   =   -EHsc
 CPPC_F_RTTI         =   -GR

@@ -5,11 +5,11 @@
  *              use of processing instructions for field-name aliases.
  *
  * Created:     12th May 2006
- * Updated:     28th May 2006
+ * Updated:     23rd April 2007
  *
  * www:         http://www.openrj.org/
  *
- * License:     Copyright (c) 2006, Synesis Software Pty Ltd.
+ * License:     Copyright (c) 2006-2007, Synesis Software Pty Ltd.
  *              All rights reserved.
  *
  *              (Licensed under the Synesis Software Open License)
@@ -125,7 +125,7 @@ int main()
                 name    =   &field->name;
                 value   =   &field->value;
 
-                printf("  field-#%ld %.*s=%.*s\n", (long)iField, (int)field->name.len, field->name.ptr, (int)field->value.len, field->value.ptr);
+                printf("  field-#%ld %.*s=%.*s\n", (long)iField, (int)name->len, name->ptr, (int)value->len, value->ptr);
             }
         }
 

@@ -53,11 +53,11 @@
 <a name="l00005"></a>00005 <span class="comment"> *              use of processing instructions for field-name aliases.</span>
 <a name="l00006"></a>00006 <span class="comment"> *</span>
 <a name="l00007"></a>00007 <span class="comment"> * Created:     12th May 2006</span>
-<a name="l00008"></a>00008 <span class="comment"> * Updated:     28th May 2006</span>
+<a name="l00008"></a>00008 <span class="comment"> * Updated:     23rd April 2007</span>
 <a name="l00009"></a>00009 <span class="comment"> *</span>
 <a name="l00010"></a>00010 <span class="comment"> * www:         http://www.openrj.org/</span>
 <a name="l00011"></a>00011 <span class="comment"> *</span>
-<a name="l00012"></a>00012 <span class="comment"> * License:     Copyright (c) 2006, Synesis Software Pty Ltd.</span>
+<a name="l00012"></a>00012 <span class="comment"> * License:     Copyright (c) 2006-2007, Synesis Software Pty Ltd.</span>
 <a name="l00013"></a>00013 <span class="comment"> *              All rights reserved.</span>
 <a name="l00014"></a>00014 <span class="comment"> *</span>
 <a name="l00015"></a>00015 <span class="comment"> *              (Licensed under the Synesis Software Open License)</span>
@@ -173,7 +173,7 @@
 <a name="l00125"></a>00125                 name    =   &amp;field-&gt;name;
 <a name="l00126"></a>00126                 value   =   &amp;field-&gt;value;
 <a name="l00127"></a>00127 
-<a name="l00128"></a>00128                 printf(<span class="stringliteral">"  field-#%ld %.*s=%.*s\n"</span>, (<span class="keywordtype">long</span>)iField, (<span class="keywordtype">int</span>)field-&gt;name.len, field-&gt;name.ptr, (<span class="keywordtype">int</span>)field-&gt;value.len, field-&gt;value.ptr);
+<a name="l00128"></a>00128                 printf(<span class="stringliteral">"  field-#%ld %.*s=%.*s\n"</span>, (<span class="keywordtype">long</span>)iField, (<span class="keywordtype">int</span>)name-&gt;len, name-&gt;ptr, (<span class="keywordtype">int</span>)value-&gt;len, value-&gt;ptr);
 <a name="l00129"></a>00129             }
 <a name="l00130"></a>00130         }
 <a name="l00131"></a>00131 

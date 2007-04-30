@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
-# Updated:  20th September 2006
+# Updated:  22nd February 2007
 #
 ################################################################################
 
@@ -218,6 +218,12 @@ OBJS_CORE_ST_DEBUG_PM =\
  -+$(OBJ_CORE_orjstr__ST_DEBUG)\
  \
 
+OBJS_CORE_ST_DEBUG = \
+ $(OBJ_CORE_orjapi__ST_DEBUG)\
+ $(OBJ_CORE_orjmem__ST_DEBUG)\
+ $(OBJ_CORE_orjstr__ST_DEBUG)\
+ \
+
 OBJ_CORE_orjapi__ST_RELEASE = $(PROJ_OBJ_DIR)\orjapi.obj
 OBJ_CORE_orjmem__ST_RELEASE = $(PROJ_OBJ_DIR)\orjmem.obj
 OBJ_CORE_orjstr__ST_RELEASE = $(PROJ_OBJ_DIR)\orjstr.obj
@@ -228,6 +234,11 @@ OBJS_CORE_ST_RELEASE_PM =\
  -+$(OBJ_CORE_orjstr__ST_RELEASE)\
  \
 
+OBJS_CORE_ST_RELEASE = \
+ $(OBJ_CORE_orjapi__ST_RELEASE)\
+ $(OBJ_CORE_orjmem__ST_RELEASE)\
+ $(OBJ_CORE_orjstr__ST_RELEASE)\
+ \
 
 OBJS_CORE =\
  $(OBJS_CORE_ST_DEBUG)\

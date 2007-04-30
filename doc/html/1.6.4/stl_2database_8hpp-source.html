@@ -57,11 +57,11 @@
 <a name="l00005"></a>00005 <span class="comment"> *          Open-RJ library</span>
 <a name="l00006"></a>00006 <span class="comment"> *</span>
 <a name="l00007"></a>00007 <span class="comment"> * Created: 15th June 2004</span>
-<a name="l00008"></a>00008 <span class="comment"> * Updated: 26th December 2006</span>
+<a name="l00008"></a>00008 <span class="comment"> * Updated: 23rd April 2007</span>
 <a name="l00009"></a>00009 <span class="comment"> *</span>
 <a name="l00010"></a>00010 <span class="comment"> * Home:    http://openrj.org/</span>
 <a name="l00011"></a>00011 <span class="comment"> *</span>
-<a name="l00012"></a>00012 <span class="comment"> * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software</span>
+<a name="l00012"></a>00012 <span class="comment"> * Copyright (c) 2004-2007, Matthew Wilson and Synesis Software</span>
 <a name="l00013"></a>00013 <span class="comment"> * All rights reserved.</span>
 <a name="l00014"></a>00014 <span class="comment"> *</span>
 <a name="l00015"></a>00015 <span class="comment"> * Redistribution and use in source and binary forms, with or without</span>
@@ -101,8 +101,8 @@
 <a name="l00055"></a>00055 <span class="preprocessor">#ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION</span>
 <a name="l00056"></a>00056 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1</span>
 <a name="l00057"></a>00057 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       7</span>
-<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    7</span>
-<a name="l00059"></a>00059 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        39</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    9</span>
+<a name="l00059"></a>00059 <span class="preprocessor"></span><span class="preprocessor"># define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        41</span>
 <a name="l00060"></a>00060 <span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_DOCUMENTATION_SKIP_SECTION */</span>
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062 <span class="comment">/* /////////////////////////////////////////////////////////////////////////////</span>
@@ -123,8 +123,8 @@
 <a name="l00077"></a>00077 <span class="preprocessor">#include &lt;iterator&gt;</span>
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079 <span class="preprocessor">#include &lt;stlsoft/iterators/indirect_reverse_iterator.hpp&gt;</span>
-<a name="l00080"></a>00080 <span class="preprocessor">#include &lt;stlsoft/iterator.hpp&gt;</span>
-<a name="l00081"></a>00081 <span class="preprocessor">#include &lt;stlsoft/proxy_iterator.hpp&gt;</span>
+<a name="l00080"></a>00080 <span class="preprocessor">#include &lt;stlsoft/util/std/iterator_helper.hpp&gt;</span>
+<a name="l00081"></a>00081 <span class="preprocessor">#include &lt;stlsoft/obsolete/proxy_iterator.hpp&gt;</span>
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083 <span class="comment">/* /////////////////////////////////////////////////////////////////////////////</span>
 <a name="l00084"></a>00084 <span class="comment"> * Compiler warnings</span>
@@ -200,14 +200,14 @@
 <a name="l00163"></a>00163                                 ,   <a class="code" href="classopenrj_1_1stl_1_1field.html">field</a>
 <a name="l00164"></a><a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">00164</a>                                 &gt;           <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a>;
 <a name="l00165"></a>00165 
-<a name="l00166"></a>00166 <span class="preprocessor"># if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
+<a name="l00166"></a>00166 <span class="preprocessor"># if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
 <a name="l00168"></a>00168 <span class="preprocessor">    typedef stlsoft_ns_qual(const_reverse_iterator_base)&lt;   const_field_iterator</span>
 <a name="l00169"></a>00169 <span class="preprocessor"></span>                                                        ,   <a class="code" href="classopenrj_1_1stl_1_1field.html">field</a>
 <a name="l00170"></a>00170                                                         ,   <a class="code" href="classopenrj_1_1stl_1_1field.html">field</a> <span class="comment">// Return by value!</span>
 <a name="l00171"></a>00171                                                         ,   void
 <a name="l00172"></a>00172                                                         ,   <a class="code" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a>
-<a name="l00173"></a>00173                                                         &gt;   const_reverse_field_iterator;
-<a name="l00174"></a>00174 <span class="preprocessor"># endif </span><span class="comment">/* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
+<a name="l00173"></a><a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">00173</a>                                                         &gt;   <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a>;
+<a name="l00174"></a>00174 <span class="preprocessor"># endif </span><span class="comment">/* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
 <a name="l00175"></a>00175 <span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */</span>
 <a name="l00177"></a><a class="code" href="classopenrj_1_1stl_1_1database__base.html#ac646b801f332be28e1a870aa6b005f3">00177</a>     typedef size_t                          distance_type;
 <a name="l00178"></a>00178 
@@ -216,14 +216,14 @@
 <a name="l00182"></a>00182     <span class="keyword">class </span><a class="code" href="classopenrj_1_1stl_1_1database__base_1_1const__iterator.html">const_iterator</a>;
 <a name="l00183"></a>00183 <span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_DOCUMENTATION_SKIP_SECTION */</span>
 <a name="l00184"></a>00184 
-<a name="l00185"></a>00185 <span class="preprocessor">#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
+<a name="l00185"></a>00185 <span class="preprocessor">#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
 <a name="l00187"></a>00187 <span class="preprocessor">#  if 0</span>
 <a name="l00188"></a>00188 <span class="preprocessor"></span>    <span class="keyword">typedef</span> stlsoft_ns_qual(const_reverse_iterator_base)&lt;   <a class="code" href="classopenrj_1_1stl_1_1database__base_1_1const__iterator.html">const_iterator</a>
 <a name="l00189"></a>00189                                                         ,   <a class="code" href="classopenrj_1_1stl_1_1record.html">value_type</a>
 <a name="l00190"></a>00190                                                         ,   <a class="code" href="classopenrj_1_1stl_1_1record.html">value_type</a> <span class="comment">// Return by value!</span>
 <a name="l00191"></a>00191                                                         ,   void
 <a name="l00192"></a>00192                                                         ,   <a class="code" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a>
-<a name="l00193"></a>00193                                                         &gt;   const_reverse_iterator;
+<a name="l00193"></a>00193                                                         &gt;   <a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a>;
 <a name="l00194"></a>00194 <span class="preprocessor">#  else </span><span class="comment">/* ? 0 */</span>
 <a name="l00195"></a>00195     <span class="comment">// Can't use reverse_iterator, because const_iterator is a forward-declared member </span>
 <a name="l00196"></a>00196     <span class="comment">// class - this now appears incorrect. Somehow I've made subsequent changes that</span>
@@ -234,9 +234,9 @@
 <a name="l00201"></a>00201                                                         ,   void
 <a name="l00202"></a>00202                                                         ,   <a class="code" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a>
 <a name="l00203"></a>00203                                                         ,   std::random_access_iterator_tag
-<a name="l00204"></a>00204                                                         &gt;   const_reverse_iterator;
+<a name="l00204"></a><a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">00204</a>                                                         &gt;   <a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a>;
 <a name="l00205"></a>00205 <span class="preprocessor">#  endif </span><span class="comment">/* 0 */</span>
-<a name="l00206"></a>00206 <span class="preprocessor">#endif </span><span class="comment">/* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
+<a name="l00206"></a>00206 <span class="preprocessor">#endif </span><span class="comment">/* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
 <a name="l00207"></a>00207 
 <a name="l00208"></a>00208 <span class="keyword">protected</span>:
 <a name="l00209"></a>00209     <span class="keyword">explicit</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html">database_base</a>(<a class="code" href="structopenrj_1_1ORJDatabaseA.html">ORJDatabase</a> <span class="keyword">const</span> *<a class="code" href="classopenrj_1_1stl_1_1file__database.html">database</a>);
@@ -256,18 +256,18 @@
 <a name="l00235"></a>00235     <a class="code" href="classopenrj_1_1stl_1_1database__base_1_1const__iterator.html">const_iterator</a> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#a988d8d5bb702797f446d13e73c3e496">begin</a>() <span class="keyword">const</span>;
 <a name="l00239"></a>00239     <a class="code" href="classopenrj_1_1stl_1_1database__base_1_1const__iterator.html">const_iterator</a> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#37880d98e8ba9fa73e75cc1a01e69964">end</a>() <span class="keyword">const</span>;
 <a name="l00240"></a>00240 
-<a name="l00241"></a>00241 <span class="preprocessor">#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
+<a name="l00241"></a>00241 <span class="preprocessor">#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
 <a name="l00245"></a>00245 <span class="preprocessor">    const_reverse_iterator rbegin() const;</span>
 <a name="l00249"></a>00249 <span class="preprocessor">    const_reverse_iterator rend() const;</span>
-<a name="l00250"></a>00250 <span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
+<a name="l00250"></a>00250 <span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
 <a name="l00251"></a>00251 
 <a name="l00252"></a>00252 <span class="preprocessor">#ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS</span>
 <a name="l00253"></a>00253 <span class="preprocessor"></span>    <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a> fields_begin() <span class="keyword">const</span>;
 <a name="l00254"></a>00254     <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a> fields_end() <span class="keyword">const</span>;
-<a name="l00255"></a>00255 <span class="preprocessor"># if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
-<a name="l00256"></a>00256 <span class="preprocessor"></span>    const_reverse_field_iterator fields_rbegin() <span class="keyword">const</span>;
-<a name="l00257"></a>00257     const_reverse_field_iterator fields_rend() <span class="keyword">const</span>;
-<a name="l00258"></a>00258 <span class="preprocessor"># endif </span><span class="comment">/* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
+<a name="l00255"></a>00255 <span class="preprocessor"># if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
+<a name="l00256"></a>00256 <span class="preprocessor"></span>    <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a> fields_rbegin() <span class="keyword">const</span>;
+<a name="l00257"></a>00257     <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a> fields_rend() <span class="keyword">const</span>;
+<a name="l00258"></a>00258 <span class="preprocessor"># endif </span><span class="comment">/* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
 <a name="l00259"></a>00259 <span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */</span>
 <a name="l00260"></a>00260 
 <a name="l00261"></a>00261 <span class="comment">// Members</span>
@@ -323,12 +323,12 @@
 <a name="l00334"></a><a class="code" href="classopenrj_1_1stl_1_1memory__database.html#cffafa89e1fa6fa874b10750b5de63cc">00334</a>     <span class="keyword">explicit</span> <a class="code" href="classopenrj_1_1stl_1_1memory__database.html#3c5e92e51d05b1cc2357593aaad974d8">memory_database</a>(S <span class="keyword">const</span> &amp;contents, <span class="keywordtype">unsigned</span> flags = 0)
 <a name="l00335"></a>00335         : <a class="code" href="classopenrj_1_1stl_1_1database__base.html">parent_class_type</a>(create_database_(::stlsoft::<a class="code" href="group__group__openrj__stringaccessshims.html#g81cf6384ff215810d0d889599a530d55">c_str_data</a>(contents), ::stlsoft::<a class="code" href="group__group__openrj__stringaccessshims.html#g0b3ea29f7496b74231f1115e63d92e30">c_str_len</a>(contents), flags))
 <a name="l00336"></a>00336     {}
-<a name="l00337"></a>00337 <span class="preprocessor">#ifdef __STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT</span>
+<a name="l00337"></a>00337 <span class="preprocessor">#ifdef STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT</span>
 <a name="l00343"></a>00343 <span class="preprocessor">    template &lt;size_t N&gt;</span>
-<a name="l00344"></a>00344 <span class="preprocessor"></span>    <span class="keyword">explicit</span> <a class="code" href="classopenrj_1_1stl_1_1memory__database.html#3c5e92e51d05b1cc2357593aaad974d8">memory_database</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> (&amp;contents)[N], <span class="keywordtype">unsigned</span> flags = 0)
-<a name="l00345"></a>00345         : parent_class_type(create_database_(&amp;contents[0], N, flags))
+<a name="l00344"></a><a class="code" href="classopenrj_1_1stl_1_1memory__database.html#23d7d799fffb2922c9bf0feb81ec52e3">00344</a> <span class="preprocessor"></span>    <span class="keyword">explicit</span> <a class="code" href="classopenrj_1_1stl_1_1memory__database.html#3c5e92e51d05b1cc2357593aaad974d8">memory_database</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> (&amp;contents)[N], <span class="keywordtype">unsigned</span> flags = 0)
+<a name="l00345"></a>00345         : <a class="code" href="classopenrj_1_1stl_1_1database__base.html">parent_class_type</a>(create_database_(&amp;contents[0], N, flags))
 <a name="l00346"></a>00346     {}
-<a name="l00347"></a>00347 <span class="preprocessor">#endif </span><span class="comment">/* __STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT */</span>
+<a name="l00347"></a>00347 <span class="preprocessor">#endif </span><span class="comment">/* STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT */</span>
 <a name="l00348"></a>00348 
 <a name="l00349"></a>00349 <span class="comment">// Implementation</span>
 <a name="l00350"></a>00350 <span class="keyword">private</span>:
@@ -607,44 +607,44 @@
 <a name="l00624"></a>00624     <span class="keywordflow">return</span> &amp;m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#ac534323aa9d4d308ff177aed4634003">records</a>[m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#c5eccc773a5c3e287bbf5124e787092c">numRecords</a>];
 <a name="l00625"></a>00625 }
 <a name="l00626"></a>00626 
-<a name="l00627"></a>00627 <span class="preprocessor">#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
-<a name="l00628"></a>00628 <span class="preprocessor"></span><span class="keyword">inline</span> database_base::const_reverse_iterator database_base::rbegin()<span class="keyword"> const</span>
+<a name="l00627"></a>00627 <span class="preprocessor">#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
+<a name="l00628"></a><a class="code" href="classopenrj_1_1stl_1_1database__base.html#fd7c21fcd71f4afc37ba792a35c9d5a0">00628</a> <span class="preprocessor"></span><span class="keyword">inline</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">database_base::const_reverse_iterator</a> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#fd7c21fcd71f4afc37ba792a35c9d5a0">database_base::rbegin</a>()<span class="keyword"> const</span>
 <a name="l00629"></a>00629 <span class="keyword"></span>{
-<a name="l00630"></a>00630     <span class="keywordflow">return</span> const_reverse_iterator(<a class="code" href="classopenrj_1_1stl_1_1database__base.html#37880d98e8ba9fa73e75cc1a01e69964">end</a>());
+<a name="l00630"></a>00630     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a>(<a class="code" href="classopenrj_1_1stl_1_1database__base.html#37880d98e8ba9fa73e75cc1a01e69964">end</a>());
 <a name="l00631"></a>00631 }
 <a name="l00632"></a>00632 
-<a name="l00633"></a>00633 <span class="keyword">inline</span> database_base::const_reverse_iterator database_base::rend()<span class="keyword"> const</span>
+<a name="l00633"></a><a class="code" href="classopenrj_1_1stl_1_1database__base.html#398ebd75af9cc26c2e02a9b12358ae0c">00633</a> <span class="keyword">inline</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">database_base::const_reverse_iterator</a> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#398ebd75af9cc26c2e02a9b12358ae0c">database_base::rend</a>()<span class="keyword"> const</span>
 <a name="l00634"></a>00634 <span class="keyword"></span>{
-<a name="l00635"></a>00635     <span class="keywordflow">return</span> const_reverse_iterator(<a class="code" href="classopenrj_1_1stl_1_1database__base.html#a988d8d5bb702797f446d13e73c3e496">begin</a>());
+<a name="l00635"></a>00635     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a>(<a class="code" href="classopenrj_1_1stl_1_1database__base.html#a988d8d5bb702797f446d13e73c3e496">begin</a>());
 <a name="l00636"></a>00636 }
-<a name="l00637"></a>00637 <span class="preprocessor">#endif </span><span class="comment">/* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
+<a name="l00637"></a>00637 <span class="preprocessor">#endif </span><span class="comment">/* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
 <a name="l00638"></a>00638 
 <a name="l00639"></a>00639 <span class="preprocessor">#ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS</span>
 <a name="l00640"></a>00640 <span class="preprocessor"></span><span class="keyword">inline</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">database_base::const_field_iterator</a> database_base::fields_begin()<span class="keyword"> const</span>
 <a name="l00641"></a>00641 <span class="keyword"></span>{
 <a name="l00642"></a>00642     <a class="code" href="openrj__assert_8h.html#b4596119eaff3f8f2b0fa399d927d35b">openrj_assert</a>(NULL != m_database);
 <a name="l00643"></a>00643 
-<a name="l00644"></a>00644     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a>(&amp;m_database-&gt;fields[0], &amp;m_database-&gt;fields[m_database-&gt;numFields]);
+<a name="l00644"></a>00644     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a>(&amp;m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#c371c86da98cc8e782dc90af48090b2e">fields</a>[0], &amp;m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#c371c86da98cc8e782dc90af48090b2e">fields</a>[m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#d8bd9f3ce8d95e948ba0b8c5359f9ade">numFields</a>]);
 <a name="l00645"></a>00645 }
 <a name="l00646"></a>00646 
 <a name="l00647"></a>00647 <span class="keyword">inline</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">database_base::const_field_iterator</a> database_base::fields_end()<span class="keyword"> const</span>
 <a name="l00648"></a>00648 <span class="keyword"></span>{
 <a name="l00649"></a>00649     <a class="code" href="openrj__assert_8h.html#b4596119eaff3f8f2b0fa399d927d35b">openrj_assert</a>(NULL != m_database);
 <a name="l00650"></a>00650 
-<a name="l00651"></a>00651     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a>(&amp;m_database-&gt;fields[m_database-&gt;numFields], &amp;m_database-&gt;fields[m_database-&gt;numFields]);
+<a name="l00651"></a>00651     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a>(&amp;m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#c371c86da98cc8e782dc90af48090b2e">fields</a>[m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#d8bd9f3ce8d95e948ba0b8c5359f9ade">numFields</a>], &amp;m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#c371c86da98cc8e782dc90af48090b2e">fields</a>[m_database-&gt;<a class="code" href="structopenrj_1_1ORJDatabaseA.html#d8bd9f3ce8d95e948ba0b8c5359f9ade">numFields</a>]);
 <a name="l00652"></a>00652 }
 <a name="l00653"></a>00653 
-<a name="l00654"></a>00654 <span class="preprocessor"># if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
-<a name="l00655"></a>00655 <span class="preprocessor"></span><span class="keyword">inline</span> database_base::const_reverse_field_iterator database_base::fields_rbegin()<span class="keyword"> const</span>
+<a name="l00654"></a>00654 <span class="preprocessor"># if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)</span>
+<a name="l00655"></a>00655 <span class="preprocessor"></span><span class="keyword">inline</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">database_base::const_reverse_field_iterator</a> database_base::fields_rbegin()<span class="keyword"> const</span>
 <a name="l00656"></a>00656 <span class="keyword"></span>{
-<a name="l00657"></a>00657     <span class="keywordflow">return</span> const_reverse_field_iterator(fields_end());
+<a name="l00657"></a>00657     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a>(fields_end());
 <a name="l00658"></a>00658 }
 <a name="l00659"></a>00659 
-<a name="l00660"></a>00660 <span class="keyword">inline</span> database_base::const_reverse_field_iterator database_base::fields_rend()<span class="keyword"> const</span>
+<a name="l00660"></a>00660 <span class="keyword">inline</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">database_base::const_reverse_field_iterator</a> database_base::fields_rend()<span class="keyword"> const</span>
 <a name="l00661"></a>00661 <span class="keyword"></span>{
-<a name="l00662"></a>00662     <span class="keywordflow">return</span> const_reverse_field_iterator(fields_begin());
+<a name="l00662"></a>00662     <span class="keywordflow">return</span> <a class="code" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a>(fields_begin());
 <a name="l00663"></a>00663 }
-<a name="l00664"></a>00664 <span class="preprocessor"># endif </span><span class="comment">/* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
+<a name="l00664"></a>00664 <span class="preprocessor"># endif </span><span class="comment">/* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */</span>
 <a name="l00665"></a>00665 <span class="preprocessor">#endif </span><span class="comment">/* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */</span>
 <a name="l00666"></a>00666 
 <a name="l00667"></a>00667 <span class="comment">/* /////////////////////////////////////////////////////////////////////////////</span>

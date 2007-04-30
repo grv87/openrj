@@ -94,9 +94,20 @@ This class opens and provides access to a file-based Open-RJ database. <dl compa
  <a class="el" href="classopenrj_1_1stl_1_1field.html">field</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The non-mutating (const) iterator type for enumerating all fields in the database.  <a href="#de93b568eb4d723229799292272bfcd2"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef stlsoft::const_reverse_iterator_base&lt;<br>
+ <a class="el" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a>, <a class="el" href="classopenrj_1_1stl_1_1field.html">field</a>,<br>
+ <a class="el" href="classopenrj_1_1stl_1_1field.html">field</a>, void, <a class="el" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The non-mutating (const) reverse iterator type.  <a href="#2f55c3c39bd26047d56900f4b511324f"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#ac646b801f332be28e1a870aa6b005f3">distance_type</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The distance type.  <a href="#ac646b801f332be28e1a870aa6b005f3"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef stlsoft::indirect_reverse_iterator&lt;<br>
+ const_iterator, <a class="el" href="classopenrj_1_1stl_1_1database__base.html#e8b04b96c7efe3bcf39c95a751afc4e8">value_type</a>,<br>
+ <a class="el" href="classopenrj_1_1stl_1_1database__base.html#e8b04b96c7efe3bcf39c95a751afc4e8">value_type</a>, void, <a class="el" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a>,<br>
+ std::random_access_iterator_tag &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The non-mutating (const) reverse iterator type.  <a href="#276517c03a0f0b24f6fdabf209de04b6"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1file__database.html#70e98b8e6d3b0ec5e3303227fc892ba6">file_database</a> (char const *jarName, unsigned flags=0)</td></tr>
 
@@ -126,6 +137,12 @@ This class opens and provides access to a file-based Open-RJ database. <dl compa
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const_iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#37880d98e8ba9fa73e75cc1a01e69964">end</a> () const </td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Ends the iteration.  <a href="#37880d98e8ba9fa73e75cc1a01e69964"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#fd7c21fcd71f4afc37ba792a35c9d5a0">rbegin</a> () const </td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Begins the reverse iteration.  <a href="#fd7c21fcd71f4afc37ba792a35c9d5a0"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#398ebd75af9cc26c2e02a9b12358ae0c">rend</a> () const </td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Ends the reverse iteration.  <a href="#398ebd75af9cc26c2e02a9b12358ae0c"></a><br></td></tr>
 </table>
 <hr><h2>Member Typedef Documentation</h2>
 <a class="anchor" name="2f157a4762f8003a3e0e2975abc2ace2"></a><!-- doxytag: member="openrj::stl::file_database::class_type" ref="2f157a4762f8003a3e0e2975abc2ace2" args="" -->
@@ -194,6 +211,40 @@ The non-mutating (const) pointer type.
 
 <p>
 The non-mutating (const) reference type. 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="2f55c3c39bd26047d56900f4b511324f"></a><!-- doxytag: member="openrj::stl::file_database::const_reverse_field_iterator" ref="2f55c3c39bd26047d56900f4b511324f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef stlsoft:: const_reverse_iterator_base&lt; <a class="el" href="classopenrj_1_1stl_1_1database__base.html#de93b568eb4d723229799292272bfcd2">const_field_iterator</a> , <a class="el" href="classopenrj_1_1stl_1_1field.html">field</a> , <a class="el" href="classopenrj_1_1stl_1_1field.html">field</a> , void , <a class="el" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a> &gt; <a class="el" href="classopenrj_1_1stl_1_1database__base.html#2f55c3c39bd26047d56900f4b511324f">const_reverse_field_iterator</a><code> [inherited]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+The non-mutating (const) reverse iterator type. 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="276517c03a0f0b24f6fdabf209de04b6"></a><!-- doxytag: member="openrj::stl::file_database::const_reverse_iterator" ref="276517c03a0f0b24f6fdabf209de04b6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef stlsoft:: indirect_reverse_iterator&lt; const_iterator , <a class="el" href="classopenrj_1_1stl_1_1database__base.html#e8b04b96c7efe3bcf39c95a751afc4e8">value_type</a> , <a class="el" href="classopenrj_1_1stl_1_1database__base.html#e8b04b96c7efe3bcf39c95a751afc4e8">value_type</a> , void , <a class="el" href="classopenrj_1_1stl_1_1database__base.html#cf947bbb9e09f863cc3572ff8550b183">difference_type</a> , std::random_access_iterator_tag &gt; <a class="el" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">const_reverse_iterator</a><code> [inherited]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+The non-mutating (const) reverse iterator type. 
 <p>
 
 </div>
@@ -478,6 +529,50 @@ Returns the requested record.
     <tr><td valign="top"></td><td valign="top"><em>index</em>&nbsp;</td><td>The index of the record to be returned. Must be less than the value returned by <a class="el" href="classopenrj_1_1stl_1_1database__base.html#ac782da1f912bceb5d8ad00c8dc892ac">size()</a> </td></tr>
   </table>
 </dl>
+
+</div>
+</div><p>
+<a class="anchor" name="fd7c21fcd71f4afc37ba792a35c9d5a0"></a><!-- doxytag: member="openrj::stl::file_database::rbegin" ref="fd7c21fcd71f4afc37ba792a35c9d5a0" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">database_base::const_reverse_iterator</a> rbegin           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline, inherited]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Begins the reverse iteration. 
+<p>
+<dl compact><dt><b>Returns:</b></dt><dd>A non-mutating (const) iterator representing the start of the reverse sequence </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="398ebd75af9cc26c2e02a9b12358ae0c"></a><!-- doxytag: member="openrj::stl::file_database::rend" ref="398ebd75af9cc26c2e02a9b12358ae0c" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classopenrj_1_1stl_1_1database__base.html#276517c03a0f0b24f6fdabf209de04b6">database_base::const_reverse_iterator</a> rend           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline, inherited]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Ends the reverse iteration. 
+<p>
+<dl compact><dt><b>Returns:</b></dt><dd>A non-mutating (const) iterator representing the end of the reverse sequence </dd></dl>
 
 </div>
 </div><p>
