@@ -4,11 +4,11 @@
  * Purpose: record class, in the STL mapping of the Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 28th May 2006
+ * Updated: 23rd April 2007
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2007, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MAJOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_MINOR     7
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  4
-# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      28
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_REVISION  6
+# define OPENRJ_VER_OPENRJ_STL_HPP_RECORD_EDIT      30
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -74,8 +74,15 @@
 #include <iterator>
 #include <stdexcept>
 
+#include <stlsoft/stlsoft.h>
+
+#if !defined(_STLSOFT_VER_1_9_1) || \
+    _STLSOFT_VER < _STLSOFT_VER_1_9_1
+# error This requires STLSoft 1.9.1, or later
+#endif /* STLSoft 1.9.1 */
+
 #include <stlsoft/iterators/indirect_reverse_iterator.hpp>
-#include <stlsoft/iterator.hpp>
+#include <stlsoft/util/std/iterator_helper.hpp>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Compiler warnings
@@ -121,7 +128,7 @@ public:
     friend class const_iterator;
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
-#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// The non-mutating (const) reverse iterator type
 #  if 0
     typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_iterator
@@ -142,11 +149,11 @@ public:
                                                         ,   stlsoft_ns_qual_std(random_access_iterator_tag)
                                                         >   const_reverse_iterator;
 #  endif /* 0 */
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 public:
     /// Conversion constructor
-    explicit record(ORJRecord const *record);
+    explicit record(ORJRecord const* record);
     /// Default constructor
     record();
     /// Copy constructor
@@ -177,7 +184,7 @@ public:
     bool has_field(string_t const &name) const;
 
 #if defined(STLSOFT_COMPILER_IS_INTEL)
-    bool has_field(char const *name) const
+    bool has_field(char const* name) const
     {
         return this->has_field(string_t(name));
     }
@@ -200,7 +207,7 @@ public:
     const string_t operator [](string_t const &name) const; // throw (std::out_of_range)
 
 #if defined(STLSOFT_COMPILER_IS_INTEL)
-    const string_t operator [](char const *name) const
+    const string_t operator [](char const* name) const
     {
         return this->operator [](string_t(name));
     }
@@ -225,7 +232,7 @@ public:
     /// \return A non-mutating (const) iterator representing the end of the sequence
     const_iterator end() const;
 
-#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// Begins the reverse iteration
     ///
     /// \return A non-mutating (const) iterator representing the start of the reverse sequence
@@ -234,7 +241,7 @@ public:
     ///
     /// \return A non-mutating (const) iterator representing the end of the reverse sequence
     const_reverse_iterator rend() const;
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 private:
     /// \brief Predicate for detecting name
@@ -248,7 +255,7 @@ private:
     struct same_name;
 
 private:
-    static field create_field_(ORJFieldA const *r)
+    static field create_field_(ORJFieldA const* r)
     {
         return field(r);
     }
@@ -258,8 +265,8 @@ private:
     size_t          count_fields_(string_t const &name) const;
 
 private:
-    ORJRecord const *m_record;
-    size_t          m_flags;
+    ORJRecord const*    m_record;
+    size_t              m_flags;
 };
 
 class record::const_iterator
@@ -271,7 +278,7 @@ public:
 private:
     friend class    record;
 
-    const_iterator(ORJFieldA const *field);
+    const_iterator(ORJFieldA const* field);
 public:
     const_iterator();
     const_iterator(const_iterator const &rhs);
@@ -331,7 +338,7 @@ inline bool operator !=(record::const_iterator const &lhs, record::const_iterato
 
 // record::const_iterator
 
-inline record::const_iterator::const_iterator(ORJFieldA const *field)
+inline record::const_iterator::const_iterator(ORJFieldA const* field)
     : m_field(field)
 {}
 
@@ -470,7 +477,7 @@ private:
 
 // record
 
-inline ORJField const *record::find_field_(string_t const &name) const
+inline ORJField const* record::find_field_(string_t const &name) const
 {
     // We do a boring linear search.
     ORJField const  *const  b           =   &m_record->fields[0];
@@ -533,7 +540,7 @@ inline size_t record::count_fields_(string_t const &name) const
     }
 }
 
-inline record::record(ORJRecord const *record)
+inline record::record(ORJRecord const* record)
     : m_record(record)
 {}
 
@@ -639,7 +646,7 @@ inline record::const_iterator record::end() const
     return &m_record->fields[m_record->numFields];
 }
 
-#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
 inline record::const_reverse_iterator record::rbegin() const
 {
     return const_reverse_iterator(end());
@@ -649,7 +656,7 @@ inline record::const_reverse_iterator record::rend() const
 {
     return const_reverse_iterator(begin());
 }
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Namespace

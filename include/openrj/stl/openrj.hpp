@@ -4,11 +4,11 @@
  * Purpose: Root header file for the STL mapping of the Open-RJ library
  *
  * Created: 28th September 2004
- * Updated: 13th July 2006
+ * Updated: 22nd April 2007
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2007, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,8 +54,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MAJOR     1
 # define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_MINOR     4
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  2
-# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      19
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_REVISION  3
+# define OPENRJ_VER_OPENRJ_STL_HPP_OPENRJ_EDIT      20
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -75,9 +75,9 @@
 #endif /* ORJ_NO_EXCEPTIONS */
 
 #include <stlsoft/stlsoft.h>
-
-#if !defined(_STLSOFT_VER_1_9_1)
-# error STLSoft version 1.9.1 or greater required. (www.stlsoft.org/downloads.html)
+#if !defined(_STLSOFT_VER_1_9_1) || \
+	_STLSOFT_VER < _STLSOFT_VER_1_9_1
+# error Requires STLSoft 1.9.1, or later. (www.stlsoft.org/downloads.html)
 #endif /* STLSoft version */
 
 #include <stlsoft/conversion/integer_to_string.hpp>

@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
-# Updated:  20th September 2006
+# Updated:  22nd February 2007
 #
 ################################################################################
 
@@ -333,6 +333,12 @@ OBJS_CORE_ST_D_PM =\
  -+$(OBJ_CORE_orjstr__ST_D)\
  \
 
+OBJS_CORE_ST_D = \
+ $(OBJ_CORE_orjapi__ST_D)\
+ $(OBJ_CORE_orjmem__ST_D)\
+ $(OBJ_CORE_orjstr__ST_D)\
+ \
+
 OBJ_CORE_orjapi__ST_R = $(PROJ_OBJ_DIR)\orjapi.obj
 OBJ_CORE_orjmem__ST_R = $(PROJ_OBJ_DIR)\orjmem.obj
 OBJ_CORE_orjstr__ST_R = $(PROJ_OBJ_DIR)\orjstr.obj
@@ -343,6 +349,11 @@ OBJS_CORE_ST_R_PM =\
  -+$(OBJ_CORE_orjstr__ST_R)\
  \
 
+OBJS_CORE_ST_R = \
+ $(OBJ_CORE_orjapi__ST_R)\
+ $(OBJ_CORE_orjmem__ST_R)\
+ $(OBJ_CORE_orjstr__ST_R)\
+ \
 
 OBJS_CORE =\
  $(OBJS_CORE_ST_D)\

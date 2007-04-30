@@ -4,7 +4,7 @@
  * Purpose: Root header file for the Open-RJ library
  *
  * Created: 11th June 2004
- * Updated: 26th January 2007
+ * Updated: 30th April 2007
  *
  * Home:    http://openrj.org/
  *
@@ -52,9 +52,9 @@
 
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_MAJOR       1
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       23
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_MINOR       24
 # define OPENRJ_VER_OPENRJ_H_OPENRJ_REVISION    2
-# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        58
+# define OPENRJ_VER_OPENRJ_H_OPENRJ_EDIT        60
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /** \def OPENRJ_VER_MAJOR
@@ -91,13 +91,14 @@
 # define OPENRJ_VER_1_6_1       0x01060100
 # define OPENRJ_VER_1_6_2       0x01060200
 # define OPENRJ_VER_1_6_3       0x01060300
+# define OPENRJ_VER_1_6_4       0x01060400
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 #define OPENRJ_VER_MAJOR    1
 #define OPENRJ_VER_MINOR    6
-#define OPENRJ_VER_REVISION 3
+#define OPENRJ_VER_REVISION 4
 
-#define OPENRJ_VER  OPENRJ_VER_1_6_3
+#define OPENRJ_VER  OPENRJ_VER_1_6_4
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Includes
@@ -760,6 +761,173 @@ inline ORJRC ORJ_FreeDatabase(/* [in] */ ORJDatabase const *database)
 # endif /* !OPENRJ_NO_FILE_HANDLING */
 # define ORJ_CreateDatabaseFromMemory           ORJ_CreateDatabaseFromMemoryA
 # define ORJ_FreeDatabase                       ORJ_FreeDatabaseA
+#endif /* __cplusplus */
+
+/* /////////////////////////////////////////////////////////////////////////////
+ * C++ shorter name functions
+ */
+
+#ifdef __cplusplus
+
+# ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
+
+inline ORJRC ReadDatabase(  /* [in] */ char const           *jarName
+                        ,   /* [in] */ IORJAllocator        *ator
+                        ,   /* [in] */ unsigned             flags
+                        ,   /* [out] */ ORJDatabaseA const  **pdatabase
+                        ,   /* [out] */ ORJError            *error = NULL)
+{
+    return ORJ_ReadDatabaseA(jarName, ator, flags, pdatabase, error);
+}
+
+inline ORJRC ReadDatabase(  /* [in] */ char const           *jarName
+                        ,   /* [in] */ unsigned             flags
+                        ,   /* [out] */ ORJDatabaseA const  **pdatabase
+                        ,   /* [out] */ ORJError            *error = NULL)
+{
+    return ORJ_ReadDatabaseA(jarName, NULL, flags, pdatabase, error);
+}
+
+inline ORJRC CreateDatabaseFromMemory(  /* [in] */ char const           *contents
+                                    ,   /* [in] */ size_t               cbContents
+                                    ,   /* [in] */ IORJAllocator        *ator
+                                    ,   /* [in] */ unsigned             flags
+                                    ,   /* [out] */ ORJDatabaseA const  **pdatabase
+                                    ,   /* [out] */ ORJError            *error)
+{
+    return ORJ_CreateDatabaseFromMemoryA(contents, cbContents, ator, flags, pdatabase, error);
+}
+
+inline ORJRC FreeDatabase(/* [in] */ ORJDatabaseA const *database)
+{
+    return ORJ_FreeDatabaseA(database);
+}
+
+inline size_t Database_GetNumLines(/* [in] */ ORJDatabaseA const *database)
+{
+    return ORJ_Database_GetNumLinesA(database);
+}
+
+inline size_t Database_GetNumFields(/* [in] */ ORJDatabaseA const   *database)
+{
+    return ORJ_Database_GetNumFieldsA(database);
+}
+
+inline size_t Database_GetNumRecords(/* [in] */ ORJDatabaseA const *database)
+{
+    return ORJ_Database_GetNumRecordsA(database);
+}
+
+inline ORJRC Database_GetRecord(/* [in] */ ORJDatabaseA const   *database
+                            ,   /* [in] */ size_t               iRecord
+                            ,   /* [in] */ ORJRecordA const     **precord)
+{
+    return ORJ_Database_GetRecordA(database, iRecord, precord);
+}
+
+inline ORJRC Database_GetField( /* [in] */ ORJDatabaseA const   *database
+                            ,   /* [in] */ size_t               iField
+                            ,   /* [in] */ ORJFieldA const      **pfield)
+{
+    return ORJ_Database_GetFieldA(database, iField, pfield);
+}
+
+inline size_t Record_GetNumFields(/* [in] */ ORJRecordA const *record)
+{
+    return ORJ_Record_GetNumFieldsA(record);
+}
+
+inline ORJRC Record_GetField(   /* [in] */ ORJRecordA const *record
+                            ,   /* [in] */ size_t           iField
+                            ,   /* [in] */ ORJFieldA const  **pfield)
+{
+    return ORJ_Record_GetFieldA(record, iField, pfield);
+}
+
+inline ORJFieldA const* Record_FindFieldByName( /* [in] */ ORJRecordA const *record
+                                            ,   /* [in] */ char const       *fieldName
+                                            ,   /* [in] */ char const       *fieldValue)
+{
+    return ORJ_Record_FindFieldByNameA(record, fieldName, fieldValue);
+}
+
+inline ORJFieldA const* Record_FindNextField(   /* [in] */ ORJRecordA const *record
+                                            ,   /* [in] */ ORJFieldA const  *fieldAfter = NULL
+                                            ,   /* [in] */ char const       *fieldName  = NULL
+                                            ,   /* [in] */ char const       *fieldValue = NULL)
+{
+    return ORJ_Record_FindNextFieldA(record, fieldAfter, fieldName, fieldValue);
+}
+
+inline ORJDatabaseA const* Record_GetDatabase(/* [in] */ ORJRecordA const *record)
+{
+    return ORJ_Record_GetDatabaseA(record);
+}
+
+inline ORJRC Record_GetComment( /* [in] */ ORJRecordA const *record
+                            ,   /* [in] */ ORJStringA const **pcomment)
+{
+    return ORJ_Record_GetCommentA(record, pcomment);
+}
+
+inline ORJRC Field_GetName( /* [in] */ ORJFieldA const  *field
+                        ,   /* [in] */ ORJStringA const **pname)
+{
+    return ORJ_Field_GetNameA(field, pname);
+}
+
+inline ORJRC Field_GetValue(/* [in] */ ORJFieldA const  *field
+                        ,   /* [in] */ ORJStringA const **pvalue)
+{
+    return ORJ_Field_GetValueA(field, pvalue);
+}
+
+inline ORJRC Field_GetNameAndValue( /* [in] */ ORJFieldA const  *field
+                                ,   /* [in] */ ORJStringA const **pname
+                                ,   /* [in] */ ORJStringA const **pvalue)
+{
+    return ORJ_Field_GetNameAndValueA(field, pname, pvalue);
+}
+
+inline ORJRecordA const* Field_GetRecord(/* [in] */ ORJFieldA const *field)
+{
+    return ORJ_Field_GetRecordA(field);
+}
+
+inline char const *GetErrorString(/* [in] */ ORJRC errorCode)
+{
+    return ORJ_GetErrorStringA(errorCode);
+}
+
+inline size_t GetErrorStringLength(/* [in] */ ORJRC errorCode)
+{
+    return ORJ_GetErrorStringLengthA(errorCode);
+}
+
+inline char const *GetParseErrorString(/* [in] */ ORJ_PARSE_ERROR errorCode)
+{
+    return ORJ_GetParseErrorStringA(errorCode);
+}
+
+inline size_t GetParseErrorStringLength(/* [in] */ ORJ_PARSE_ERROR errorCode)
+{
+    return ORJ_GetParseErrorStringLengthA(errorCode);
+}
+
+#if 0
+ORJ_CALL(int) ORJ_FormatErrorA( /* [in] */ char             *dest
+                            ,   /* [in] */ size_t           cchDest
+                            ,   /* [in] */ ORJRC            rc
+                            ,   /* [in] */ ORJError const   *error  /* = NULL */
+                            ,   /* [in] */ char const       *fmt
+                            ,   /* [in] */ ...
+                            );
+#endif /* 0 */
+
+
+
+# endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
+
 #endif /* __cplusplus */
 
 /* /////////////////////////////////////////////////////////////////////////////

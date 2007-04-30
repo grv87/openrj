@@ -5,7 +5,7 @@
 #           compiler, on Win32
 #
 # Created:  15th Feburary 2005
-# Updated:  20th September 2006
+# Updated:  22nd February 2007
 #
 ################################################################################
 
@@ -334,7 +334,6 @@ OBJS_CORE_RELEASE = \
  $(OBJ_CORE_orjmem__RELEASE)\
  $(OBJ_CORE_orjstr__RELEASE)\
  \
-
 
 OBJS_CORE =\
  $(OBJS_CORE_DEBUG)\

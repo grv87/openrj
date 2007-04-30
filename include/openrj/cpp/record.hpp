@@ -4,11 +4,11 @@
  * Purpose: Record class, in the C++ mapping of the Open-RJ library
  *
  * Created: 18th June 2004
- * Updated: 26th December 2006
+ * Updated: 22nd April 2007
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2007, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,8 +53,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MAJOR       1
 # define OPENRJ_VER_OPENRJ_CPP_H_RECORD_MINOR       7
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    4
-# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        22
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_REVISION    5
+# define OPENRJ_VER_OPENRJ_CPP_H_RECORD_EDIT        23
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -65,12 +65,16 @@
 #include <openrj/cpp/field.hpp>
 
 #include <stlsoft/stlsoft.h>
+#if !defined(_STLSOFT_VER_1_9_1) || \
+	_STLSOFT_VER < _STLSOFT_VER_1_9_1
+# error Requires STLSoft 1.9.1, or later. (www.stlsoft.org/downloads.html)
+#endif /* STLSoft version */
 #include <stlsoft/memory/auto_buffer.hpp>
-#ifdef __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
+#ifdef STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT
 # include <stlsoft/meta/is_integral_type.hpp>
 # include <stlsoft/meta/select_first_type_if.hpp>
 # include <stlsoft/meta/yesno.hpp>
-#endif /* __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
+#endif /* STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
 
 #include <stdio.h>
 #include <algorithm>
@@ -237,7 +241,7 @@ public:
     }
 
 
-# if defined(__STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT) && \
+# if defined(STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT) && \
      !defined(STLSOFT_COMPILER_IS_BORLAND)
     template <typename S>
     String subscript_operator_(S const &name, stlsoft::no_type) const
@@ -263,7 +267,7 @@ public:
 
         return subscript_operator_(name, yesno_type());
     }
-# else /* ? __STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
+# else /* ? STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
     /// \brief Returns the requested field
     ///
     /// \param name The index of the field to be returned.
@@ -288,7 +292,7 @@ public:
 //        return operator [](static_cast<size_t>(index));
 //    }
 #  endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
-# endif /* !__STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
+# endif /* !STLSOFT_CF_TEMPLATE_PARTIAL_SPECIALISATION_SUPPORT */
 #endif /* !ORJ_NO_EXCEPTIONS */
 
 // Implementation

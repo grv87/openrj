@@ -4,11 +4,27 @@ Open-RJ - Changes
 -----------------
 
 
+  30th April 2007 - Open-RJ 1.6.4 released
+
+    general:
+      + now compatible with STLSoft 1.9.1 (the special version 
+        prepared for the Extended STL, volume 1: CD)
+
+    core library (C++ only):
+      + ReadDatabase(), CreateDatabaseFromMemory(), etc.
+
+    Open-RJ/C++:
+      ~ compatible with STLSoft 1.9.1
+
+    Open-RJ/STL:
+      ~ compatible with STLSoft 1.9.1
+
+
   27th September 2006 - Open-RJ 1.6.3 released
 
     general:
       + now roots the distribution under openrj-X.Y,
-	    e.g. openrj-3.4.3
+        e.g. openrj-3.4.3
 
 
   26th September 2006 - Open-RJ 1.6.2 released

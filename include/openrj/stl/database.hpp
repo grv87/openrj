@@ -5,11 +5,11 @@
  *          Open-RJ library
  *
  * Created: 15th June 2004
- * Updated: 26th December 2006
+ * Updated: 23rd April 2007
  *
  * Home:    http://openrj.org/
  *
- * Copyright (c) 2004-2006, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2007, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,8 +55,8 @@
 #ifndef OPENRJ_DOCUMENTATION_SKIP_SECTION
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MAJOR       1
 # define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_MINOR       7
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    7
-# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        39
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_REVISION    9
+# define OPENRJ_VER_OPENRJ_STL_HPP_DATABASE_EDIT        41
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -77,8 +77,8 @@
 #include <iterator>
 
 #include <stlsoft/iterators/indirect_reverse_iterator.hpp>
-#include <stlsoft/iterator.hpp>
-#include <stlsoft/proxy_iterator.hpp>
+#include <stlsoft/util/std/iterator_helper.hpp>
+#include <stlsoft/obsolete/proxy_iterator.hpp>
 
 /* /////////////////////////////////////////////////////////////////////////////
  * Compiler warnings
@@ -163,7 +163,7 @@ public:
                                 ,   field
                                 >           const_field_iterator;
 
-# if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+# if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// The non-mutating (const) reverse iterator type
     typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_field_iterator
                                                         ,   field
@@ -171,7 +171,7 @@ public:
                                                         ,   void
                                                         ,   difference_type
                                                         >   const_reverse_field_iterator;
-# endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+# endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 #endif /* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */
     /// The distance type
     typedef size_t                          distance_type;
@@ -182,7 +182,7 @@ public:
     class const_iterator;
 #endif /* !OPENRJ_DOCUMENTATION_SKIP_SECTION */
 
-#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// The non-mutating (const) reverse iterator type
 #  if 0
     typedef stlsoft_ns_qual(const_reverse_iterator_base)<   const_iterator
@@ -203,7 +203,7 @@ public:
                                                         ,   std::random_access_iterator_tag
                                                         >   const_reverse_iterator;
 #  endif /* 0 */
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 protected:
     explicit database_base(ORJDatabase const *database);
@@ -238,7 +238,7 @@ public:
     /// \return A non-mutating (const) iterator representing the end of the sequence
     const_iterator end() const;
 
-#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     /// Begins the reverse iteration
     ///
     /// \return A non-mutating (const) iterator representing the start of the reverse sequence
@@ -247,15 +247,15 @@ public:
     ///
     /// \return A non-mutating (const) iterator representing the end of the reverse sequence
     const_reverse_iterator rend() const;
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 #ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS
     const_field_iterator fields_begin() const;
     const_field_iterator fields_end() const;
-# if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+# if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
     const_reverse_field_iterator fields_rbegin() const;
     const_reverse_field_iterator fields_rend() const;
-# endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+# endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 #endif /* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */
 
 // Members
@@ -334,7 +334,7 @@ public:
     explicit memory_database(S const &contents, unsigned flags = 0)
         : parent_class_type(create_database_(::stlsoft::c_str_data(contents), ::stlsoft::c_str_len(contents), flags))
     {}
-#ifdef __STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT
+#ifdef STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT
     /// \brief Constructs a database instance from the given character array, and
     /// the optional flags
     ///
@@ -344,7 +344,7 @@ public:
     explicit memory_database(const char (&contents)[N], unsigned flags = 0)
         : parent_class_type(create_database_(&contents[0], N, flags))
     {}
-#endif /* __STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT */
+#endif /* STLSOFT_CF_STATIC_ARRAY_SIZE_DETERMINATION_SUPPORT */
 
 // Implementation
 private:
@@ -624,7 +624,7 @@ inline database_base::const_iterator database_base::end() const
     return &m_database->records[m_database->numRecords];
 }
 
-#if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+#if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
 inline database_base::const_reverse_iterator database_base::rbegin() const
 {
     return const_reverse_iterator(end());
@@ -634,7 +634,7 @@ inline database_base::const_reverse_iterator database_base::rend() const
 {
     return const_reverse_iterator(begin());
 }
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 #ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS
 inline database_base::const_field_iterator database_base::fields_begin() const
@@ -651,7 +651,7 @@ inline database_base::const_field_iterator database_base::fields_end() const
     return const_field_iterator(&m_database->fields[m_database->numFields], &m_database->fields[m_database->numFields]);
 }
 
-# if defined(__STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
+# if defined(STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT)
 inline database_base::const_reverse_field_iterator database_base::fields_rbegin() const
 {
     return const_reverse_field_iterator(fields_end());
@@ -661,7 +661,7 @@ inline database_base::const_reverse_field_iterator database_base::fields_rend() 
 {
     return const_reverse_field_iterator(fields_begin());
 }
-# endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+# endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 #endif /* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */
 
 /* /////////////////////////////////////////////////////////////////////////////

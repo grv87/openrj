@@ -6,11 +6,11 @@
  *              subscript operators.
  *
  * Created:     12th May 2006
- * Updated:     28th May 2006
+ * Updated:     23rd April 2007
  *
  * www:         http://www.openrj.org/
  *
- * License:     Copyright (c) 2006, Synesis Software Pty Ltd.
+ * License:     Copyright (c) 2006-2007, Synesis Software Pty Ltd.
  *              All rights reserved.
  *
  *              (Licensed under the Synesis Software Open License)
@@ -107,7 +107,7 @@ int main(int /* argc */, char * /* argv */[])
             }
         }}
     }
-    catch(std::exception &x)
+    catch(std::exception& x)
     {
         cerr << "Failed to open database: " << x.what() << endl;
     }

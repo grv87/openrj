@@ -5,7 +5,7 @@
  *              Open-RJ library).
  *
  * Created:     18th June 2004
- * Updated:     26th December 2006
+ * Updated:     22nd April 2007
  *
  * www:         http://www.openrj.org/
  *
@@ -283,7 +283,7 @@ static int main_(int argc, char *argv[])
                 }}
             }}
 
-#ifdef __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT
+#ifdef STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT
             // 5. Enumerate the contents in reverse using rbegin()/rend() methods
 
             cout << endl << "5. Enumerate the contents in reverse using rbegin()/rend() methods:" << endl << endl;
@@ -323,7 +323,7 @@ static int main_(int argc, char *argv[])
                         cout << "    field-#" << iField << " " << field << endl;
                 }}
             }}
-#endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+#endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 
 #ifndef OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS
             // 6. Enumerate all fields in the database using begin()/end() methods
@@ -332,14 +332,14 @@ static int main_(int argc, char *argv[])
 
             std::copy(db.fields_begin(), db.fields_end(), std::ostream_iterator<openrj::stl::field>(std::cout, "\n"));
 
-# ifdef __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT
+# ifdef STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT
             // 7. Enumerate all fields in the database in reverse using rbegin()/rend() methods
 
             cout << endl << "7. Enumerate all fields in the database in reverse using rbegin()/rend() methods:" << endl << endl;
 
             cout << endl << "All fields (in reverse order):" << endl;
             std::copy(db.fields_rbegin(), db.fields_rend(), std::ostream_iterator<openrj::stl::field>(std::cout, "\n"));
-# endif /* __STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
+# endif /* STLSOFT_CF_BIDIRECTIONAL_ITERATOR_SUPPORT */
 #endif /* !OPENRJ_STL_DATABASE_NO_FIELD_ITERATORS */
 
         }
