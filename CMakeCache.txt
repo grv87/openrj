@@ -1,0 +1,6 @@
+cmake_minimum_required (VERSION 3.9 FATAL_ERROR)
+project ("Open-RJ")
+include_directories(include)
+# source_group
+# BUILD_SHARED_LIBS
+add_library(openrj orjapi.c orjmem.c orjstr.c)
